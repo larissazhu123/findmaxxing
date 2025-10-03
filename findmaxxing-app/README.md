@@ -45,10 +45,18 @@ npm run dev, this will spin up the local instance
 
 
 First, if you don't already, create a .env.local file in the findmaxxing-app directory where you will add the supabase details in this format: 
+
 NEXT_PUBLIC_SUPABASE_URL=your-url-here
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
 
 To get these details, contact the database manager. 
 
+Next, create a .env file at the project root where the prisma details will be.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+DATABASE_URL=postgresql://postgres:your-db-password@db.PROJECT_ID.supabase.co:5432/postgres
+
+For the specific url, contact the database manager. 
+
+Now, you should be set to safely deploy and work on the project, (make sure that the gitignore isn't changed so secrets aren't exposed). 
+
+
