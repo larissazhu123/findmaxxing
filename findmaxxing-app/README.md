@@ -37,4 +37,18 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
+
+
+## DEV USAGE
+npm install, 
+npm run dev, this will spin up the local instance
+
+
+First, if you don't already, create a .env.local file in the findmaxxing-app directory where you will add the supabase details in this format: 
+NEXT_PUBLIC_SUPABASE_URL=your-url-here
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
+
+To get these details, contact the database manager. 
+
+
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
