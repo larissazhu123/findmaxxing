@@ -126,6 +126,15 @@ exports.Prisma.ListingScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.App_userScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  username: 'username',
+  points: 'points',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -136,9 +145,15 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
-  Listing: 'Listing'
+  Listing: 'Listing',
+  app_user: 'app_user'
 };
 
 /**
