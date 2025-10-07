@@ -2,8 +2,16 @@
 "use client"; // ensures this runs client-side only
 import Image from "next/image";
 import { useState } from "react";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 import type { LeafletMouseEvent } from "leaflet";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+
+const PinIcon = L.icon({
+  iconUrl: "/pin.svg", // points to /public/pin.svg
+  iconSize: [32, 32], // adjust size to match your SVG design
+  iconAnchor: [16, 32], // point of the icon that corresponds to marker location
+});
 
 // Modal (for adding pins and viewing details)
 function Modal({
@@ -45,7 +53,10 @@ function ClickHandler({
 export default function MapView() {
   const [pins, setPins] = useState<any[]>([]);
   const [selectedPin, setSelectedPin] = useState<any | null>(null);
-  const [newPinCoords, setNewPinCoords] = useState<{ lat: number; lng: number } | null>(null);
+  const [newPinCoords, setNewPinCoords] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(null);
 
   // Form state
   const [title, setTitle] = useState("");
@@ -62,7 +73,6 @@ export default function MapView() {
       title,
       desc,
       category,
-      // For now, create a temporary preview URL
       image: imageFile ? URL.createObjectURL(imageFile) : "",
       lat: newPinCoords.lat,
       lng: newPinCoords.lng,
@@ -99,6 +109,7 @@ export default function MapView() {
           <Marker
             key={pin.id}
             position={[pin.lat, pin.lng]}
+            icon={PinIcon}
             eventHandlers={{
               click: () => setSelectedPin(pin),
             }}
