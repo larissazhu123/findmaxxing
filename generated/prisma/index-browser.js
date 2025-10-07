@@ -120,12 +120,6 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.ListingScalarFieldEnum = {
-  id: 'id',
-  title: 'title',
-  createdAt: 'createdAt'
-};
-
 exports.Prisma.App_userScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -135,9 +129,73 @@ exports.Prisma.App_userScalarFieldEnum = {
   updated_at: 'updated_at'
 };
 
+exports.Prisma.CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+};
+
+exports.Prisma.User_prefScalarFieldEnum = {
+  user_id: 'user_id',
+  notifications_on: 'notifications_on',
+  radius_meters: 'radius_meters',
+  category_filter: 'category_filter',
+  dark_mode: 'dark_mode',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.ListingScalarFieldEnum = {
+  id: 'id',
+  finder_user_id: 'finder_user_id',
+  title: 'title',
+  description: 'description',
+  category_id: 'category_id',
+  status: 'status',
+  found_at: 'found_at',
+  expires_at: 'expires_at',
+  lat: 'lat',
+  lng: 'lng',
+  place_name: 'place_name',
+  manual_address: 'manual_address',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.Listing_photoScalarFieldEnum = {
+  id: 'id',
+  listing_id: 'listing_id',
+  url: 'url',
+  storage_key: 'storage_key',
+  sort_order: 'sort_order',
+  uploaded_at: 'uploaded_at'
+};
+
+exports.Prisma.ClaimScalarFieldEnum = {
+  id: 'id',
+  listing_id: 'listing_id',
+  claimer_user_id: 'claimer_user_id',
+  status: 'status',
+  message: 'message',
+  created_at: 'created_at'
+};
+
+exports.Prisma.NotificationScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  type: 'type',
+  channel: 'channel',
+  payload: 'payload',
+  status: 'status',
+  created_at: 'created_at',
+  sent_at: 'sent_at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -150,10 +208,21 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
 
 exports.Prisma.ModelName = {
-  Listing: 'Listing',
-  app_user: 'app_user'
+  app_user: 'app_user',
+  category: 'category',
+  user_pref: 'user_pref',
+  listing: 'listing',
+  listing_photo: 'listing_photo',
+  claim: 'claim',
+  notification: 'notification'
 };
 
 /**
