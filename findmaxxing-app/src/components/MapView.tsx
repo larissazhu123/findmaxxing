@@ -1,19 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client"; // ensures this runs client-side only
+"use client";
+
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { LeafletMouseEvent } from "leaflet";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import { v4 as uuidv4 } from "uuid";
+import { supabase } from "@/lib/supabaseClient";
 
+// ---------------- UI helpers ----------------
 const PinIcon = L.icon({
-  iconUrl: "/pin.svg", // points to /public/pin.svg
-  iconSize: [32, 32], // adjust size to match your SVG design
-  iconAnchor: [16, 32], // point of the icon that corresponds to marker location
+  iconUrl: "/pin.svg",
+  iconSize: [32, 32],
+  iconAnchor: [16, 32],
 });
 
-// Modal (for adding pins and viewing details)
 function Modal({
   children,
   onClose,
@@ -22,11 +25,11 @@ function Modal({
   onClose: () => void;
 }) {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-[1000]">
+    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[1000]">
       <div className="bg-black rounded-lg p-6 max-w-md w-full relative shadow-lg">
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
+          className="absolute top-2 right-2 text-gray-400 hover:text-gray-200"
         >
           ✖
         </button>
@@ -36,12 +39,7 @@ function Modal({
   );
 }
 
-// Handles map click events
-function ClickHandler({
-  onMapClick,
-}: {
-  onMapClick: (lat: number, lng: number) => void;
-}) {
+function ClickHandler({ onMapClick }: { onMapClick: (lat: number, lng: number) => void }) {
   useMapEvents({
     click(e: LeafletMouseEvent) {
       onMapClick(e.latlng.lat, e.latlng.lng);
@@ -50,69 +48,182 @@ function ClickHandler({
   return null;
 }
 
-export default function MapView() {
-  const [pins, setPins] = useState<any[]>([]);
-  const [selectedPin, setSelectedPin] = useState<any | null>(null);
-  const [newPinCoords, setNewPinCoords] = useState<{
-    lat: number;
-    lng: number;
-  } | null>(null);
+// --------------- DB types -------------------
+type ListingRow = {
+  id: string;
+  finder_user_id: string | null;
+  title: string | null;
+  description: string | null;
+  category_id: number | null;   // int2
+  status: string | null;        // e.g., "found"
+  found_at: string | null;      // ISO
+  expires_at: string | null;    // ISO
+  lat: number | null;
+  lng: number | null;
+  place_name: string | null;
+  manual_address: string | null;
+  image_url: string | null;     // <-- add column: ALTER TABLE public.listing ADD COLUMN IF NOT EXISTS image_url text;
+  created_at?: string | null;
+  updated_at?: string | null;
+};
 
-  // Form state
+const CURRENT_USER_ID = "1"; // TEMP until you wire auth
+
+export default function MapView() {
+  const [pins, setPins] = useState<ListingRow[]>([]);
+  const [selectedPin, setSelectedPin] = useState<ListingRow | null>(null);
+  const [newPinCoords, setNewPinCoords] = useState<{ lat: number; lng: number } | null>(null);
+
+  // form
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [category, setCategory] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const handleAddPin = (e: React.FormEvent) => {
+  // map UI category -> DB category_id (agree this mapping with backend)
+  const CATEGORY_MAP = useMemo(
+    () => ({
+      electronics: 1,
+      clothing: 2,
+      books: 3,
+      other: 99,
+    }),
+    []
+  );
+
+  // --------- initial fetch ----------
+  useEffect(() => {
+    (async () => {
+      const { data, error } = await supabase
+        .from("listing")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error(error);
+        setErrorMsg(error.message);
+        return;
+      }
+      setPins((data as ListingRow[]) ?? []);
+    })();
+  }, []);
+
+  // --------- realtime subscription ----------
+  useEffect(() => {
+    const channel = supabase
+      .channel("listing-changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "listing" },
+        (payload) => {
+          if (payload.eventType === "INSERT") {
+            setPins((prev) => [payload.new as ListingRow, ...prev]);
+          } else if (payload.eventType === "UPDATE") {
+            setPins((prev) =>
+              prev.map((p) => (p.id === (payload.new as ListingRow).id ? (payload.new as ListingRow) : p))
+            );
+          } else if (payload.eventType === "DELETE") {
+            setPins((prev) => prev.filter((p) => p.id !== (payload.old as ListingRow).id));
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  // --------- storage upload (optional) ----------
+  async function uploadImageIfAny(file: File | null, listingId: string): Promise<string | null> {
+    if (!file) return null;
+    const ext = file.name.split(".").pop() || "jpg";
+    const path = `listings/${listingId}.${ext}`;
+
+    const { error } = await supabase.storage.from("listing-images").upload(path, file, { upsert: true });
+    if (error) {
+      console.error("upload error", error);
+      setErrorMsg(error.message);
+      return null;
+    }
+
+    const { data } = supabase.storage.from("listing-images").getPublicUrl(path); // bucket public
+    return data.publicUrl ?? null;
+  }
+
+  // --------- insert listing ----------
+  const handleAddPin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newPinCoords) return;
 
-    const newPin = {
-      id: Date.now(),
-      title,
-      desc,
-      category,
-      image: imageFile ? URL.createObjectURL(imageFile) : "",
-      lat: newPinCoords.lat,
-      lng: newPinCoords.lng,
-    };
+    try {
+      setSaving(true);
+      setErrorMsg(null);
 
-    setPins((prev) => [...prev, newPin]);
-    setNewPinCoords(null);
-    setTitle("");
-    setDesc("");
-    setCategory("");
-    setImageFile(null);
+      const id = uuidv4();
+      const now = new Date();
+      const expires = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+
+      const image_url = await uploadImageIfAny(imageFile, id);
+
+      const { data, error } = await supabase
+        .from("listing")
+        .insert([
+          {
+            id,
+            finder_user_id: CURRENT_USER_ID, // hardcoded for now
+            title,
+            description: desc,
+            category_id: category ? CATEGORY_MAP[category as keyof typeof CATEGORY_MAP] : null,
+            status: "found",
+            found_at: now.toISOString(),
+            expires_at: expires.toISOString(),
+            lat: newPinCoords.lat,
+            lng: newPinCoords.lng,
+            place_name: null,
+            manual_address: null,
+            image_url,
+          } satisfies Partial<ListingRow>,
+        ])
+        .select("*")
+        .single();
+
+      if (error) throw error;
+
+      // optimistic update (Realtime will also push it)
+      setPins((prev) => [data as ListingRow, ...prev]);
+
+      // reset form
+      setNewPinCoords(null);
+      setTitle("");
+      setDesc("");
+      setCategory("");
+      setImageFile(null);
+    } catch (err: any) {
+      console.error(err);
+      setErrorMsg(err.message ?? "Failed to save listing.");
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
     <div className="h-full w-full">
-      <MapContainer
-        center={[42.391, -72.526]}
-        zoom={13}
-        className="h-full w-full"
-        style={{ zIndex: 0 }}
-      >
+      <MapContainer center={[42.391, -72.526]} zoom={13} className="h-full w-full" style={{ zIndex: 0 }}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="© OpenStreetMap contributors"
         />
-
-        <ClickHandler
-          onMapClick={(lat, lng) => {
-            setNewPinCoords({ lat, lng });
-          }}
-        />
+        <ClickHandler onMapClick={(lat, lng) => setNewPinCoords({ lat, lng })} />
 
         {pins.map((pin) => (
           <Marker
             key={pin.id}
-            position={[pin.lat, pin.lng]}
+            position={[pin.lat ?? 0, pin.lng ?? 0]}
             icon={PinIcon}
-            eventHandlers={{
-              click: () => setSelectedPin(pin),
-            }}
+            eventHandlers={{ click: () => setSelectedPin(pin) }}
           />
         ))}
       </MapContainer>
@@ -121,46 +232,42 @@ export default function MapView() {
       {newPinCoords && (
         <Modal onClose={() => setNewPinCoords(null)}>
           <h2 className="text-xl font-bold mb-4">Add New Pin</h2>
-          <form onSubmit={handleAddPin} className="flex flex-col gap-4">
+          {errorMsg && <p className="text-red-400 text-sm mb-2">{errorMsg}</p>}
+
+          <form onSubmit={handleAddPin} className="flex flex-col gap-3">
             <input
               type="text"
               placeholder="Title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="border p-2 rounded"
+              className="border border-gray-700 bg-black text-white p-2 rounded"
               required
             />
             <textarea
               placeholder="Description"
               value={desc}
               onChange={(e) => setDesc(e.target.value)}
-              className="border p-2 rounded"
+              className="border border-gray-700 bg-black text-white p-2 rounded"
             />
-            {/* File input for image upload */}
             <input
               type="file"
               accept="image/*"
-              onChange={(e) => {
-                if (e.target.files && e.target.files.length > 0) {
-                  setImageFile(e.target.files[0]);
-                }
-              }}
-              className="border p-2 rounded"
+              onChange={(e) => e.target.files?.[0] && setImageFile(e.target.files[0])}
+              className="border border-gray-700 bg-black text-white p-2 rounded"
             />
-            {/* Preview selected image */}
             {imageFile && (
               <Image
                 src={URL.createObjectURL(imageFile)}
                 alt="Preview"
                 width={400}
                 height={200}
-                className="w-full h-40 object-cover rounded mb-2"
+                className="w-full h-40 object-cover rounded mb-1"
               />
             )}
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="border p-2 rounded"
+              className="border border-gray-700 bg-black text-white p-2 rounded"
             >
               <option value="">Select category</option>
               <option value="electronics">Electronics</option>
@@ -170,30 +277,31 @@ export default function MapView() {
             </select>
             <button
               type="submit"
-              className="px-6 py-3 bg-green-600 text-white rounded hover:bg-green-700"
+              disabled={saving}
+              className="px-6 py-3 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
             >
-              Save Pin
+              {saving ? "Saving..." : "Save Pin"}
             </button>
           </form>
         </Modal>
       )}
 
-      {/* View Pin Info Modal */}
+      {/* View Pin */}
       {selectedPin && (
         <Modal onClose={() => setSelectedPin(null)}>
           <h2 className="text-xl font-bold mb-2">{selectedPin.title}</h2>
-          {selectedPin.image && (
+          {selectedPin.image_url && (
             <Image
-              src={selectedPin.image}
-              alt={selectedPin.title}
+              src={selectedPin.image_url}
+              alt={selectedPin.title ?? "Listing image"}
               width={400}
               height={200}
               className="w-full h-40 object-cover rounded mb-4"
             />
           )}
-          <p className="mb-2">{selectedPin.desc}</p>
-          <p className="text-sm text-gray-600">
-            <strong>Category:</strong> {selectedPin.category || "None"}
+          <p className="mb-2">{selectedPin.description}</p>
+          <p className="text-sm text-gray-400">
+            <strong>Category ID:</strong> {selectedPin.category_id ?? "—"}
           </p>
         </Modal>
       )}
