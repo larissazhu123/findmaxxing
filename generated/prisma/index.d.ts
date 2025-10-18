@@ -1406,14 +1406,14 @@ export namespace Prisma {
    */
 
   export type App_userCountOutputType = {
-    listings: number
     claims: number
+    listings: number
     notifications: number
   }
 
   export type App_userCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    listings?: boolean | App_userCountOutputTypeCountListingsArgs
     claims?: boolean | App_userCountOutputTypeCountClaimsArgs
+    listings?: boolean | App_userCountOutputTypeCountListingsArgs
     notifications?: boolean | App_userCountOutputTypeCountNotificationsArgs
   }
 
@@ -1431,15 +1431,15 @@ export namespace Prisma {
   /**
    * App_userCountOutputType without action
    */
-  export type App_userCountOutputTypeCountListingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: listingWhereInput
+  export type App_userCountOutputTypeCountClaimsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: claimWhereInput
   }
 
   /**
    * App_userCountOutputType without action
    */
-  export type App_userCountOutputTypeCountClaimsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: claimWhereInput
+  export type App_userCountOutputTypeCountListingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: listingWhereInput
   }
 
   /**
@@ -1486,13 +1486,13 @@ export namespace Prisma {
    */
 
   export type ListingCountOutputType = {
-    photos: number
     claims: number
+    photos: number
   }
 
   export type ListingCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    photos?: boolean | ListingCountOutputTypeCountPhotosArgs
     claims?: boolean | ListingCountOutputTypeCountClaimsArgs
+    photos?: boolean | ListingCountOutputTypeCountPhotosArgs
   }
 
   // Custom InputTypes
@@ -1509,15 +1509,15 @@ export namespace Prisma {
   /**
    * ListingCountOutputType without action
    */
-  export type ListingCountOutputTypeCountPhotosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: listing_photoWhereInput
+  export type ListingCountOutputTypeCountClaimsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: claimWhereInput
   }
 
   /**
    * ListingCountOutputType without action
    */
-  export type ListingCountOutputTypeCountClaimsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: claimWhereInput
+  export type ListingCountOutputTypeCountPhotosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: listing_photoWhereInput
   }
 
 
@@ -1731,10 +1731,10 @@ export namespace Prisma {
     points?: boolean
     created_at?: boolean
     updated_at?: boolean
-    user_pref?: boolean | app_user$user_prefArgs<ExtArgs>
-    listings?: boolean | app_user$listingsArgs<ExtArgs>
     claims?: boolean | app_user$claimsArgs<ExtArgs>
+    listings?: boolean | app_user$listingsArgs<ExtArgs>
     notifications?: boolean | app_user$notificationsArgs<ExtArgs>
+    user_pref?: boolean | app_user$user_prefArgs<ExtArgs>
     _count?: boolean | App_userCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["app_user"]>
 
@@ -1767,10 +1767,10 @@ export namespace Prisma {
 
   export type app_userOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "points" | "created_at" | "updated_at", ExtArgs["result"]["app_user"]>
   export type app_userInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user_pref?: boolean | app_user$user_prefArgs<ExtArgs>
-    listings?: boolean | app_user$listingsArgs<ExtArgs>
     claims?: boolean | app_user$claimsArgs<ExtArgs>
+    listings?: boolean | app_user$listingsArgs<ExtArgs>
     notifications?: boolean | app_user$notificationsArgs<ExtArgs>
+    user_pref?: boolean | app_user$user_prefArgs<ExtArgs>
     _count?: boolean | App_userCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type app_userIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1779,10 +1779,10 @@ export namespace Prisma {
   export type $app_userPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "app_user"
     objects: {
-      user_pref: Prisma.$user_prefPayload<ExtArgs> | null
-      listings: Prisma.$listingPayload<ExtArgs>[]
       claims: Prisma.$claimPayload<ExtArgs>[]
+      listings: Prisma.$listingPayload<ExtArgs>[]
       notifications: Prisma.$notificationPayload<ExtArgs>[]
+      user_pref: Prisma.$user_prefPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2185,10 +2185,10 @@ export namespace Prisma {
    */
   export interface Prisma__app_userClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user_pref<T extends app_user$user_prefArgs<ExtArgs> = {}>(args?: Subset<T, app_user$user_prefArgs<ExtArgs>>): Prisma__user_prefClient<$Result.GetResult<Prisma.$user_prefPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    listings<T extends app_user$listingsArgs<ExtArgs> = {}>(args?: Subset<T, app_user$listingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$listingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     claims<T extends app_user$claimsArgs<ExtArgs> = {}>(args?: Subset<T, app_user$claimsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$claimPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    listings<T extends app_user$listingsArgs<ExtArgs> = {}>(args?: Subset<T, app_user$listingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$listingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notifications<T extends app_user$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, app_user$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$notificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    user_pref<T extends app_user$user_prefArgs<ExtArgs> = {}>(args?: Subset<T, app_user$user_prefArgs<ExtArgs>>): Prisma__user_prefClient<$Result.GetResult<Prisma.$user_prefPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2612,22 +2612,27 @@ export namespace Prisma {
   }
 
   /**
-   * app_user.user_pref
+   * app_user.claims
    */
-  export type app_user$user_prefArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type app_user$claimsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the user_pref
+     * Select specific fields to fetch from the claim
      */
-    select?: user_prefSelect<ExtArgs> | null
+    select?: claimSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the user_pref
+     * Omit specific fields from the claim
      */
-    omit?: user_prefOmit<ExtArgs> | null
+    omit?: claimOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: user_prefInclude<ExtArgs> | null
-    where?: user_prefWhereInput
+    include?: claimInclude<ExtArgs> | null
+    where?: claimWhereInput
+    orderBy?: claimOrderByWithRelationInput | claimOrderByWithRelationInput[]
+    cursor?: claimWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClaimScalarFieldEnum | ClaimScalarFieldEnum[]
   }
 
   /**
@@ -2655,30 +2660,6 @@ export namespace Prisma {
   }
 
   /**
-   * app_user.claims
-   */
-  export type app_user$claimsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the claim
-     */
-    select?: claimSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the claim
-     */
-    omit?: claimOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: claimInclude<ExtArgs> | null
-    where?: claimWhereInput
-    orderBy?: claimOrderByWithRelationInput | claimOrderByWithRelationInput[]
-    cursor?: claimWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ClaimScalarFieldEnum | ClaimScalarFieldEnum[]
-  }
-
-  /**
    * app_user.notifications
    */
   export type app_user$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2700,6 +2681,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
+   * app_user.user_pref
+   */
+  export type app_user$user_prefArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the user_pref
+     */
+    select?: user_prefSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the user_pref
+     */
+    omit?: user_prefOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: user_prefInclude<ExtArgs> | null
+    where?: user_prefWhereInput
   }
 
   /**
@@ -5165,10 +5165,10 @@ export namespace Prisma {
     manual_address?: boolean
     created_at?: boolean
     updated_at?: boolean
-    finder?: boolean | app_userDefaultArgs<ExtArgs>
-    category?: boolean | listing$categoryArgs<ExtArgs>
-    photos?: boolean | listing$photosArgs<ExtArgs>
     claims?: boolean | listing$claimsArgs<ExtArgs>
+    category?: boolean | listing$categoryArgs<ExtArgs>
+    finder?: boolean | app_userDefaultArgs<ExtArgs>
+    photos?: boolean | listing$photosArgs<ExtArgs>
     _count?: boolean | ListingCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["listing"]>
 
@@ -5187,8 +5187,8 @@ export namespace Prisma {
     manual_address?: boolean
     created_at?: boolean
     updated_at?: boolean
-    finder?: boolean | app_userDefaultArgs<ExtArgs>
     category?: boolean | listing$categoryArgs<ExtArgs>
+    finder?: boolean | app_userDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["listing"]>
 
   export type listingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5206,8 +5206,8 @@ export namespace Prisma {
     manual_address?: boolean
     created_at?: boolean
     updated_at?: boolean
-    finder?: boolean | app_userDefaultArgs<ExtArgs>
     category?: boolean | listing$categoryArgs<ExtArgs>
+    finder?: boolean | app_userDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["listing"]>
 
   export type listingSelectScalar = {
@@ -5229,28 +5229,28 @@ export namespace Prisma {
 
   export type listingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "finder_user_id" | "title" | "description" | "category_id" | "status" | "found_at" | "expires_at" | "lat" | "lng" | "place_name" | "manual_address" | "created_at" | "updated_at", ExtArgs["result"]["listing"]>
   export type listingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    finder?: boolean | app_userDefaultArgs<ExtArgs>
-    category?: boolean | listing$categoryArgs<ExtArgs>
-    photos?: boolean | listing$photosArgs<ExtArgs>
     claims?: boolean | listing$claimsArgs<ExtArgs>
+    category?: boolean | listing$categoryArgs<ExtArgs>
+    finder?: boolean | app_userDefaultArgs<ExtArgs>
+    photos?: boolean | listing$photosArgs<ExtArgs>
     _count?: boolean | ListingCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type listingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    finder?: boolean | app_userDefaultArgs<ExtArgs>
     category?: boolean | listing$categoryArgs<ExtArgs>
+    finder?: boolean | app_userDefaultArgs<ExtArgs>
   }
   export type listingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    finder?: boolean | app_userDefaultArgs<ExtArgs>
     category?: boolean | listing$categoryArgs<ExtArgs>
+    finder?: boolean | app_userDefaultArgs<ExtArgs>
   }
 
   export type $listingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "listing"
     objects: {
-      finder: Prisma.$app_userPayload<ExtArgs>
-      category: Prisma.$categoryPayload<ExtArgs> | null
-      photos: Prisma.$listing_photoPayload<ExtArgs>[]
       claims: Prisma.$claimPayload<ExtArgs>[]
+      category: Prisma.$categoryPayload<ExtArgs> | null
+      finder: Prisma.$app_userPayload<ExtArgs>
+      photos: Prisma.$listing_photoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5661,10 +5661,10 @@ export namespace Prisma {
    */
   export interface Prisma__listingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    finder<T extends app_userDefaultArgs<ExtArgs> = {}>(args?: Subset<T, app_userDefaultArgs<ExtArgs>>): Prisma__app_userClient<$Result.GetResult<Prisma.$app_userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    category<T extends listing$categoryArgs<ExtArgs> = {}>(args?: Subset<T, listing$categoryArgs<ExtArgs>>): Prisma__categoryClient<$Result.GetResult<Prisma.$categoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    photos<T extends listing$photosArgs<ExtArgs> = {}>(args?: Subset<T, listing$photosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$listing_photoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     claims<T extends listing$claimsArgs<ExtArgs> = {}>(args?: Subset<T, listing$claimsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$claimPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    category<T extends listing$categoryArgs<ExtArgs> = {}>(args?: Subset<T, listing$categoryArgs<ExtArgs>>): Prisma__categoryClient<$Result.GetResult<Prisma.$categoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    finder<T extends app_userDefaultArgs<ExtArgs> = {}>(args?: Subset<T, app_userDefaultArgs<ExtArgs>>): Prisma__app_userClient<$Result.GetResult<Prisma.$app_userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    photos<T extends listing$photosArgs<ExtArgs> = {}>(args?: Subset<T, listing$photosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$listing_photoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6104,6 +6104,30 @@ export namespace Prisma {
   }
 
   /**
+   * listing.claims
+   */
+  export type listing$claimsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the claim
+     */
+    select?: claimSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the claim
+     */
+    omit?: claimOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: claimInclude<ExtArgs> | null
+    where?: claimWhereInput
+    orderBy?: claimOrderByWithRelationInput | claimOrderByWithRelationInput[]
+    cursor?: claimWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClaimScalarFieldEnum | ClaimScalarFieldEnum[]
+  }
+
+  /**
    * listing.category
    */
   export type listing$categoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6144,30 +6168,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Listing_photoScalarFieldEnum | Listing_photoScalarFieldEnum[]
-  }
-
-  /**
-   * listing.claims
-   */
-  export type listing$claimsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the claim
-     */
-    select?: claimSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the claim
-     */
-    omit?: claimOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: claimInclude<ExtArgs> | null
-    where?: claimWhereInput
-    orderBy?: claimOrderByWithRelationInput | claimOrderByWithRelationInput[]
-    cursor?: claimWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ClaimScalarFieldEnum | ClaimScalarFieldEnum[]
   }
 
   /**
@@ -7466,8 +7466,8 @@ export namespace Prisma {
     status?: boolean
     message?: boolean
     created_at?: boolean
-    listing?: boolean | listingDefaultArgs<ExtArgs>
     claimer?: boolean | app_userDefaultArgs<ExtArgs>
+    listing?: boolean | listingDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["claim"]>
 
   export type claimSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7477,8 +7477,8 @@ export namespace Prisma {
     status?: boolean
     message?: boolean
     created_at?: boolean
-    listing?: boolean | listingDefaultArgs<ExtArgs>
     claimer?: boolean | app_userDefaultArgs<ExtArgs>
+    listing?: boolean | listingDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["claim"]>
 
   export type claimSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7488,8 +7488,8 @@ export namespace Prisma {
     status?: boolean
     message?: boolean
     created_at?: boolean
-    listing?: boolean | listingDefaultArgs<ExtArgs>
     claimer?: boolean | app_userDefaultArgs<ExtArgs>
+    listing?: boolean | listingDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["claim"]>
 
   export type claimSelectScalar = {
@@ -7503,23 +7503,23 @@ export namespace Prisma {
 
   export type claimOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "listing_id" | "claimer_user_id" | "status" | "message" | "created_at", ExtArgs["result"]["claim"]>
   export type claimInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    listing?: boolean | listingDefaultArgs<ExtArgs>
     claimer?: boolean | app_userDefaultArgs<ExtArgs>
+    listing?: boolean | listingDefaultArgs<ExtArgs>
   }
   export type claimIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    listing?: boolean | listingDefaultArgs<ExtArgs>
     claimer?: boolean | app_userDefaultArgs<ExtArgs>
+    listing?: boolean | listingDefaultArgs<ExtArgs>
   }
   export type claimIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    listing?: boolean | listingDefaultArgs<ExtArgs>
     claimer?: boolean | app_userDefaultArgs<ExtArgs>
+    listing?: boolean | listingDefaultArgs<ExtArgs>
   }
 
   export type $claimPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "claim"
     objects: {
-      listing: Prisma.$listingPayload<ExtArgs>
       claimer: Prisma.$app_userPayload<ExtArgs>
+      listing: Prisma.$listingPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7922,8 +7922,8 @@ export namespace Prisma {
    */
   export interface Prisma__claimClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    listing<T extends listingDefaultArgs<ExtArgs> = {}>(args?: Subset<T, listingDefaultArgs<ExtArgs>>): Prisma__listingClient<$Result.GetResult<Prisma.$listingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     claimer<T extends app_userDefaultArgs<ExtArgs> = {}>(args?: Subset<T, app_userDefaultArgs<ExtArgs>>): Prisma__app_userClient<$Result.GetResult<Prisma.$app_userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    listing<T extends listingDefaultArgs<ExtArgs> = {}>(args?: Subset<T, listingDefaultArgs<ExtArgs>>): Prisma__listingClient<$Result.GetResult<Prisma.$listingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9705,10 +9705,10 @@ export namespace Prisma {
     points?: IntFilter<"app_user"> | number
     created_at?: DateTimeFilter<"app_user"> | Date | string
     updated_at?: DateTimeFilter<"app_user"> | Date | string
-    user_pref?: XOR<User_prefNullableScalarRelationFilter, user_prefWhereInput> | null
-    listings?: ListingListRelationFilter
     claims?: ClaimListRelationFilter
+    listings?: ListingListRelationFilter
     notifications?: NotificationListRelationFilter
+    user_pref?: XOR<User_prefNullableScalarRelationFilter, user_prefWhereInput> | null
   }
 
   export type app_userOrderByWithRelationInput = {
@@ -9718,10 +9718,10 @@ export namespace Prisma {
     points?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
-    user_pref?: user_prefOrderByWithRelationInput
-    listings?: listingOrderByRelationAggregateInput
     claims?: claimOrderByRelationAggregateInput
+    listings?: listingOrderByRelationAggregateInput
     notifications?: notificationOrderByRelationAggregateInput
+    user_pref?: user_prefOrderByWithRelationInput
   }
 
   export type app_userWhereUniqueInput = Prisma.AtLeast<{
@@ -9734,10 +9734,10 @@ export namespace Prisma {
     points?: IntFilter<"app_user"> | number
     created_at?: DateTimeFilter<"app_user"> | Date | string
     updated_at?: DateTimeFilter<"app_user"> | Date | string
-    user_pref?: XOR<User_prefNullableScalarRelationFilter, user_prefWhereInput> | null
-    listings?: ListingListRelationFilter
     claims?: ClaimListRelationFilter
+    listings?: ListingListRelationFilter
     notifications?: NotificationListRelationFilter
+    user_pref?: XOR<User_prefNullableScalarRelationFilter, user_prefWhereInput> | null
   }, "id" | "email">
 
   export type app_userOrderByWithAggregationInput = {
@@ -9888,10 +9888,10 @@ export namespace Prisma {
     manual_address?: StringNullableFilter<"listing"> | string | null
     created_at?: DateTimeFilter<"listing"> | Date | string
     updated_at?: DateTimeFilter<"listing"> | Date | string
-    finder?: XOR<App_userScalarRelationFilter, app_userWhereInput>
-    category?: XOR<CategoryNullableScalarRelationFilter, categoryWhereInput> | null
-    photos?: Listing_photoListRelationFilter
     claims?: ClaimListRelationFilter
+    category?: XOR<CategoryNullableScalarRelationFilter, categoryWhereInput> | null
+    finder?: XOR<App_userScalarRelationFilter, app_userWhereInput>
+    photos?: Listing_photoListRelationFilter
   }
 
   export type listingOrderByWithRelationInput = {
@@ -9909,10 +9909,10 @@ export namespace Prisma {
     manual_address?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
-    finder?: app_userOrderByWithRelationInput
-    category?: categoryOrderByWithRelationInput
-    photos?: listing_photoOrderByRelationAggregateInput
     claims?: claimOrderByRelationAggregateInput
+    category?: categoryOrderByWithRelationInput
+    finder?: app_userOrderByWithRelationInput
+    photos?: listing_photoOrderByRelationAggregateInput
   }
 
   export type listingWhereUniqueInput = Prisma.AtLeast<{
@@ -9933,10 +9933,10 @@ export namespace Prisma {
     manual_address?: StringNullableFilter<"listing"> | string | null
     created_at?: DateTimeFilter<"listing"> | Date | string
     updated_at?: DateTimeFilter<"listing"> | Date | string
-    finder?: XOR<App_userScalarRelationFilter, app_userWhereInput>
-    category?: XOR<CategoryNullableScalarRelationFilter, categoryWhereInput> | null
-    photos?: Listing_photoListRelationFilter
     claims?: ClaimListRelationFilter
+    category?: XOR<CategoryNullableScalarRelationFilter, categoryWhereInput> | null
+    finder?: XOR<App_userScalarRelationFilter, app_userWhereInput>
+    photos?: Listing_photoListRelationFilter
   }, "id">
 
   export type listingOrderByWithAggregationInput = {
@@ -10053,8 +10053,8 @@ export namespace Prisma {
     status?: StringFilter<"claim"> | string
     message?: StringNullableFilter<"claim"> | string | null
     created_at?: DateTimeFilter<"claim"> | Date | string
-    listing?: XOR<ListingScalarRelationFilter, listingWhereInput>
     claimer?: XOR<App_userScalarRelationFilter, app_userWhereInput>
+    listing?: XOR<ListingScalarRelationFilter, listingWhereInput>
   }
 
   export type claimOrderByWithRelationInput = {
@@ -10064,8 +10064,8 @@ export namespace Prisma {
     status?: SortOrder
     message?: SortOrderInput | SortOrder
     created_at?: SortOrder
-    listing?: listingOrderByWithRelationInput
     claimer?: app_userOrderByWithRelationInput
+    listing?: listingOrderByWithRelationInput
   }
 
   export type claimWhereUniqueInput = Prisma.AtLeast<{
@@ -10078,8 +10078,8 @@ export namespace Prisma {
     status?: StringFilter<"claim"> | string
     message?: StringNullableFilter<"claim"> | string | null
     created_at?: DateTimeFilter<"claim"> | Date | string
-    listing?: XOR<ListingScalarRelationFilter, listingWhereInput>
     claimer?: XOR<App_userScalarRelationFilter, app_userWhereInput>
+    listing?: XOR<ListingScalarRelationFilter, listingWhereInput>
   }, "id">
 
   export type claimOrderByWithAggregationInput = {
@@ -10183,10 +10183,10 @@ export namespace Prisma {
     points?: number
     created_at?: Date | string
     updated_at?: Date | string
-    user_pref?: user_prefCreateNestedOneWithoutUserInput
-    listings?: listingCreateNestedManyWithoutFinderInput
     claims?: claimCreateNestedManyWithoutClaimerInput
+    listings?: listingCreateNestedManyWithoutFinderInput
     notifications?: notificationCreateNestedManyWithoutUserInput
+    user_pref?: user_prefCreateNestedOneWithoutUserInput
   }
 
   export type app_userUncheckedCreateInput = {
@@ -10196,10 +10196,10 @@ export namespace Prisma {
     points?: number
     created_at?: Date | string
     updated_at?: Date | string
-    user_pref?: user_prefUncheckedCreateNestedOneWithoutUserInput
-    listings?: listingUncheckedCreateNestedManyWithoutFinderInput
     claims?: claimUncheckedCreateNestedManyWithoutClaimerInput
+    listings?: listingUncheckedCreateNestedManyWithoutFinderInput
     notifications?: notificationUncheckedCreateNestedManyWithoutUserInput
+    user_pref?: user_prefUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type app_userUpdateInput = {
@@ -10209,10 +10209,10 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_pref?: user_prefUpdateOneWithoutUserNestedInput
-    listings?: listingUpdateManyWithoutFinderNestedInput
     claims?: claimUpdateManyWithoutClaimerNestedInput
+    listings?: listingUpdateManyWithoutFinderNestedInput
     notifications?: notificationUpdateManyWithoutUserNestedInput
+    user_pref?: user_prefUpdateOneWithoutUserNestedInput
   }
 
   export type app_userUncheckedUpdateInput = {
@@ -10222,10 +10222,10 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_pref?: user_prefUncheckedUpdateOneWithoutUserNestedInput
-    listings?: listingUncheckedUpdateManyWithoutFinderNestedInput
     claims?: claimUncheckedUpdateManyWithoutClaimerNestedInput
+    listings?: listingUncheckedUpdateManyWithoutFinderNestedInput
     notifications?: notificationUncheckedUpdateManyWithoutUserNestedInput
+    user_pref?: user_prefUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type app_userCreateManyInput = {
@@ -10369,10 +10369,10 @@ export namespace Prisma {
     manual_address?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    finder: app_userCreateNestedOneWithoutListingsInput
-    category?: categoryCreateNestedOneWithoutListingsInput
-    photos?: listing_photoCreateNestedManyWithoutListingInput
     claims?: claimCreateNestedManyWithoutListingInput
+    category?: categoryCreateNestedOneWithoutListingsInput
+    finder: app_userCreateNestedOneWithoutListingsInput
+    photos?: listing_photoCreateNestedManyWithoutListingInput
   }
 
   export type listingUncheckedCreateInput = {
@@ -10390,8 +10390,8 @@ export namespace Prisma {
     manual_address?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    photos?: listing_photoUncheckedCreateNestedManyWithoutListingInput
     claims?: claimUncheckedCreateNestedManyWithoutListingInput
+    photos?: listing_photoUncheckedCreateNestedManyWithoutListingInput
   }
 
   export type listingUpdateInput = {
@@ -10407,10 +10407,10 @@ export namespace Prisma {
     manual_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    finder?: app_userUpdateOneRequiredWithoutListingsNestedInput
-    category?: categoryUpdateOneWithoutListingsNestedInput
-    photos?: listing_photoUpdateManyWithoutListingNestedInput
     claims?: claimUpdateManyWithoutListingNestedInput
+    category?: categoryUpdateOneWithoutListingsNestedInput
+    finder?: app_userUpdateOneRequiredWithoutListingsNestedInput
+    photos?: listing_photoUpdateManyWithoutListingNestedInput
   }
 
   export type listingUncheckedUpdateInput = {
@@ -10428,8 +10428,8 @@ export namespace Prisma {
     manual_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    photos?: listing_photoUncheckedUpdateManyWithoutListingNestedInput
     claims?: claimUncheckedUpdateManyWithoutListingNestedInput
+    photos?: listing_photoUncheckedUpdateManyWithoutListingNestedInput
   }
 
   export type listingCreateManyInput = {
@@ -10548,8 +10548,8 @@ export namespace Prisma {
     status?: string
     message?: string | null
     created_at?: Date | string
-    listing: listingCreateNestedOneWithoutClaimsInput
     claimer: app_userCreateNestedOneWithoutClaimsInput
+    listing: listingCreateNestedOneWithoutClaimsInput
   }
 
   export type claimUncheckedCreateInput = {
@@ -10566,8 +10566,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     message?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    listing?: listingUpdateOneRequiredWithoutClaimsNestedInput
     claimer?: app_userUpdateOneRequiredWithoutClaimsNestedInput
+    listing?: listingUpdateOneRequiredWithoutClaimsNestedInput
   }
 
   export type claimUncheckedUpdateInput = {
@@ -10732,9 +10732,10 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type User_prefNullableScalarRelationFilter = {
-    is?: user_prefWhereInput | null
-    isNot?: user_prefWhereInput | null
+  export type ClaimListRelationFilter = {
+    every?: claimWhereInput
+    some?: claimWhereInput
+    none?: claimWhereInput
   }
 
   export type ListingListRelationFilter = {
@@ -10743,16 +10744,15 @@ export namespace Prisma {
     none?: listingWhereInput
   }
 
-  export type ClaimListRelationFilter = {
-    every?: claimWhereInput
-    some?: claimWhereInput
-    none?: claimWhereInput
-  }
-
   export type NotificationListRelationFilter = {
     every?: notificationWhereInput
     some?: notificationWhereInput
     none?: notificationWhereInput
+  }
+
+  export type User_prefNullableScalarRelationFilter = {
+    is?: user_prefWhereInput | null
+    isNot?: user_prefWhereInput | null
   }
 
   export type SortOrderInput = {
@@ -10760,11 +10760,11 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
-  export type listingOrderByRelationAggregateInput = {
+  export type claimOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type claimOrderByRelationAggregateInput = {
+  export type listingOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -11259,10 +11259,11 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type user_prefCreateNestedOneWithoutUserInput = {
-    create?: XOR<user_prefCreateWithoutUserInput, user_prefUncheckedCreateWithoutUserInput>
-    connectOrCreate?: user_prefCreateOrConnectWithoutUserInput
-    connect?: user_prefWhereUniqueInput
+  export type claimCreateNestedManyWithoutClaimerInput = {
+    create?: XOR<claimCreateWithoutClaimerInput, claimUncheckedCreateWithoutClaimerInput> | claimCreateWithoutClaimerInput[] | claimUncheckedCreateWithoutClaimerInput[]
+    connectOrCreate?: claimCreateOrConnectWithoutClaimerInput | claimCreateOrConnectWithoutClaimerInput[]
+    createMany?: claimCreateManyClaimerInputEnvelope
+    connect?: claimWhereUniqueInput | claimWhereUniqueInput[]
   }
 
   export type listingCreateNestedManyWithoutFinderInput = {
@@ -11272,14 +11273,34 @@ export namespace Prisma {
     connect?: listingWhereUniqueInput | listingWhereUniqueInput[]
   }
 
-  export type claimCreateNestedManyWithoutClaimerInput = {
+  export type notificationCreateNestedManyWithoutUserInput = {
+    create?: XOR<notificationCreateWithoutUserInput, notificationUncheckedCreateWithoutUserInput> | notificationCreateWithoutUserInput[] | notificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: notificationCreateOrConnectWithoutUserInput | notificationCreateOrConnectWithoutUserInput[]
+    createMany?: notificationCreateManyUserInputEnvelope
+    connect?: notificationWhereUniqueInput | notificationWhereUniqueInput[]
+  }
+
+  export type user_prefCreateNestedOneWithoutUserInput = {
+    create?: XOR<user_prefCreateWithoutUserInput, user_prefUncheckedCreateWithoutUserInput>
+    connectOrCreate?: user_prefCreateOrConnectWithoutUserInput
+    connect?: user_prefWhereUniqueInput
+  }
+
+  export type claimUncheckedCreateNestedManyWithoutClaimerInput = {
     create?: XOR<claimCreateWithoutClaimerInput, claimUncheckedCreateWithoutClaimerInput> | claimCreateWithoutClaimerInput[] | claimUncheckedCreateWithoutClaimerInput[]
     connectOrCreate?: claimCreateOrConnectWithoutClaimerInput | claimCreateOrConnectWithoutClaimerInput[]
     createMany?: claimCreateManyClaimerInputEnvelope
     connect?: claimWhereUniqueInput | claimWhereUniqueInput[]
   }
 
-  export type notificationCreateNestedManyWithoutUserInput = {
+  export type listingUncheckedCreateNestedManyWithoutFinderInput = {
+    create?: XOR<listingCreateWithoutFinderInput, listingUncheckedCreateWithoutFinderInput> | listingCreateWithoutFinderInput[] | listingUncheckedCreateWithoutFinderInput[]
+    connectOrCreate?: listingCreateOrConnectWithoutFinderInput | listingCreateOrConnectWithoutFinderInput[]
+    createMany?: listingCreateManyFinderInputEnvelope
+    connect?: listingWhereUniqueInput | listingWhereUniqueInput[]
+  }
+
+  export type notificationUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<notificationCreateWithoutUserInput, notificationUncheckedCreateWithoutUserInput> | notificationCreateWithoutUserInput[] | notificationUncheckedCreateWithoutUserInput[]
     connectOrCreate?: notificationCreateOrConnectWithoutUserInput | notificationCreateOrConnectWithoutUserInput[]
     createMany?: notificationCreateManyUserInputEnvelope
@@ -11290,27 +11311,6 @@ export namespace Prisma {
     create?: XOR<user_prefCreateWithoutUserInput, user_prefUncheckedCreateWithoutUserInput>
     connectOrCreate?: user_prefCreateOrConnectWithoutUserInput
     connect?: user_prefWhereUniqueInput
-  }
-
-  export type listingUncheckedCreateNestedManyWithoutFinderInput = {
-    create?: XOR<listingCreateWithoutFinderInput, listingUncheckedCreateWithoutFinderInput> | listingCreateWithoutFinderInput[] | listingUncheckedCreateWithoutFinderInput[]
-    connectOrCreate?: listingCreateOrConnectWithoutFinderInput | listingCreateOrConnectWithoutFinderInput[]
-    createMany?: listingCreateManyFinderInputEnvelope
-    connect?: listingWhereUniqueInput | listingWhereUniqueInput[]
-  }
-
-  export type claimUncheckedCreateNestedManyWithoutClaimerInput = {
-    create?: XOR<claimCreateWithoutClaimerInput, claimUncheckedCreateWithoutClaimerInput> | claimCreateWithoutClaimerInput[] | claimUncheckedCreateWithoutClaimerInput[]
-    connectOrCreate?: claimCreateOrConnectWithoutClaimerInput | claimCreateOrConnectWithoutClaimerInput[]
-    createMany?: claimCreateManyClaimerInputEnvelope
-    connect?: claimWhereUniqueInput | claimWhereUniqueInput[]
-  }
-
-  export type notificationUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<notificationCreateWithoutUserInput, notificationUncheckedCreateWithoutUserInput> | notificationCreateWithoutUserInput[] | notificationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: notificationCreateOrConnectWithoutUserInput | notificationCreateOrConnectWithoutUserInput[]
-    createMany?: notificationCreateManyUserInputEnvelope
-    connect?: notificationWhereUniqueInput | notificationWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -11333,14 +11333,18 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type user_prefUpdateOneWithoutUserNestedInput = {
-    create?: XOR<user_prefCreateWithoutUserInput, user_prefUncheckedCreateWithoutUserInput>
-    connectOrCreate?: user_prefCreateOrConnectWithoutUserInput
-    upsert?: user_prefUpsertWithoutUserInput
-    disconnect?: user_prefWhereInput | boolean
-    delete?: user_prefWhereInput | boolean
-    connect?: user_prefWhereUniqueInput
-    update?: XOR<XOR<user_prefUpdateToOneWithWhereWithoutUserInput, user_prefUpdateWithoutUserInput>, user_prefUncheckedUpdateWithoutUserInput>
+  export type claimUpdateManyWithoutClaimerNestedInput = {
+    create?: XOR<claimCreateWithoutClaimerInput, claimUncheckedCreateWithoutClaimerInput> | claimCreateWithoutClaimerInput[] | claimUncheckedCreateWithoutClaimerInput[]
+    connectOrCreate?: claimCreateOrConnectWithoutClaimerInput | claimCreateOrConnectWithoutClaimerInput[]
+    upsert?: claimUpsertWithWhereUniqueWithoutClaimerInput | claimUpsertWithWhereUniqueWithoutClaimerInput[]
+    createMany?: claimCreateManyClaimerInputEnvelope
+    set?: claimWhereUniqueInput | claimWhereUniqueInput[]
+    disconnect?: claimWhereUniqueInput | claimWhereUniqueInput[]
+    delete?: claimWhereUniqueInput | claimWhereUniqueInput[]
+    connect?: claimWhereUniqueInput | claimWhereUniqueInput[]
+    update?: claimUpdateWithWhereUniqueWithoutClaimerInput | claimUpdateWithWhereUniqueWithoutClaimerInput[]
+    updateMany?: claimUpdateManyWithWhereWithoutClaimerInput | claimUpdateManyWithWhereWithoutClaimerInput[]
+    deleteMany?: claimScalarWhereInput | claimScalarWhereInput[]
   }
 
   export type listingUpdateManyWithoutFinderNestedInput = {
@@ -11357,7 +11361,31 @@ export namespace Prisma {
     deleteMany?: listingScalarWhereInput | listingScalarWhereInput[]
   }
 
-  export type claimUpdateManyWithoutClaimerNestedInput = {
+  export type notificationUpdateManyWithoutUserNestedInput = {
+    create?: XOR<notificationCreateWithoutUserInput, notificationUncheckedCreateWithoutUserInput> | notificationCreateWithoutUserInput[] | notificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: notificationCreateOrConnectWithoutUserInput | notificationCreateOrConnectWithoutUserInput[]
+    upsert?: notificationUpsertWithWhereUniqueWithoutUserInput | notificationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: notificationCreateManyUserInputEnvelope
+    set?: notificationWhereUniqueInput | notificationWhereUniqueInput[]
+    disconnect?: notificationWhereUniqueInput | notificationWhereUniqueInput[]
+    delete?: notificationWhereUniqueInput | notificationWhereUniqueInput[]
+    connect?: notificationWhereUniqueInput | notificationWhereUniqueInput[]
+    update?: notificationUpdateWithWhereUniqueWithoutUserInput | notificationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: notificationUpdateManyWithWhereWithoutUserInput | notificationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: notificationScalarWhereInput | notificationScalarWhereInput[]
+  }
+
+  export type user_prefUpdateOneWithoutUserNestedInput = {
+    create?: XOR<user_prefCreateWithoutUserInput, user_prefUncheckedCreateWithoutUserInput>
+    connectOrCreate?: user_prefCreateOrConnectWithoutUserInput
+    upsert?: user_prefUpsertWithoutUserInput
+    disconnect?: user_prefWhereInput | boolean
+    delete?: user_prefWhereInput | boolean
+    connect?: user_prefWhereUniqueInput
+    update?: XOR<XOR<user_prefUpdateToOneWithWhereWithoutUserInput, user_prefUpdateWithoutUserInput>, user_prefUncheckedUpdateWithoutUserInput>
+  }
+
+  export type claimUncheckedUpdateManyWithoutClaimerNestedInput = {
     create?: XOR<claimCreateWithoutClaimerInput, claimUncheckedCreateWithoutClaimerInput> | claimCreateWithoutClaimerInput[] | claimUncheckedCreateWithoutClaimerInput[]
     connectOrCreate?: claimCreateOrConnectWithoutClaimerInput | claimCreateOrConnectWithoutClaimerInput[]
     upsert?: claimUpsertWithWhereUniqueWithoutClaimerInput | claimUpsertWithWhereUniqueWithoutClaimerInput[]
@@ -11371,7 +11399,21 @@ export namespace Prisma {
     deleteMany?: claimScalarWhereInput | claimScalarWhereInput[]
   }
 
-  export type notificationUpdateManyWithoutUserNestedInput = {
+  export type listingUncheckedUpdateManyWithoutFinderNestedInput = {
+    create?: XOR<listingCreateWithoutFinderInput, listingUncheckedCreateWithoutFinderInput> | listingCreateWithoutFinderInput[] | listingUncheckedCreateWithoutFinderInput[]
+    connectOrCreate?: listingCreateOrConnectWithoutFinderInput | listingCreateOrConnectWithoutFinderInput[]
+    upsert?: listingUpsertWithWhereUniqueWithoutFinderInput | listingUpsertWithWhereUniqueWithoutFinderInput[]
+    createMany?: listingCreateManyFinderInputEnvelope
+    set?: listingWhereUniqueInput | listingWhereUniqueInput[]
+    disconnect?: listingWhereUniqueInput | listingWhereUniqueInput[]
+    delete?: listingWhereUniqueInput | listingWhereUniqueInput[]
+    connect?: listingWhereUniqueInput | listingWhereUniqueInput[]
+    update?: listingUpdateWithWhereUniqueWithoutFinderInput | listingUpdateWithWhereUniqueWithoutFinderInput[]
+    updateMany?: listingUpdateManyWithWhereWithoutFinderInput | listingUpdateManyWithWhereWithoutFinderInput[]
+    deleteMany?: listingScalarWhereInput | listingScalarWhereInput[]
+  }
+
+  export type notificationUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<notificationCreateWithoutUserInput, notificationUncheckedCreateWithoutUserInput> | notificationCreateWithoutUserInput[] | notificationUncheckedCreateWithoutUserInput[]
     connectOrCreate?: notificationCreateOrConnectWithoutUserInput | notificationCreateOrConnectWithoutUserInput[]
     upsert?: notificationUpsertWithWhereUniqueWithoutUserInput | notificationUpsertWithWhereUniqueWithoutUserInput[]
@@ -11393,48 +11435,6 @@ export namespace Prisma {
     delete?: user_prefWhereInput | boolean
     connect?: user_prefWhereUniqueInput
     update?: XOR<XOR<user_prefUpdateToOneWithWhereWithoutUserInput, user_prefUpdateWithoutUserInput>, user_prefUncheckedUpdateWithoutUserInput>
-  }
-
-  export type listingUncheckedUpdateManyWithoutFinderNestedInput = {
-    create?: XOR<listingCreateWithoutFinderInput, listingUncheckedCreateWithoutFinderInput> | listingCreateWithoutFinderInput[] | listingUncheckedCreateWithoutFinderInput[]
-    connectOrCreate?: listingCreateOrConnectWithoutFinderInput | listingCreateOrConnectWithoutFinderInput[]
-    upsert?: listingUpsertWithWhereUniqueWithoutFinderInput | listingUpsertWithWhereUniqueWithoutFinderInput[]
-    createMany?: listingCreateManyFinderInputEnvelope
-    set?: listingWhereUniqueInput | listingWhereUniqueInput[]
-    disconnect?: listingWhereUniqueInput | listingWhereUniqueInput[]
-    delete?: listingWhereUniqueInput | listingWhereUniqueInput[]
-    connect?: listingWhereUniqueInput | listingWhereUniqueInput[]
-    update?: listingUpdateWithWhereUniqueWithoutFinderInput | listingUpdateWithWhereUniqueWithoutFinderInput[]
-    updateMany?: listingUpdateManyWithWhereWithoutFinderInput | listingUpdateManyWithWhereWithoutFinderInput[]
-    deleteMany?: listingScalarWhereInput | listingScalarWhereInput[]
-  }
-
-  export type claimUncheckedUpdateManyWithoutClaimerNestedInput = {
-    create?: XOR<claimCreateWithoutClaimerInput, claimUncheckedCreateWithoutClaimerInput> | claimCreateWithoutClaimerInput[] | claimUncheckedCreateWithoutClaimerInput[]
-    connectOrCreate?: claimCreateOrConnectWithoutClaimerInput | claimCreateOrConnectWithoutClaimerInput[]
-    upsert?: claimUpsertWithWhereUniqueWithoutClaimerInput | claimUpsertWithWhereUniqueWithoutClaimerInput[]
-    createMany?: claimCreateManyClaimerInputEnvelope
-    set?: claimWhereUniqueInput | claimWhereUniqueInput[]
-    disconnect?: claimWhereUniqueInput | claimWhereUniqueInput[]
-    delete?: claimWhereUniqueInput | claimWhereUniqueInput[]
-    connect?: claimWhereUniqueInput | claimWhereUniqueInput[]
-    update?: claimUpdateWithWhereUniqueWithoutClaimerInput | claimUpdateWithWhereUniqueWithoutClaimerInput[]
-    updateMany?: claimUpdateManyWithWhereWithoutClaimerInput | claimUpdateManyWithWhereWithoutClaimerInput[]
-    deleteMany?: claimScalarWhereInput | claimScalarWhereInput[]
-  }
-
-  export type notificationUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<notificationCreateWithoutUserInput, notificationUncheckedCreateWithoutUserInput> | notificationCreateWithoutUserInput[] | notificationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: notificationCreateOrConnectWithoutUserInput | notificationCreateOrConnectWithoutUserInput[]
-    upsert?: notificationUpsertWithWhereUniqueWithoutUserInput | notificationUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: notificationCreateManyUserInputEnvelope
-    set?: notificationWhereUniqueInput | notificationWhereUniqueInput[]
-    disconnect?: notificationWhereUniqueInput | notificationWhereUniqueInput[]
-    delete?: notificationWhereUniqueInput | notificationWhereUniqueInput[]
-    connect?: notificationWhereUniqueInput | notificationWhereUniqueInput[]
-    update?: notificationUpdateWithWhereUniqueWithoutUserInput | notificationUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: notificationUpdateManyWithWhereWithoutUserInput | notificationUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: notificationScalarWhereInput | notificationScalarWhereInput[]
   }
 
   export type listingCreateNestedManyWithoutCategoryInput = {
@@ -11506,10 +11506,11 @@ export namespace Prisma {
     update?: XOR<XOR<app_userUpdateToOneWithWhereWithoutUser_prefInput, app_userUpdateWithoutUser_prefInput>, app_userUncheckedUpdateWithoutUser_prefInput>
   }
 
-  export type app_userCreateNestedOneWithoutListingsInput = {
-    create?: XOR<app_userCreateWithoutListingsInput, app_userUncheckedCreateWithoutListingsInput>
-    connectOrCreate?: app_userCreateOrConnectWithoutListingsInput
-    connect?: app_userWhereUniqueInput
+  export type claimCreateNestedManyWithoutListingInput = {
+    create?: XOR<claimCreateWithoutListingInput, claimUncheckedCreateWithoutListingInput> | claimCreateWithoutListingInput[] | claimUncheckedCreateWithoutListingInput[]
+    connectOrCreate?: claimCreateOrConnectWithoutListingInput | claimCreateOrConnectWithoutListingInput[]
+    createMany?: claimCreateManyListingInputEnvelope
+    connect?: claimWhereUniqueInput | claimWhereUniqueInput[]
   }
 
   export type categoryCreateNestedOneWithoutListingsInput = {
@@ -11518,21 +11519,13 @@ export namespace Prisma {
     connect?: categoryWhereUniqueInput
   }
 
+  export type app_userCreateNestedOneWithoutListingsInput = {
+    create?: XOR<app_userCreateWithoutListingsInput, app_userUncheckedCreateWithoutListingsInput>
+    connectOrCreate?: app_userCreateOrConnectWithoutListingsInput
+    connect?: app_userWhereUniqueInput
+  }
+
   export type listing_photoCreateNestedManyWithoutListingInput = {
-    create?: XOR<listing_photoCreateWithoutListingInput, listing_photoUncheckedCreateWithoutListingInput> | listing_photoCreateWithoutListingInput[] | listing_photoUncheckedCreateWithoutListingInput[]
-    connectOrCreate?: listing_photoCreateOrConnectWithoutListingInput | listing_photoCreateOrConnectWithoutListingInput[]
-    createMany?: listing_photoCreateManyListingInputEnvelope
-    connect?: listing_photoWhereUniqueInput | listing_photoWhereUniqueInput[]
-  }
-
-  export type claimCreateNestedManyWithoutListingInput = {
-    create?: XOR<claimCreateWithoutListingInput, claimUncheckedCreateWithoutListingInput> | claimCreateWithoutListingInput[] | claimUncheckedCreateWithoutListingInput[]
-    connectOrCreate?: claimCreateOrConnectWithoutListingInput | claimCreateOrConnectWithoutListingInput[]
-    createMany?: claimCreateManyListingInputEnvelope
-    connect?: claimWhereUniqueInput | claimWhereUniqueInput[]
-  }
-
-  export type listing_photoUncheckedCreateNestedManyWithoutListingInput = {
     create?: XOR<listing_photoCreateWithoutListingInput, listing_photoUncheckedCreateWithoutListingInput> | listing_photoCreateWithoutListingInput[] | listing_photoUncheckedCreateWithoutListingInput[]
     connectOrCreate?: listing_photoCreateOrConnectWithoutListingInput | listing_photoCreateOrConnectWithoutListingInput[]
     createMany?: listing_photoCreateManyListingInputEnvelope
@@ -11546,44 +11539,19 @@ export namespace Prisma {
     connect?: claimWhereUniqueInput | claimWhereUniqueInput[]
   }
 
+  export type listing_photoUncheckedCreateNestedManyWithoutListingInput = {
+    create?: XOR<listing_photoCreateWithoutListingInput, listing_photoUncheckedCreateWithoutListingInput> | listing_photoCreateWithoutListingInput[] | listing_photoUncheckedCreateWithoutListingInput[]
+    connectOrCreate?: listing_photoCreateOrConnectWithoutListingInput | listing_photoCreateOrConnectWithoutListingInput[]
+    createMany?: listing_photoCreateManyListingInputEnvelope
+    connect?: listing_photoWhereUniqueInput | listing_photoWhereUniqueInput[]
+  }
+
   export type FloatFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type app_userUpdateOneRequiredWithoutListingsNestedInput = {
-    create?: XOR<app_userCreateWithoutListingsInput, app_userUncheckedCreateWithoutListingsInput>
-    connectOrCreate?: app_userCreateOrConnectWithoutListingsInput
-    upsert?: app_userUpsertWithoutListingsInput
-    connect?: app_userWhereUniqueInput
-    update?: XOR<XOR<app_userUpdateToOneWithWhereWithoutListingsInput, app_userUpdateWithoutListingsInput>, app_userUncheckedUpdateWithoutListingsInput>
-  }
-
-  export type categoryUpdateOneWithoutListingsNestedInput = {
-    create?: XOR<categoryCreateWithoutListingsInput, categoryUncheckedCreateWithoutListingsInput>
-    connectOrCreate?: categoryCreateOrConnectWithoutListingsInput
-    upsert?: categoryUpsertWithoutListingsInput
-    disconnect?: categoryWhereInput | boolean
-    delete?: categoryWhereInput | boolean
-    connect?: categoryWhereUniqueInput
-    update?: XOR<XOR<categoryUpdateToOneWithWhereWithoutListingsInput, categoryUpdateWithoutListingsInput>, categoryUncheckedUpdateWithoutListingsInput>
-  }
-
-  export type listing_photoUpdateManyWithoutListingNestedInput = {
-    create?: XOR<listing_photoCreateWithoutListingInput, listing_photoUncheckedCreateWithoutListingInput> | listing_photoCreateWithoutListingInput[] | listing_photoUncheckedCreateWithoutListingInput[]
-    connectOrCreate?: listing_photoCreateOrConnectWithoutListingInput | listing_photoCreateOrConnectWithoutListingInput[]
-    upsert?: listing_photoUpsertWithWhereUniqueWithoutListingInput | listing_photoUpsertWithWhereUniqueWithoutListingInput[]
-    createMany?: listing_photoCreateManyListingInputEnvelope
-    set?: listing_photoWhereUniqueInput | listing_photoWhereUniqueInput[]
-    disconnect?: listing_photoWhereUniqueInput | listing_photoWhereUniqueInput[]
-    delete?: listing_photoWhereUniqueInput | listing_photoWhereUniqueInput[]
-    connect?: listing_photoWhereUniqueInput | listing_photoWhereUniqueInput[]
-    update?: listing_photoUpdateWithWhereUniqueWithoutListingInput | listing_photoUpdateWithWhereUniqueWithoutListingInput[]
-    updateMany?: listing_photoUpdateManyWithWhereWithoutListingInput | listing_photoUpdateManyWithWhereWithoutListingInput[]
-    deleteMany?: listing_photoScalarWhereInput | listing_photoScalarWhereInput[]
   }
 
   export type claimUpdateManyWithoutListingNestedInput = {
@@ -11600,15 +11568,25 @@ export namespace Prisma {
     deleteMany?: claimScalarWhereInput | claimScalarWhereInput[]
   }
 
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type categoryUpdateOneWithoutListingsNestedInput = {
+    create?: XOR<categoryCreateWithoutListingsInput, categoryUncheckedCreateWithoutListingsInput>
+    connectOrCreate?: categoryCreateOrConnectWithoutListingsInput
+    upsert?: categoryUpsertWithoutListingsInput
+    disconnect?: categoryWhereInput | boolean
+    delete?: categoryWhereInput | boolean
+    connect?: categoryWhereUniqueInput
+    update?: XOR<XOR<categoryUpdateToOneWithWhereWithoutListingsInput, categoryUpdateWithoutListingsInput>, categoryUncheckedUpdateWithoutListingsInput>
   }
 
-  export type listing_photoUncheckedUpdateManyWithoutListingNestedInput = {
+  export type app_userUpdateOneRequiredWithoutListingsNestedInput = {
+    create?: XOR<app_userCreateWithoutListingsInput, app_userUncheckedCreateWithoutListingsInput>
+    connectOrCreate?: app_userCreateOrConnectWithoutListingsInput
+    upsert?: app_userUpsertWithoutListingsInput
+    connect?: app_userWhereUniqueInput
+    update?: XOR<XOR<app_userUpdateToOneWithWhereWithoutListingsInput, app_userUpdateWithoutListingsInput>, app_userUncheckedUpdateWithoutListingsInput>
+  }
+
+  export type listing_photoUpdateManyWithoutListingNestedInput = {
     create?: XOR<listing_photoCreateWithoutListingInput, listing_photoUncheckedCreateWithoutListingInput> | listing_photoCreateWithoutListingInput[] | listing_photoUncheckedCreateWithoutListingInput[]
     connectOrCreate?: listing_photoCreateOrConnectWithoutListingInput | listing_photoCreateOrConnectWithoutListingInput[]
     upsert?: listing_photoUpsertWithWhereUniqueWithoutListingInput | listing_photoUpsertWithWhereUniqueWithoutListingInput[]
@@ -11620,6 +11598,14 @@ export namespace Prisma {
     update?: listing_photoUpdateWithWhereUniqueWithoutListingInput | listing_photoUpdateWithWhereUniqueWithoutListingInput[]
     updateMany?: listing_photoUpdateManyWithWhereWithoutListingInput | listing_photoUpdateManyWithWhereWithoutListingInput[]
     deleteMany?: listing_photoScalarWhereInput | listing_photoScalarWhereInput[]
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type claimUncheckedUpdateManyWithoutListingNestedInput = {
@@ -11636,6 +11622,20 @@ export namespace Prisma {
     deleteMany?: claimScalarWhereInput | claimScalarWhereInput[]
   }
 
+  export type listing_photoUncheckedUpdateManyWithoutListingNestedInput = {
+    create?: XOR<listing_photoCreateWithoutListingInput, listing_photoUncheckedCreateWithoutListingInput> | listing_photoCreateWithoutListingInput[] | listing_photoUncheckedCreateWithoutListingInput[]
+    connectOrCreate?: listing_photoCreateOrConnectWithoutListingInput | listing_photoCreateOrConnectWithoutListingInput[]
+    upsert?: listing_photoUpsertWithWhereUniqueWithoutListingInput | listing_photoUpsertWithWhereUniqueWithoutListingInput[]
+    createMany?: listing_photoCreateManyListingInputEnvelope
+    set?: listing_photoWhereUniqueInput | listing_photoWhereUniqueInput[]
+    disconnect?: listing_photoWhereUniqueInput | listing_photoWhereUniqueInput[]
+    delete?: listing_photoWhereUniqueInput | listing_photoWhereUniqueInput[]
+    connect?: listing_photoWhereUniqueInput | listing_photoWhereUniqueInput[]
+    update?: listing_photoUpdateWithWhereUniqueWithoutListingInput | listing_photoUpdateWithWhereUniqueWithoutListingInput[]
+    updateMany?: listing_photoUpdateManyWithWhereWithoutListingInput | listing_photoUpdateManyWithWhereWithoutListingInput[]
+    deleteMany?: listing_photoScalarWhereInput | listing_photoScalarWhereInput[]
+  }
+
   export type listingCreateNestedOneWithoutPhotosInput = {
     create?: XOR<listingCreateWithoutPhotosInput, listingUncheckedCreateWithoutPhotosInput>
     connectOrCreate?: listingCreateOrConnectWithoutPhotosInput
@@ -11650,24 +11650,16 @@ export namespace Prisma {
     update?: XOR<XOR<listingUpdateToOneWithWhereWithoutPhotosInput, listingUpdateWithoutPhotosInput>, listingUncheckedUpdateWithoutPhotosInput>
   }
 
-  export type listingCreateNestedOneWithoutClaimsInput = {
-    create?: XOR<listingCreateWithoutClaimsInput, listingUncheckedCreateWithoutClaimsInput>
-    connectOrCreate?: listingCreateOrConnectWithoutClaimsInput
-    connect?: listingWhereUniqueInput
-  }
-
   export type app_userCreateNestedOneWithoutClaimsInput = {
     create?: XOR<app_userCreateWithoutClaimsInput, app_userUncheckedCreateWithoutClaimsInput>
     connectOrCreate?: app_userCreateOrConnectWithoutClaimsInput
     connect?: app_userWhereUniqueInput
   }
 
-  export type listingUpdateOneRequiredWithoutClaimsNestedInput = {
+  export type listingCreateNestedOneWithoutClaimsInput = {
     create?: XOR<listingCreateWithoutClaimsInput, listingUncheckedCreateWithoutClaimsInput>
     connectOrCreate?: listingCreateOrConnectWithoutClaimsInput
-    upsert?: listingUpsertWithoutClaimsInput
     connect?: listingWhereUniqueInput
-    update?: XOR<XOR<listingUpdateToOneWithWhereWithoutClaimsInput, listingUpdateWithoutClaimsInput>, listingUncheckedUpdateWithoutClaimsInput>
   }
 
   export type app_userUpdateOneRequiredWithoutClaimsNestedInput = {
@@ -11676,6 +11668,14 @@ export namespace Prisma {
     upsert?: app_userUpsertWithoutClaimsInput
     connect?: app_userWhereUniqueInput
     update?: XOR<XOR<app_userUpdateToOneWithWhereWithoutClaimsInput, app_userUpdateWithoutClaimsInput>, app_userUncheckedUpdateWithoutClaimsInput>
+  }
+
+  export type listingUpdateOneRequiredWithoutClaimsNestedInput = {
+    create?: XOR<listingCreateWithoutClaimsInput, listingUncheckedCreateWithoutClaimsInput>
+    connectOrCreate?: listingCreateOrConnectWithoutClaimsInput
+    upsert?: listingUpsertWithoutClaimsInput
+    connect?: listingWhereUniqueInput
+    update?: XOR<XOR<listingUpdateToOneWithWhereWithoutClaimsInput, listingUpdateWithoutClaimsInput>, listingUncheckedUpdateWithoutClaimsInput>
   }
 
   export type app_userCreateNestedOneWithoutNotificationsInput = {
@@ -11936,73 +11936,6 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type user_prefCreateWithoutUserInput = {
-    notifications_on?: boolean
-    radius_meters?: number
-    category_filter?: user_prefCreatecategory_filterInput | string[]
-    dark_mode?: boolean
-    updated_at?: Date | string
-  }
-
-  export type user_prefUncheckedCreateWithoutUserInput = {
-    notifications_on?: boolean
-    radius_meters?: number
-    category_filter?: user_prefCreatecategory_filterInput | string[]
-    dark_mode?: boolean
-    updated_at?: Date | string
-  }
-
-  export type user_prefCreateOrConnectWithoutUserInput = {
-    where: user_prefWhereUniqueInput
-    create: XOR<user_prefCreateWithoutUserInput, user_prefUncheckedCreateWithoutUserInput>
-  }
-
-  export type listingCreateWithoutFinderInput = {
-    id: string
-    title: string
-    description?: string | null
-    status?: string
-    found_at?: Date | string
-    expires_at: Date | string
-    lat: number
-    lng: number
-    place_name?: string | null
-    manual_address?: string | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    category?: categoryCreateNestedOneWithoutListingsInput
-    photos?: listing_photoCreateNestedManyWithoutListingInput
-    claims?: claimCreateNestedManyWithoutListingInput
-  }
-
-  export type listingUncheckedCreateWithoutFinderInput = {
-    id: string
-    title: string
-    description?: string | null
-    category_id?: number | null
-    status?: string
-    found_at?: Date | string
-    expires_at: Date | string
-    lat: number
-    lng: number
-    place_name?: string | null
-    manual_address?: string | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    photos?: listing_photoUncheckedCreateNestedManyWithoutListingInput
-    claims?: claimUncheckedCreateNestedManyWithoutListingInput
-  }
-
-  export type listingCreateOrConnectWithoutFinderInput = {
-    where: listingWhereUniqueInput
-    create: XOR<listingCreateWithoutFinderInput, listingUncheckedCreateWithoutFinderInput>
-  }
-
-  export type listingCreateManyFinderInputEnvelope = {
-    data: listingCreateManyFinderInput | listingCreateManyFinderInput[]
-    skipDuplicates?: boolean
-  }
-
   export type claimCreateWithoutClaimerInput = {
     id: string
     status?: string
@@ -12026,6 +11959,52 @@ export namespace Prisma {
 
   export type claimCreateManyClaimerInputEnvelope = {
     data: claimCreateManyClaimerInput | claimCreateManyClaimerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type listingCreateWithoutFinderInput = {
+    id: string
+    title: string
+    description?: string | null
+    status?: string
+    found_at?: Date | string
+    expires_at: Date | string
+    lat: number
+    lng: number
+    place_name?: string | null
+    manual_address?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    claims?: claimCreateNestedManyWithoutListingInput
+    category?: categoryCreateNestedOneWithoutListingsInput
+    photos?: listing_photoCreateNestedManyWithoutListingInput
+  }
+
+  export type listingUncheckedCreateWithoutFinderInput = {
+    id: string
+    title: string
+    description?: string | null
+    category_id?: number | null
+    status?: string
+    found_at?: Date | string
+    expires_at: Date | string
+    lat: number
+    lng: number
+    place_name?: string | null
+    manual_address?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    claims?: claimUncheckedCreateNestedManyWithoutListingInput
+    photos?: listing_photoUncheckedCreateNestedManyWithoutListingInput
+  }
+
+  export type listingCreateOrConnectWithoutFinderInput = {
+    where: listingWhereUniqueInput
+    create: XOR<listingCreateWithoutFinderInput, listingUncheckedCreateWithoutFinderInput>
+  }
+
+  export type listingCreateManyFinderInputEnvelope = {
+    data: listingCreateManyFinderInput | listingCreateManyFinderInput[]
     skipDuplicates?: boolean
   }
 
@@ -12059,31 +12038,53 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type user_prefUpsertWithoutUserInput = {
-    update: XOR<user_prefUpdateWithoutUserInput, user_prefUncheckedUpdateWithoutUserInput>
+  export type user_prefCreateWithoutUserInput = {
+    notifications_on?: boolean
+    radius_meters?: number
+    category_filter?: user_prefCreatecategory_filterInput | string[]
+    dark_mode?: boolean
+    updated_at?: Date | string
+  }
+
+  export type user_prefUncheckedCreateWithoutUserInput = {
+    notifications_on?: boolean
+    radius_meters?: number
+    category_filter?: user_prefCreatecategory_filterInput | string[]
+    dark_mode?: boolean
+    updated_at?: Date | string
+  }
+
+  export type user_prefCreateOrConnectWithoutUserInput = {
+    where: user_prefWhereUniqueInput
     create: XOR<user_prefCreateWithoutUserInput, user_prefUncheckedCreateWithoutUserInput>
-    where?: user_prefWhereInput
   }
 
-  export type user_prefUpdateToOneWithWhereWithoutUserInput = {
-    where?: user_prefWhereInput
-    data: XOR<user_prefUpdateWithoutUserInput, user_prefUncheckedUpdateWithoutUserInput>
+  export type claimUpsertWithWhereUniqueWithoutClaimerInput = {
+    where: claimWhereUniqueInput
+    update: XOR<claimUpdateWithoutClaimerInput, claimUncheckedUpdateWithoutClaimerInput>
+    create: XOR<claimCreateWithoutClaimerInput, claimUncheckedCreateWithoutClaimerInput>
   }
 
-  export type user_prefUpdateWithoutUserInput = {
-    notifications_on?: BoolFieldUpdateOperationsInput | boolean
-    radius_meters?: IntFieldUpdateOperationsInput | number
-    category_filter?: user_prefUpdatecategory_filterInput | string[]
-    dark_mode?: BoolFieldUpdateOperationsInput | boolean
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type claimUpdateWithWhereUniqueWithoutClaimerInput = {
+    where: claimWhereUniqueInput
+    data: XOR<claimUpdateWithoutClaimerInput, claimUncheckedUpdateWithoutClaimerInput>
   }
 
-  export type user_prefUncheckedUpdateWithoutUserInput = {
-    notifications_on?: BoolFieldUpdateOperationsInput | boolean
-    radius_meters?: IntFieldUpdateOperationsInput | number
-    category_filter?: user_prefUpdatecategory_filterInput | string[]
-    dark_mode?: BoolFieldUpdateOperationsInput | boolean
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type claimUpdateManyWithWhereWithoutClaimerInput = {
+    where: claimScalarWhereInput
+    data: XOR<claimUpdateManyMutationInput, claimUncheckedUpdateManyWithoutClaimerInput>
+  }
+
+  export type claimScalarWhereInput = {
+    AND?: claimScalarWhereInput | claimScalarWhereInput[]
+    OR?: claimScalarWhereInput[]
+    NOT?: claimScalarWhereInput | claimScalarWhereInput[]
+    id?: StringFilter<"claim"> | string
+    listing_id?: StringFilter<"claim"> | string
+    claimer_user_id?: StringFilter<"claim"> | string
+    status?: StringFilter<"claim"> | string
+    message?: StringNullableFilter<"claim"> | string | null
+    created_at?: DateTimeFilter<"claim"> | Date | string
   }
 
   export type listingUpsertWithWhereUniqueWithoutFinderInput = {
@@ -12122,34 +12123,6 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"listing"> | Date | string
   }
 
-  export type claimUpsertWithWhereUniqueWithoutClaimerInput = {
-    where: claimWhereUniqueInput
-    update: XOR<claimUpdateWithoutClaimerInput, claimUncheckedUpdateWithoutClaimerInput>
-    create: XOR<claimCreateWithoutClaimerInput, claimUncheckedCreateWithoutClaimerInput>
-  }
-
-  export type claimUpdateWithWhereUniqueWithoutClaimerInput = {
-    where: claimWhereUniqueInput
-    data: XOR<claimUpdateWithoutClaimerInput, claimUncheckedUpdateWithoutClaimerInput>
-  }
-
-  export type claimUpdateManyWithWhereWithoutClaimerInput = {
-    where: claimScalarWhereInput
-    data: XOR<claimUpdateManyMutationInput, claimUncheckedUpdateManyWithoutClaimerInput>
-  }
-
-  export type claimScalarWhereInput = {
-    AND?: claimScalarWhereInput | claimScalarWhereInput[]
-    OR?: claimScalarWhereInput[]
-    NOT?: claimScalarWhereInput | claimScalarWhereInput[]
-    id?: StringFilter<"claim"> | string
-    listing_id?: StringFilter<"claim"> | string
-    claimer_user_id?: StringFilter<"claim"> | string
-    status?: StringFilter<"claim"> | string
-    message?: StringNullableFilter<"claim"> | string | null
-    created_at?: DateTimeFilter<"claim"> | Date | string
-  }
-
   export type notificationUpsertWithWhereUniqueWithoutUserInput = {
     where: notificationWhereUniqueInput
     update: XOR<notificationUpdateWithoutUserInput, notificationUncheckedUpdateWithoutUserInput>
@@ -12180,6 +12153,33 @@ export namespace Prisma {
     sent_at?: DateTimeNullableFilter<"notification"> | Date | string | null
   }
 
+  export type user_prefUpsertWithoutUserInput = {
+    update: XOR<user_prefUpdateWithoutUserInput, user_prefUncheckedUpdateWithoutUserInput>
+    create: XOR<user_prefCreateWithoutUserInput, user_prefUncheckedCreateWithoutUserInput>
+    where?: user_prefWhereInput
+  }
+
+  export type user_prefUpdateToOneWithWhereWithoutUserInput = {
+    where?: user_prefWhereInput
+    data: XOR<user_prefUpdateWithoutUserInput, user_prefUncheckedUpdateWithoutUserInput>
+  }
+
+  export type user_prefUpdateWithoutUserInput = {
+    notifications_on?: BoolFieldUpdateOperationsInput | boolean
+    radius_meters?: IntFieldUpdateOperationsInput | number
+    category_filter?: user_prefUpdatecategory_filterInput | string[]
+    dark_mode?: BoolFieldUpdateOperationsInput | boolean
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type user_prefUncheckedUpdateWithoutUserInput = {
+    notifications_on?: BoolFieldUpdateOperationsInput | boolean
+    radius_meters?: IntFieldUpdateOperationsInput | number
+    category_filter?: user_prefUpdatecategory_filterInput | string[]
+    dark_mode?: BoolFieldUpdateOperationsInput | boolean
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type listingCreateWithoutCategoryInput = {
     id: string
     title: string
@@ -12193,9 +12193,9 @@ export namespace Prisma {
     manual_address?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    claims?: claimCreateNestedManyWithoutListingInput
     finder: app_userCreateNestedOneWithoutListingsInput
     photos?: listing_photoCreateNestedManyWithoutListingInput
-    claims?: claimCreateNestedManyWithoutListingInput
   }
 
   export type listingUncheckedCreateWithoutCategoryInput = {
@@ -12212,8 +12212,8 @@ export namespace Prisma {
     manual_address?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    photos?: listing_photoUncheckedCreateNestedManyWithoutListingInput
     claims?: claimUncheckedCreateNestedManyWithoutListingInput
+    photos?: listing_photoUncheckedCreateNestedManyWithoutListingInput
   }
 
   export type listingCreateOrConnectWithoutCategoryInput = {
@@ -12249,8 +12249,8 @@ export namespace Prisma {
     points?: number
     created_at?: Date | string
     updated_at?: Date | string
-    listings?: listingCreateNestedManyWithoutFinderInput
     claims?: claimCreateNestedManyWithoutClaimerInput
+    listings?: listingCreateNestedManyWithoutFinderInput
     notifications?: notificationCreateNestedManyWithoutUserInput
   }
 
@@ -12261,8 +12261,8 @@ export namespace Prisma {
     points?: number
     created_at?: Date | string
     updated_at?: Date | string
-    listings?: listingUncheckedCreateNestedManyWithoutFinderInput
     claims?: claimUncheckedCreateNestedManyWithoutClaimerInput
+    listings?: listingUncheckedCreateNestedManyWithoutFinderInput
     notifications?: notificationUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -12289,8 +12289,8 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    listings?: listingUpdateManyWithoutFinderNestedInput
     claims?: claimUpdateManyWithoutClaimerNestedInput
+    listings?: listingUpdateManyWithoutFinderNestedInput
     notifications?: notificationUpdateManyWithoutUserNestedInput
   }
 
@@ -12301,79 +12301,9 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    listings?: listingUncheckedUpdateManyWithoutFinderNestedInput
     claims?: claimUncheckedUpdateManyWithoutClaimerNestedInput
+    listings?: listingUncheckedUpdateManyWithoutFinderNestedInput
     notifications?: notificationUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type app_userCreateWithoutListingsInput = {
-    id: string
-    email?: string | null
-    username?: string | null
-    points?: number
-    created_at?: Date | string
-    updated_at?: Date | string
-    user_pref?: user_prefCreateNestedOneWithoutUserInput
-    claims?: claimCreateNestedManyWithoutClaimerInput
-    notifications?: notificationCreateNestedManyWithoutUserInput
-  }
-
-  export type app_userUncheckedCreateWithoutListingsInput = {
-    id: string
-    email?: string | null
-    username?: string | null
-    points?: number
-    created_at?: Date | string
-    updated_at?: Date | string
-    user_pref?: user_prefUncheckedCreateNestedOneWithoutUserInput
-    claims?: claimUncheckedCreateNestedManyWithoutClaimerInput
-    notifications?: notificationUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type app_userCreateOrConnectWithoutListingsInput = {
-    where: app_userWhereUniqueInput
-    create: XOR<app_userCreateWithoutListingsInput, app_userUncheckedCreateWithoutListingsInput>
-  }
-
-  export type categoryCreateWithoutListingsInput = {
-    id: number
-    name: string
-  }
-
-  export type categoryUncheckedCreateWithoutListingsInput = {
-    id: number
-    name: string
-  }
-
-  export type categoryCreateOrConnectWithoutListingsInput = {
-    where: categoryWhereUniqueInput
-    create: XOR<categoryCreateWithoutListingsInput, categoryUncheckedCreateWithoutListingsInput>
-  }
-
-  export type listing_photoCreateWithoutListingInput = {
-    id: string
-    url: string
-    storage_key?: string | null
-    sort_order?: number
-    uploaded_at?: Date | string
-  }
-
-  export type listing_photoUncheckedCreateWithoutListingInput = {
-    id: string
-    url: string
-    storage_key?: string | null
-    sort_order?: number
-    uploaded_at?: Date | string
-  }
-
-  export type listing_photoCreateOrConnectWithoutListingInput = {
-    where: listing_photoWhereUniqueInput
-    create: XOR<listing_photoCreateWithoutListingInput, listing_photoUncheckedCreateWithoutListingInput>
-  }
-
-  export type listing_photoCreateManyListingInputEnvelope = {
-    data: listing_photoCreateManyListingInput | listing_photoCreateManyListingInput[]
-    skipDuplicates?: boolean
   }
 
   export type claimCreateWithoutListingInput = {
@@ -12402,39 +12332,90 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type app_userUpsertWithoutListingsInput = {
-    update: XOR<app_userUpdateWithoutListingsInput, app_userUncheckedUpdateWithoutListingsInput>
+  export type categoryCreateWithoutListingsInput = {
+    id: number
+    name: string
+  }
+
+  export type categoryUncheckedCreateWithoutListingsInput = {
+    id: number
+    name: string
+  }
+
+  export type categoryCreateOrConnectWithoutListingsInput = {
+    where: categoryWhereUniqueInput
+    create: XOR<categoryCreateWithoutListingsInput, categoryUncheckedCreateWithoutListingsInput>
+  }
+
+  export type app_userCreateWithoutListingsInput = {
+    id: string
+    email?: string | null
+    username?: string | null
+    points?: number
+    created_at?: Date | string
+    updated_at?: Date | string
+    claims?: claimCreateNestedManyWithoutClaimerInput
+    notifications?: notificationCreateNestedManyWithoutUserInput
+    user_pref?: user_prefCreateNestedOneWithoutUserInput
+  }
+
+  export type app_userUncheckedCreateWithoutListingsInput = {
+    id: string
+    email?: string | null
+    username?: string | null
+    points?: number
+    created_at?: Date | string
+    updated_at?: Date | string
+    claims?: claimUncheckedCreateNestedManyWithoutClaimerInput
+    notifications?: notificationUncheckedCreateNestedManyWithoutUserInput
+    user_pref?: user_prefUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type app_userCreateOrConnectWithoutListingsInput = {
+    where: app_userWhereUniqueInput
     create: XOR<app_userCreateWithoutListingsInput, app_userUncheckedCreateWithoutListingsInput>
-    where?: app_userWhereInput
   }
 
-  export type app_userUpdateToOneWithWhereWithoutListingsInput = {
-    where?: app_userWhereInput
-    data: XOR<app_userUpdateWithoutListingsInput, app_userUncheckedUpdateWithoutListingsInput>
+  export type listing_photoCreateWithoutListingInput = {
+    id: string
+    url: string
+    storage_key?: string | null
+    sort_order?: number
+    uploaded_at?: Date | string
   }
 
-  export type app_userUpdateWithoutListingsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    points?: IntFieldUpdateOperationsInput | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_pref?: user_prefUpdateOneWithoutUserNestedInput
-    claims?: claimUpdateManyWithoutClaimerNestedInput
-    notifications?: notificationUpdateManyWithoutUserNestedInput
+  export type listing_photoUncheckedCreateWithoutListingInput = {
+    id: string
+    url: string
+    storage_key?: string | null
+    sort_order?: number
+    uploaded_at?: Date | string
   }
 
-  export type app_userUncheckedUpdateWithoutListingsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    points?: IntFieldUpdateOperationsInput | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_pref?: user_prefUncheckedUpdateOneWithoutUserNestedInput
-    claims?: claimUncheckedUpdateManyWithoutClaimerNestedInput
-    notifications?: notificationUncheckedUpdateManyWithoutUserNestedInput
+  export type listing_photoCreateOrConnectWithoutListingInput = {
+    where: listing_photoWhereUniqueInput
+    create: XOR<listing_photoCreateWithoutListingInput, listing_photoUncheckedCreateWithoutListingInput>
+  }
+
+  export type listing_photoCreateManyListingInputEnvelope = {
+    data: listing_photoCreateManyListingInput | listing_photoCreateManyListingInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type claimUpsertWithWhereUniqueWithoutListingInput = {
+    where: claimWhereUniqueInput
+    update: XOR<claimUpdateWithoutListingInput, claimUncheckedUpdateWithoutListingInput>
+    create: XOR<claimCreateWithoutListingInput, claimUncheckedCreateWithoutListingInput>
+  }
+
+  export type claimUpdateWithWhereUniqueWithoutListingInput = {
+    where: claimWhereUniqueInput
+    data: XOR<claimUpdateWithoutListingInput, claimUncheckedUpdateWithoutListingInput>
+  }
+
+  export type claimUpdateManyWithWhereWithoutListingInput = {
+    where: claimScalarWhereInput
+    data: XOR<claimUpdateManyMutationInput, claimUncheckedUpdateManyWithoutListingInput>
   }
 
   export type categoryUpsertWithoutListingsInput = {
@@ -12456,6 +12437,41 @@ export namespace Prisma {
   export type categoryUncheckedUpdateWithoutListingsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type app_userUpsertWithoutListingsInput = {
+    update: XOR<app_userUpdateWithoutListingsInput, app_userUncheckedUpdateWithoutListingsInput>
+    create: XOR<app_userCreateWithoutListingsInput, app_userUncheckedCreateWithoutListingsInput>
+    where?: app_userWhereInput
+  }
+
+  export type app_userUpdateToOneWithWhereWithoutListingsInput = {
+    where?: app_userWhereInput
+    data: XOR<app_userUpdateWithoutListingsInput, app_userUncheckedUpdateWithoutListingsInput>
+  }
+
+  export type app_userUpdateWithoutListingsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    points?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    claims?: claimUpdateManyWithoutClaimerNestedInput
+    notifications?: notificationUpdateManyWithoutUserNestedInput
+    user_pref?: user_prefUpdateOneWithoutUserNestedInput
+  }
+
+  export type app_userUncheckedUpdateWithoutListingsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    points?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    claims?: claimUncheckedUpdateManyWithoutClaimerNestedInput
+    notifications?: notificationUncheckedUpdateManyWithoutUserNestedInput
+    user_pref?: user_prefUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type listing_photoUpsertWithWhereUniqueWithoutListingInput = {
@@ -12486,22 +12502,6 @@ export namespace Prisma {
     uploaded_at?: DateTimeFilter<"listing_photo"> | Date | string
   }
 
-  export type claimUpsertWithWhereUniqueWithoutListingInput = {
-    where: claimWhereUniqueInput
-    update: XOR<claimUpdateWithoutListingInput, claimUncheckedUpdateWithoutListingInput>
-    create: XOR<claimCreateWithoutListingInput, claimUncheckedCreateWithoutListingInput>
-  }
-
-  export type claimUpdateWithWhereUniqueWithoutListingInput = {
-    where: claimWhereUniqueInput
-    data: XOR<claimUpdateWithoutListingInput, claimUncheckedUpdateWithoutListingInput>
-  }
-
-  export type claimUpdateManyWithWhereWithoutListingInput = {
-    where: claimScalarWhereInput
-    data: XOR<claimUpdateManyMutationInput, claimUncheckedUpdateManyWithoutListingInput>
-  }
-
   export type listingCreateWithoutPhotosInput = {
     id: string
     title: string
@@ -12515,9 +12515,9 @@ export namespace Prisma {
     manual_address?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    finder: app_userCreateNestedOneWithoutListingsInput
-    category?: categoryCreateNestedOneWithoutListingsInput
     claims?: claimCreateNestedManyWithoutListingInput
+    category?: categoryCreateNestedOneWithoutListingsInput
+    finder: app_userCreateNestedOneWithoutListingsInput
   }
 
   export type listingUncheckedCreateWithoutPhotosInput = {
@@ -12567,9 +12567,9 @@ export namespace Prisma {
     manual_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    finder?: app_userUpdateOneRequiredWithoutListingsNestedInput
-    category?: categoryUpdateOneWithoutListingsNestedInput
     claims?: claimUpdateManyWithoutListingNestedInput
+    category?: categoryUpdateOneWithoutListingsNestedInput
+    finder?: app_userUpdateOneRequiredWithoutListingsNestedInput
   }
 
   export type listingUncheckedUpdateWithoutPhotosInput = {
@@ -12590,6 +12590,35 @@ export namespace Prisma {
     claims?: claimUncheckedUpdateManyWithoutListingNestedInput
   }
 
+  export type app_userCreateWithoutClaimsInput = {
+    id: string
+    email?: string | null
+    username?: string | null
+    points?: number
+    created_at?: Date | string
+    updated_at?: Date | string
+    listings?: listingCreateNestedManyWithoutFinderInput
+    notifications?: notificationCreateNestedManyWithoutUserInput
+    user_pref?: user_prefCreateNestedOneWithoutUserInput
+  }
+
+  export type app_userUncheckedCreateWithoutClaimsInput = {
+    id: string
+    email?: string | null
+    username?: string | null
+    points?: number
+    created_at?: Date | string
+    updated_at?: Date | string
+    listings?: listingUncheckedCreateNestedManyWithoutFinderInput
+    notifications?: notificationUncheckedCreateNestedManyWithoutUserInput
+    user_pref?: user_prefUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type app_userCreateOrConnectWithoutClaimsInput = {
+    where: app_userWhereUniqueInput
+    create: XOR<app_userCreateWithoutClaimsInput, app_userUncheckedCreateWithoutClaimsInput>
+  }
+
   export type listingCreateWithoutClaimsInput = {
     id: string
     title: string
@@ -12603,8 +12632,8 @@ export namespace Prisma {
     manual_address?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    finder: app_userCreateNestedOneWithoutListingsInput
     category?: categoryCreateNestedOneWithoutListingsInput
+    finder: app_userCreateNestedOneWithoutListingsInput
     photos?: listing_photoCreateNestedManyWithoutListingInput
   }
 
@@ -12631,33 +12660,39 @@ export namespace Prisma {
     create: XOR<listingCreateWithoutClaimsInput, listingUncheckedCreateWithoutClaimsInput>
   }
 
-  export type app_userCreateWithoutClaimsInput = {
-    id: string
-    email?: string | null
-    username?: string | null
-    points?: number
-    created_at?: Date | string
-    updated_at?: Date | string
-    user_pref?: user_prefCreateNestedOneWithoutUserInput
-    listings?: listingCreateNestedManyWithoutFinderInput
-    notifications?: notificationCreateNestedManyWithoutUserInput
-  }
-
-  export type app_userUncheckedCreateWithoutClaimsInput = {
-    id: string
-    email?: string | null
-    username?: string | null
-    points?: number
-    created_at?: Date | string
-    updated_at?: Date | string
-    user_pref?: user_prefUncheckedCreateNestedOneWithoutUserInput
-    listings?: listingUncheckedCreateNestedManyWithoutFinderInput
-    notifications?: notificationUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type app_userCreateOrConnectWithoutClaimsInput = {
-    where: app_userWhereUniqueInput
+  export type app_userUpsertWithoutClaimsInput = {
+    update: XOR<app_userUpdateWithoutClaimsInput, app_userUncheckedUpdateWithoutClaimsInput>
     create: XOR<app_userCreateWithoutClaimsInput, app_userUncheckedCreateWithoutClaimsInput>
+    where?: app_userWhereInput
+  }
+
+  export type app_userUpdateToOneWithWhereWithoutClaimsInput = {
+    where?: app_userWhereInput
+    data: XOR<app_userUpdateWithoutClaimsInput, app_userUncheckedUpdateWithoutClaimsInput>
+  }
+
+  export type app_userUpdateWithoutClaimsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    points?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    listings?: listingUpdateManyWithoutFinderNestedInput
+    notifications?: notificationUpdateManyWithoutUserNestedInput
+    user_pref?: user_prefUpdateOneWithoutUserNestedInput
+  }
+
+  export type app_userUncheckedUpdateWithoutClaimsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    points?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    listings?: listingUncheckedUpdateManyWithoutFinderNestedInput
+    notifications?: notificationUncheckedUpdateManyWithoutUserNestedInput
+    user_pref?: user_prefUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type listingUpsertWithoutClaimsInput = {
@@ -12684,8 +12719,8 @@ export namespace Prisma {
     manual_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    finder?: app_userUpdateOneRequiredWithoutListingsNestedInput
     category?: categoryUpdateOneWithoutListingsNestedInput
+    finder?: app_userUpdateOneRequiredWithoutListingsNestedInput
     photos?: listing_photoUpdateManyWithoutListingNestedInput
   }
 
@@ -12707,41 +12742,6 @@ export namespace Prisma {
     photos?: listing_photoUncheckedUpdateManyWithoutListingNestedInput
   }
 
-  export type app_userUpsertWithoutClaimsInput = {
-    update: XOR<app_userUpdateWithoutClaimsInput, app_userUncheckedUpdateWithoutClaimsInput>
-    create: XOR<app_userCreateWithoutClaimsInput, app_userUncheckedCreateWithoutClaimsInput>
-    where?: app_userWhereInput
-  }
-
-  export type app_userUpdateToOneWithWhereWithoutClaimsInput = {
-    where?: app_userWhereInput
-    data: XOR<app_userUpdateWithoutClaimsInput, app_userUncheckedUpdateWithoutClaimsInput>
-  }
-
-  export type app_userUpdateWithoutClaimsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    points?: IntFieldUpdateOperationsInput | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_pref?: user_prefUpdateOneWithoutUserNestedInput
-    listings?: listingUpdateManyWithoutFinderNestedInput
-    notifications?: notificationUpdateManyWithoutUserNestedInput
-  }
-
-  export type app_userUncheckedUpdateWithoutClaimsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    points?: IntFieldUpdateOperationsInput | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_pref?: user_prefUncheckedUpdateOneWithoutUserNestedInput
-    listings?: listingUncheckedUpdateManyWithoutFinderNestedInput
-    notifications?: notificationUncheckedUpdateManyWithoutUserNestedInput
-  }
-
   export type app_userCreateWithoutNotificationsInput = {
     id: string
     email?: string | null
@@ -12749,9 +12749,9 @@ export namespace Prisma {
     points?: number
     created_at?: Date | string
     updated_at?: Date | string
-    user_pref?: user_prefCreateNestedOneWithoutUserInput
-    listings?: listingCreateNestedManyWithoutFinderInput
     claims?: claimCreateNestedManyWithoutClaimerInput
+    listings?: listingCreateNestedManyWithoutFinderInput
+    user_pref?: user_prefCreateNestedOneWithoutUserInput
   }
 
   export type app_userUncheckedCreateWithoutNotificationsInput = {
@@ -12761,9 +12761,9 @@ export namespace Prisma {
     points?: number
     created_at?: Date | string
     updated_at?: Date | string
-    user_pref?: user_prefUncheckedCreateNestedOneWithoutUserInput
-    listings?: listingUncheckedCreateNestedManyWithoutFinderInput
     claims?: claimUncheckedCreateNestedManyWithoutClaimerInput
+    listings?: listingUncheckedCreateNestedManyWithoutFinderInput
+    user_pref?: user_prefUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type app_userCreateOrConnectWithoutNotificationsInput = {
@@ -12789,9 +12789,9 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_pref?: user_prefUpdateOneWithoutUserNestedInput
-    listings?: listingUpdateManyWithoutFinderNestedInput
     claims?: claimUpdateManyWithoutClaimerNestedInput
+    listings?: listingUpdateManyWithoutFinderNestedInput
+    user_pref?: user_prefUpdateOneWithoutUserNestedInput
   }
 
   export type app_userUncheckedUpdateWithoutNotificationsInput = {
@@ -12801,9 +12801,17 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user_pref?: user_prefUncheckedUpdateOneWithoutUserNestedInput
-    listings?: listingUncheckedUpdateManyWithoutFinderNestedInput
     claims?: claimUncheckedUpdateManyWithoutClaimerNestedInput
+    listings?: listingUncheckedUpdateManyWithoutFinderNestedInput
+    user_pref?: user_prefUncheckedUpdateOneWithoutUserNestedInput
+  }
+
+  export type claimCreateManyClaimerInput = {
+    id: string
+    listing_id: string
+    status?: string
+    message?: string | null
+    created_at?: Date | string
   }
 
   export type listingCreateManyFinderInput = {
@@ -12822,14 +12830,6 @@ export namespace Prisma {
     updated_at?: Date | string
   }
 
-  export type claimCreateManyClaimerInput = {
-    id: string
-    listing_id: string
-    status?: string
-    message?: string | null
-    created_at?: Date | string
-  }
-
   export type notificationCreateManyUserInput = {
     id: string
     type: string
@@ -12838,58 +12838,6 @@ export namespace Prisma {
     status?: string
     created_at?: Date | string
     sent_at?: Date | string | null
-  }
-
-  export type listingUpdateWithoutFinderInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    found_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    lat?: FloatFieldUpdateOperationsInput | number
-    lng?: FloatFieldUpdateOperationsInput | number
-    place_name?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_address?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    category?: categoryUpdateOneWithoutListingsNestedInput
-    photos?: listing_photoUpdateManyWithoutListingNestedInput
-    claims?: claimUpdateManyWithoutListingNestedInput
-  }
-
-  export type listingUncheckedUpdateWithoutFinderInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    category_id?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: StringFieldUpdateOperationsInput | string
-    found_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    lat?: FloatFieldUpdateOperationsInput | number
-    lng?: FloatFieldUpdateOperationsInput | number
-    place_name?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_address?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    photos?: listing_photoUncheckedUpdateManyWithoutListingNestedInput
-    claims?: claimUncheckedUpdateManyWithoutListingNestedInput
-  }
-
-  export type listingUncheckedUpdateManyWithoutFinderInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    category_id?: NullableIntFieldUpdateOperationsInput | number | null
-    status?: StringFieldUpdateOperationsInput | string
-    found_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    lat?: FloatFieldUpdateOperationsInput | number
-    lng?: FloatFieldUpdateOperationsInput | number
-    place_name?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_address?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type claimUpdateWithoutClaimerInput = {
@@ -12914,6 +12862,58 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     message?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type listingUpdateWithoutFinderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    found_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    lat?: FloatFieldUpdateOperationsInput | number
+    lng?: FloatFieldUpdateOperationsInput | number
+    place_name?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_address?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    claims?: claimUpdateManyWithoutListingNestedInput
+    category?: categoryUpdateOneWithoutListingsNestedInput
+    photos?: listing_photoUpdateManyWithoutListingNestedInput
+  }
+
+  export type listingUncheckedUpdateWithoutFinderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category_id?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: StringFieldUpdateOperationsInput | string
+    found_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    lat?: FloatFieldUpdateOperationsInput | number
+    lng?: FloatFieldUpdateOperationsInput | number
+    place_name?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_address?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    claims?: claimUncheckedUpdateManyWithoutListingNestedInput
+    photos?: listing_photoUncheckedUpdateManyWithoutListingNestedInput
+  }
+
+  export type listingUncheckedUpdateManyWithoutFinderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category_id?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: StringFieldUpdateOperationsInput | string
+    found_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    expires_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    lat?: FloatFieldUpdateOperationsInput | number
+    lng?: FloatFieldUpdateOperationsInput | number
+    place_name?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_address?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type notificationUpdateWithoutUserInput = {
@@ -12975,9 +12975,9 @@ export namespace Prisma {
     manual_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    claims?: claimUpdateManyWithoutListingNestedInput
     finder?: app_userUpdateOneRequiredWithoutListingsNestedInput
     photos?: listing_photoUpdateManyWithoutListingNestedInput
-    claims?: claimUpdateManyWithoutListingNestedInput
   }
 
   export type listingUncheckedUpdateWithoutCategoryInput = {
@@ -12994,8 +12994,8 @@ export namespace Prisma {
     manual_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    photos?: listing_photoUncheckedUpdateManyWithoutListingNestedInput
     claims?: claimUncheckedUpdateManyWithoutListingNestedInput
+    photos?: listing_photoUncheckedUpdateManyWithoutListingNestedInput
   }
 
   export type listingUncheckedUpdateManyWithoutCategoryInput = {
@@ -13014,14 +13014,6 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type listing_photoCreateManyListingInput = {
-    id: string
-    url: string
-    storage_key?: string | null
-    sort_order?: number
-    uploaded_at?: Date | string
-  }
-
   export type claimCreateManyListingInput = {
     id: string
     claimer_user_id: string
@@ -13030,28 +13022,12 @@ export namespace Prisma {
     created_at?: Date | string
   }
 
-  export type listing_photoUpdateWithoutListingInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    storage_key?: NullableStringFieldUpdateOperationsInput | string | null
-    sort_order?: IntFieldUpdateOperationsInput | number
-    uploaded_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type listing_photoUncheckedUpdateWithoutListingInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    storage_key?: NullableStringFieldUpdateOperationsInput | string | null
-    sort_order?: IntFieldUpdateOperationsInput | number
-    uploaded_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type listing_photoUncheckedUpdateManyWithoutListingInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    storage_key?: NullableStringFieldUpdateOperationsInput | string | null
-    sort_order?: IntFieldUpdateOperationsInput | number
-    uploaded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type listing_photoCreateManyListingInput = {
+    id: string
+    url: string
+    storage_key?: string | null
+    sort_order?: number
+    uploaded_at?: Date | string
   }
 
   export type claimUpdateWithoutListingInput = {
@@ -13076,6 +13052,30 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     message?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type listing_photoUpdateWithoutListingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    storage_key?: NullableStringFieldUpdateOperationsInput | string | null
+    sort_order?: IntFieldUpdateOperationsInput | number
+    uploaded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type listing_photoUncheckedUpdateWithoutListingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    storage_key?: NullableStringFieldUpdateOperationsInput | string | null
+    sort_order?: IntFieldUpdateOperationsInput | number
+    uploaded_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type listing_photoUncheckedUpdateManyWithoutListingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    storage_key?: NullableStringFieldUpdateOperationsInput | string | null
+    sort_order?: IntFieldUpdateOperationsInput | number
+    uploaded_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
