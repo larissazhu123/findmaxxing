@@ -253,7 +253,7 @@ export default function MapView() {
             title,
             description: desc,
             category_id: category ? CATEGORY_MAP[category as keyof typeof CATEGORY_MAP] : null,
-            status: "found",
+            status: "active",
             found_at: now.toISOString(),
             expires_at: expires.toISOString(),
             lat: newPinCoords.lat,
