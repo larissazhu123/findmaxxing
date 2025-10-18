@@ -10,12 +10,68 @@ import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "@/lib/supabaseClient";
 
+// ---------------- Category setup (by NAME) ----------------
+const CATEGORY_EMOJI_BY_ID: Record<number, string> = {
+  1: "🔑",    // keys
+  2: "🪪",    // cards/id
+  3: "🚰",    // water bottle (pick any you like)
+  4: "💎",    // jewelry
+  5: "🎧",    // headphones
+  6: "👛",    // wallet
+  7: "🧑‍💻",  // tech
+  99: "❓",   // other
+};
+
+
+
 // ---------------- UI helpers ----------------
-const PinIcon = L.icon({
-  iconUrl: "/pin.svg",
-  iconSize: [32, 32],
-  iconAnchor: [16, 32],
-});
+// const PinIcon = L.icon({
+//   iconUrl: "/pin.svg",
+//   iconSize: [32, 32],
+//   iconAnchor: [16, 32],
+// });
+
+// function PinIcon(emoji: string) {
+//   return L.divIcon({
+//     className: "emoji-pin",
+//     html: `<div style="
+//       font-size:22px;line-height:22px;width:28px;height:28px;
+//       display:flex;align-items:center;justify-content:center;
+//       border-radius:14px;background:#111;color:#fff;
+//       border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35);
+//     ">${emoji}</div>`,
+//     iconSize: [28, 28],
+//     iconAnchor: [14, 28],
+//     popupAnchor: [0, -28],
+//   });
+// }
+
+function ZoomWatcher({ onChange }: { onChange: (z: number) => void }) {
+  const map = useMapEvents({
+    zoomend() { onChange(map.getZoom()); },
+  });
+  // set initial
+  useEffect(() => { onChange(map.getZoom()); }, []);
+  return null;
+}
+
+
+
+function emojiIcon(emoji: string, size: number) {
+  return L.divIcon({
+    className: "emoji-pin",
+    html: `<div style="
+      font-size:${size}px;
+      line-height:1;
+      transform: translateY(-2px); /* nudges baseline so it sits on the point */
+      text-shadow: 0 1px 2px rgba(0,0,0,.45);
+    ">${emoji}</div>`,
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size * 0.9], // center horizontally, bottom nearly at click point
+    popupAnchor: [0, -size],
+  });
+}
+
 
 function Modal({
   children,
@@ -78,20 +134,40 @@ export default function MapView() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [category, setCategory] = useState("");
+  const [zoom, setZoom] = useState(13);
+  const markerSize = Math.max(18, Math.min(40, 18 + (zoom - 13) * 2)); // clamp 18..40
+
+
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   // map UI category -> DB category_id (agree this mapping with backend)
+  // const CATEGORY_MAP = useMemo(
+  //   () => ({
+  //     electronics: 1,
+  //     clothing: 2,
+  //     books: 3,
+  //     other: 99,
+  //   }),
+  //   []
+  // );
+
+
   const CATEGORY_MAP = useMemo(
-    () => ({
-      electronics: 1,
-      clothing: 2,
-      books: 3,
-      other: 99,
-    }),
-    []
-  );
+  () => ({
+    keys: 1,
+    "cards/id": 2,
+    "water bottle": 3,
+    jewelry: 4,
+    headphones: 5,
+    wallet: 6,
+    tech: 7,
+    other: 99,     // keep a fallback id for “other”
+  }),
+  []
+);
+
 
   // --------- initial fetch ----------
   useEffect(() => {
@@ -177,7 +253,7 @@ export default function MapView() {
             title,
             description: desc,
             category_id: category ? CATEGORY_MAP[category as keyof typeof CATEGORY_MAP] : null,
-            status: "found",
+            status: "active",
             found_at: now.toISOString(),
             expires_at: expires.toISOString(),
             lat: newPinCoords.lat,
@@ -219,13 +295,22 @@ export default function MapView() {
         <ClickHandler onMapClick={(lat, lng) => setNewPinCoords({ lat, lng })} />
 
         {pins.map((pin) => (
+          // <Marker
+          //   key={pin.id}
+          //   position={[pin.lat ?? 0, pin.lng ?? 0]}
+          //   icon={PinIcon}
+          //   eventHandlers={{ click: () => setSelectedPin(pin) }}
+          // />
           <Marker
             key={pin.id}
             position={[pin.lat ?? 0, pin.lng ?? 0]}
-            icon={PinIcon}
+            icon={emojiIcon(CATEGORY_EMOJI_BY_ID[pin.category_id ?? 99] ?? "❓", markerSize)}
             eventHandlers={{ click: () => setSelectedPin(pin) }}
           />
+
         ))}
+
+        <ZoomWatcher onChange={setZoom} />
       </MapContainer>
 
       {/* Add Pin Modal */}
@@ -264,7 +349,7 @@ export default function MapView() {
                 className="w-full h-40 object-cover rounded mb-1"
               />
             )}
-            <select
+            {/* <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               className="border border-gray-700 bg-black text-white p-2 rounded"
@@ -274,7 +359,25 @@ export default function MapView() {
               <option value="clothing">Clothing</option>
               <option value="books">Books</option>
               <option value="other">Other</option>
+
+            </select> */
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="border border-gray-700 bg-black text-white p-2 rounded"
+            >
+              <option value="">Select category</option>
+              <option value="keys">🔑 keys</option>
+              <option value="cards/id">🪪 cards/id</option>
+              <option value="water bottle">🚰 water bottle</option>
+              <option value="jewelry">💎 jewelry</option>
+              <option value="headphones">🎧 headphones</option>
+              <option value="wallet">👛 wallet</option>
+              <option value="tech">🧑‍💻 tech</option>
+              <option value="other">❓ other</option>
             </select>
+            
+            }
             <button
               type="submit"
               disabled={saving}
