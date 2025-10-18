@@ -31,20 +31,47 @@ const CATEGORY_EMOJI_BY_ID: Record<number, string> = {
 //   iconAnchor: [16, 32],
 // });
 
-function PinIcon(emoji: string) {
+// function PinIcon(emoji: string) {
+//   return L.divIcon({
+//     className: "emoji-pin",
+//     html: `<div style="
+//       font-size:22px;line-height:22px;width:28px;height:28px;
+//       display:flex;align-items:center;justify-content:center;
+//       border-radius:14px;background:#111;color:#fff;
+//       border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35);
+//     ">${emoji}</div>`,
+//     iconSize: [28, 28],
+//     iconAnchor: [14, 28],
+//     popupAnchor: [0, -28],
+//   });
+// }
+
+function ZoomWatcher({ onChange }: { onChange: (z: number) => void }) {
+  const map = useMapEvents({
+    zoomend() { onChange(map.getZoom()); },
+  });
+  // set initial
+  useEffect(() => { onChange(map.getZoom()); }, []);
+  return null;
+}
+
+
+
+function emojiIcon(emoji: string, size: number) {
   return L.divIcon({
     className: "emoji-pin",
     html: `<div style="
-      font-size:22px;line-height:22px;width:28px;height:28px;
-      display:flex;align-items:center;justify-content:center;
-      border-radius:14px;background:#111;color:#fff;
-      border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35);
+      font-size:${size}px;
+      line-height:1;
+      transform: translateY(-2px); /* nudges baseline so it sits on the point */
+      text-shadow: 0 1px 2px rgba(0,0,0,.45);
     ">${emoji}</div>`,
-    iconSize: [28, 28],
-    iconAnchor: [14, 28],
-    popupAnchor: [0, -28],
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size * 0.9], // center horizontally, bottom nearly at click point
+    popupAnchor: [0, -size],
   });
 }
+
 
 function Modal({
   children,
@@ -107,7 +134,9 @@ export default function MapView() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [category, setCategory] = useState("");
-  
+  const [zoom, setZoom] = useState(13);
+  const markerSize = Math.max(18, Math.min(40, 18 + (zoom - 13) * 2)); // clamp 18..40
+
 
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
@@ -275,11 +304,13 @@ export default function MapView() {
           <Marker
             key={pin.id}
             position={[pin.lat ?? 0, pin.lng ?? 0]}
-            icon={PinIcon(CATEGORY_EMOJI_BY_ID[pin.category_id ?? 99] ?? "❓")}
+            icon={emojiIcon(CATEGORY_EMOJI_BY_ID[pin.category_id ?? 99] ?? "❓", markerSize)}
             eventHandlers={{ click: () => setSelectedPin(pin) }}
           />
 
         ))}
+
+        <ZoomWatcher onChange={setZoom} />
       </MapContainer>
 
       {/* Add Pin Modal */}
