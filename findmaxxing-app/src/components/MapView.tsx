@@ -6,23 +6,21 @@ import { useEffect, useMemo, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { LeafletMouseEvent } from "leaflet";
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from "react-leaflet";
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "@/lib/supabaseClient";
 
 // ---------------- Category setup (by NAME) ----------------
 const CATEGORY_EMOJI_BY_ID: Record<number, string> = {
-  1: "🔑",    // keys
-  2: "🪪",    // cards/id
-  3: "🚰",    // water bottle (pick any you like)
-  4: "💎",    // jewelry
-  5: "🎧",    // headphones
-  6: "👛",    // wallet
-  7: "🧑‍💻",  // tech
-  99: "❓",   // other
+  1: "🔑", // keys
+  2: "🪪", // cards/id
+  3: "🚰", // water bottle (pick any you like)
+  4: "💎", // jewelry
+  5: "🎧", // headphones
+  6: "👛", // wallet
+  7: "🧑‍💻", // tech
+  99: "❓", // other
 };
-
-
 
 // ---------------- UI helpers ----------------
 // const PinIcon = L.icon({
@@ -48,14 +46,16 @@ const CATEGORY_EMOJI_BY_ID: Record<number, string> = {
 
 function ZoomWatcher({ onChange }: { onChange: (z: number) => void }) {
   const map = useMapEvents({
-    zoomend() { onChange(map.getZoom()); },
+    zoomend() {
+      onChange(map.getZoom());
+    },
   });
   // set initial
-  useEffect(() => { onChange(map.getZoom()); }, []);
+  useEffect(() => {
+    onChange(map.getZoom());
+  }, []);
   return null;
 }
-
-
 
 function emojiIcon(emoji: string, size: number) {
   return L.divIcon({
@@ -71,7 +71,6 @@ function emojiIcon(emoji: string, size: number) {
     popupAnchor: [0, -size],
   });
 }
-
 
 function Modal({
   children,
@@ -95,7 +94,22 @@ function Modal({
   );
 }
 
-function ClickHandler({ onMapClick }: { onMapClick: (lat: number, lng: number) => void }) {
+function MapCenterHandler({ selectedPin }: { selectedPin: ListingRow | null }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (selectedPin && selectedPin.lat && selectedPin.lng) {
+      map.setView([selectedPin.lat, selectedPin.lng], 16, { animate: true });
+    }
+  }, [selectedPin, map]);
+
+  return null; // this component doesn’t render anything visual
+}
+function ClickHandler({
+  onMapClick,
+}: {
+  onMapClick: (lat: number, lng: number) => void;
+}) {
   useMapEvents({
     click(e: LeafletMouseEvent) {
       onMapClick(e.latlng.lat, e.latlng.lng);
@@ -105,30 +119,41 @@ function ClickHandler({ onMapClick }: { onMapClick: (lat: number, lng: number) =
 }
 
 // --------------- DB types -------------------
-type ListingRow = {
+export type ListingRow = {
   id: string;
   finder_user_id: string | null;
   title: string | null;
   description: string | null;
-  category_id: number | null;   // int2
-  status: string | null;        // e.g., "found"
-  found_at: string | null;      // ISO
-  expires_at: string | null;    // ISO
+  category_id: number | null; // int2
+  status: string | null; // e.g., "found"
+  found_at: string | null; // ISO
+  expires_at: string | null; // ISO
   lat: number | null;
   lng: number | null;
   place_name: string | null;
   manual_address: string | null;
-  image_url: string | null;     // <-- add column: ALTER TABLE public.listing ADD COLUMN IF NOT EXISTS image_url text;
+  image_url: string | null; // <-- add column: ALTER TABLE public.listing ADD COLUMN IF NOT EXISTS image_url text;
   created_at?: string | null;
   updated_at?: string | null;
 };
 
 const CURRENT_USER_ID = "1"; // TEMP until you wire auth
 
-export default function MapView() {
-  const [pins, setPins] = useState<ListingRow[]>([]);
-  const [selectedPin, setSelectedPin] = useState<ListingRow | null>(null);
-  const [newPinCoords, setNewPinCoords] = useState<{ lat: number; lng: number } | null>(null);
+export default function MapView({
+  pins,
+  setPins,
+  selectedPin,
+  setSelectedPin,
+}: {
+  pins: ListingRow[];
+  setPins: React.Dispatch<React.SetStateAction<ListingRow[]>>;
+  selectedPin: ListingRow | null;
+  setSelectedPin: React.Dispatch<React.SetStateAction<ListingRow | null>>;
+}) {
+  const [newPinCoords, setNewPinCoords] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(null);
 
   // form
   const [title, setTitle] = useState("");
@@ -136,7 +161,6 @@ export default function MapView() {
   const [category, setCategory] = useState("");
   const [zoom, setZoom] = useState(13);
   const markerSize = Math.max(18, Math.min(40, 18 + (zoom - 13) * 2)); // clamp 18..40
-
 
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
@@ -153,21 +177,19 @@ export default function MapView() {
   //   []
   // );
 
-
   const CATEGORY_MAP = useMemo(
-  () => ({
-    keys: 1,
-    "cards/id": 2,
-    "water bottle": 3,
-    jewelry: 4,
-    headphones: 5,
-    wallet: 6,
-    tech: 7,
-    other: 99,     // keep a fallback id for “other”
-  }),
-  []
-);
-
+    () => ({
+      keys: 1,
+      "cards/id": 2,
+      "water bottle": 3,
+      jewelry: 4,
+      headphones: 5,
+      wallet: 6,
+      tech: 7,
+      other: 99, // keep a fallback id for “other”
+    }),
+    []
+  );
 
   // --------- initial fetch ----------
   useEffect(() => {
@@ -198,10 +220,16 @@ export default function MapView() {
             setPins((prev) => [payload.new as ListingRow, ...prev]);
           } else if (payload.eventType === "UPDATE") {
             setPins((prev) =>
-              prev.map((p) => (p.id === (payload.new as ListingRow).id ? (payload.new as ListingRow) : p))
+              prev.map((p) =>
+                p.id === (payload.new as ListingRow).id
+                  ? (payload.new as ListingRow)
+                  : p
+              )
             );
           } else if (payload.eventType === "DELETE") {
-            setPins((prev) => prev.filter((p) => p.id !== (payload.old as ListingRow).id));
+            setPins((prev) =>
+              prev.filter((p) => p.id !== (payload.old as ListingRow).id)
+            );
           }
         }
       )
@@ -213,12 +241,17 @@ export default function MapView() {
   }, []);
 
   // --------- storage upload (optional) ----------
-  async function uploadImageIfAny(file: File | null, listingId: string): Promise<string | null> {
+  async function uploadImageIfAny(
+    file: File | null,
+    listingId: string
+  ): Promise<string | null> {
     if (!file) return null;
     const ext = file.name.split(".").pop() || "jpg";
     const path = `listings/${listingId}.${ext}`;
 
-    const { error } = await supabase.storage.from("listing-images").upload(path, file, { upsert: true });
+    const { error } = await supabase.storage
+      .from("listing-images")
+      .upload(path, file, { upsert: true });
     if (error) {
       console.error("upload error", error);
       setErrorMsg(error.message);
@@ -252,7 +285,9 @@ export default function MapView() {
             finder_user_id: CURRENT_USER_ID, // hardcoded for now
             title,
             description: desc,
-            category_id: category ? CATEGORY_MAP[category as keyof typeof CATEGORY_MAP] : null,
+            category_id: category
+              ? CATEGORY_MAP[category as keyof typeof CATEGORY_MAP]
+              : null,
             status: "active",
             found_at: now.toISOString(),
             expires_at: expires.toISOString(),
@@ -284,15 +319,46 @@ export default function MapView() {
       setSaving(false);
     }
   };
+  // --------- delete listing ----------
+  async function handleDeletePin(id: string) {
+    try {
+      const { error } = await supabase.from("listing").delete().eq("id", id);
+      if (error) throw error;
+
+      // Update local state immediately
+      setPins((prev) => prev.filter((p) => p.id !== id));
+
+      // Close modal
+      setSelectedPin(null);
+    } catch (err: any) {
+      console.error("Error deleting pin:", err.message);
+      alert("Failed to delete listing. Please try again.");
+    }
+  }
 
   return (
     <div className="h-full w-full">
-      <MapContainer center={[42.391, -72.526]} zoom={13} className="h-full w-full" style={{ zIndex: 0 }}>
+      <MapContainer
+        center={[42.3895, -72.526]} // roughly UMass Amherst campus
+        zoom={15}
+        minZoom={14}
+        maxZoom={18}
+        scrollWheelZoom={true}
+        className="h-full w-full"
+        maxBounds={[
+          [42.36, -72.56], // Southwest corner
+          [42.42, -72.49], // Northeast corner
+        ]}
+        maxBoundsViscosity={1.0} // prevents panning outside Amherst
+      >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="© OpenStreetMap contributors"
         />
-        <ClickHandler onMapClick={(lat, lng) => setNewPinCoords({ lat, lng })} />
+        <MapCenterHandler selectedPin={selectedPin} />
+        <ClickHandler
+          onMapClick={(lat, lng) => setNewPinCoords({ lat, lng })}
+        />
 
         {pins.map((pin) => (
           // <Marker
@@ -304,10 +370,12 @@ export default function MapView() {
           <Marker
             key={pin.id}
             position={[pin.lat ?? 0, pin.lng ?? 0]}
-            icon={emojiIcon(CATEGORY_EMOJI_BY_ID[pin.category_id ?? 99] ?? "❓", markerSize)}
+            icon={emojiIcon(
+              CATEGORY_EMOJI_BY_ID[pin.category_id ?? 99] ?? "❓",
+              markerSize
+            )}
             eventHandlers={{ click: () => setSelectedPin(pin) }}
           />
-
         ))}
 
         <ZoomWatcher onChange={setZoom} />
@@ -337,7 +405,9 @@ export default function MapView() {
             <input
               type="file"
               accept="image/*"
-              onChange={(e) => e.target.files?.[0] && setImageFile(e.target.files[0])}
+              onChange={(e) =>
+                e.target.files?.[0] && setImageFile(e.target.files[0])
+              }
               className="border border-gray-700 bg-black text-white p-2 rounded"
             />
             {imageFile && (
@@ -349,7 +419,8 @@ export default function MapView() {
                 className="w-full h-40 object-cover rounded mb-1"
               />
             )}
-            {/* <select
+            {
+              /* <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               className="border border-gray-700 bg-black text-white p-2 rounded"
@@ -361,22 +432,21 @@ export default function MapView() {
               <option value="other">Other</option>
 
             </select> */
-            <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="border border-gray-700 bg-black text-white p-2 rounded"
-            >
-              <option value="">Select category</option>
-              <option value="keys">🔑 keys</option>
-              <option value="cards/id">🪪 cards/id</option>
-              <option value="water bottle">🚰 water bottle</option>
-              <option value="jewelry">💎 jewelry</option>
-              <option value="headphones">🎧 headphones</option>
-              <option value="wallet">👛 wallet</option>
-              <option value="tech">🧑‍💻 tech</option>
-              <option value="other">❓ other</option>
-            </select>
-            
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="border border-gray-700 bg-black text-white p-2 rounded"
+              >
+                <option value="">Select category</option>
+                <option value="keys">🔑 keys</option>
+                <option value="cards/id">🪪 cards/id</option>
+                <option value="water bottle">🚰 water bottle</option>
+                <option value="jewelry">💎 jewelry</option>
+                <option value="headphones">🎧 headphones</option>
+                <option value="wallet">👛 wallet</option>
+                <option value="tech">🧑‍💻 tech</option>
+                <option value="other">❓ other</option>
+              </select>
             }
             <button
               type="submit"
@@ -406,6 +476,16 @@ export default function MapView() {
           <p className="text-sm text-gray-400">
             <strong>Category ID:</strong> {selectedPin.category_id ?? "—"}
           </p>
+          <button
+            onClick={() => {
+              if (confirm("Are you sure you want to delete this listing?")) {
+                handleDeletePin(selectedPin.id);
+              }
+            }}
+            className="mt-4 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded"
+          >
+            Delete
+          </button>
         </Modal>
       )}
     </div>

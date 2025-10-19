@@ -13,7 +13,6 @@ export default function SettingsPage() {
 
   return (
     <div className="h-screen flex flex-col">
-      <Navbar />
       <main className="flex-grow p-6 max-w-lg mx-auto">
         <h1 className="text-2xl font-bold mb-6">User Settings</h1>
 
