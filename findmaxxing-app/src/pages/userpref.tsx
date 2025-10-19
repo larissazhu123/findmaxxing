@@ -10,7 +10,7 @@ export default function UserPrefPage() {
     e.preventDefault();
     console.log("User preferences saved:", { nickname, notificationsOn });
     // TODO: Save to Supabase profile
-    router.push("/map");
+    router.push("/browse");
   };
 
   return (

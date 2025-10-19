@@ -11,7 +11,7 @@ export default function LoginPage() {
     e.preventDefault();
     console.log("Login attempt:", { email, password });
     // TODO: Call Supabase auth (email+password)
-    router.push("/map");
+    router.push("/browse");
   };
 
   return (
