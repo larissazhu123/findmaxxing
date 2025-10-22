@@ -1,14 +1,24 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import Navbar from "@/components/Navbar";
+import { useState, useEffect } from "react";
+import { Preloader } from "@/components/Preloader";
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="min-h-screen flex flex-col bg-black text-white">
-      <Navbar />
-      <main className="flex-1">
-        <Component {...pageProps} />
-      </main>
-    </div>
+    <>
+      <Preloader isLoading={isLoading} />
+      <Component {...pageProps} />
+    </>
   );
 }

@@ -9,6 +9,13 @@ import type { LeafletMouseEvent } from "leaflet";
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from "react-leaflet";
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "@/lib/supabaseClient";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { X, MapPin, Upload, Image as ImageIcon, Trash2 } from "lucide-react";
 
 // ---------------- Category setup (by NAME) ----------------
 const CATEGORY_EMOJI_BY_ID: Record<number, string> = {
@@ -79,18 +86,40 @@ function Modal({
   children: React.ReactNode;
   onClose: () => void;
 }) {
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[1000]">
-      <div className="bg-black rounded-lg p-6 max-w-md w-full relative shadow-lg">
-        <button
-          onClick={onClose}
-          className="absolute top-2 right-2 text-gray-400 hover:text-gray-200"
+    <AnimatePresence>
+      <motion.div 
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[1000] p-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
+        onClick={handleBackdropClick}
+      >
+        <motion.div 
+          className="bg-white/90 backdrop-blur-lg rounded-xl shadow-2xl max-w-md w-full relative border border-gray-200"
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          transition={{ duration: 0.3 }}
+          onClick={(e) => e.stopPropagation()}
         >
-          ✖
-        </button>
-        {children}
-      </div>
-    </div>
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors z-10"
+          >
+            <X className="h-5 w-5" />
+          </button>
+          {children}
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
   );
 }
 
@@ -384,108 +413,215 @@ export default function MapView({
       {/* Add Pin Modal */}
       {newPinCoords && (
         <Modal onClose={() => setNewPinCoords(null)}>
-          <h2 className="text-xl font-bold mb-4">Add New Pin</h2>
-          {errorMsg && <p className="text-red-400 text-sm mb-2">{errorMsg}</p>}
+          <Card className="border-0 shadow-none">
+            <CardHeader className="pb-4">
+              <div className="flex items-center gap-3">
+                <div className="bg-green-600 rounded-lg p-2">
+                  <MapPin className="h-5 w-5 text-white" />
+                </div>
+                <CardTitle className="text-green-600">Add New Pin</CardTitle>
+              </div>
+              {errorMsg && (
+                <motion.div 
+                  className="bg-red-50 border border-red-200 text-red-600 px-3 py-2 rounded-lg text-sm"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                >
+                  {errorMsg}
+                </motion.div>
+              )}
+            </CardHeader>
+            
+            <CardContent className="space-y-4">
+              <form onSubmit={handleAddPin} className="space-y-4">
+                <div className="space-y-3">
+                  <Label htmlFor="title">Title</Label>
+                  <Input
+                    id="title"
+                    type="text"
+                    placeholder="What did you find?"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="h-12"
+                    required
+                  />
+                </div>
 
-          <form onSubmit={handleAddPin} className="flex flex-col gap-3">
-            <input
-              type="text"
-              placeholder="Title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="border border-gray-700 bg-black text-white p-2 rounded"
-              required
-            />
-            <textarea
-              placeholder="Description"
-              value={desc}
-              onChange={(e) => setDesc(e.target.value)}
-              className="border border-gray-700 bg-black text-white p-2 rounded"
-            />
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) =>
-                e.target.files?.[0] && setImageFile(e.target.files[0])
-              }
-              className="border border-gray-700 bg-black text-white p-2 rounded"
-            />
-            {imageFile && (
-              <Image
-                src={URL.createObjectURL(imageFile)}
-                alt="Preview"
-                width={400}
-                height={200}
-                className="w-full h-40 object-cover rounded mb-1"
-              />
-            )}
-            {
-              /* <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="border border-gray-700 bg-black text-white p-2 rounded"
-            >
-              <option value="">Select category</option>
-              <option value="electronics">Electronics</option>
-              <option value="clothing">Clothing</option>
-              <option value="books">Books</option>
-              <option value="other">Other</option>
+                <div className="space-y-3">
+                  <Label htmlFor="description">Description</Label>
+                  <textarea
+                    id="description"
+                    placeholder="Describe the item and where you found it..."
+                    value={desc}
+                    onChange={(e) => setDesc(e.target.value)}
+                    className="w-full min-h-[100px] px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+                  />
+                </div>
 
-            </select> */
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="border border-gray-700 bg-black text-white p-2 rounded"
-              >
-                <option value="">Select category</option>
-                <option value="keys">🔑 keys</option>
-                <option value="cards/id">🪪 cards/id</option>
-                <option value="water bottle">🚰 water bottle</option>
-                <option value="jewelry">💎 jewelry</option>
-                <option value="headphones">🎧 headphones</option>
-                <option value="wallet">👛 wallet</option>
-                <option value="tech">🧑‍💻 tech</option>
-                <option value="other">❓ other</option>
-              </select>
-            }
-            <button
-              type="submit"
-              disabled={saving}
-              className="px-6 py-3 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
-            >
-              {saving ? "Saving..." : "Save Pin"}
-            </button>
-          </form>
+                <div className="space-y-3">
+                  <Label htmlFor="category">Category</Label>
+                  <Select value={category} onValueChange={setCategory}>
+                    <SelectTrigger className="h-12">
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[1001]">
+                      <SelectItem value="keys">🔑 Keys</SelectItem>
+                      <SelectItem value="cards/id">🪪 Cards/ID</SelectItem>
+                      <SelectItem value="water bottle">🚰 Water Bottle</SelectItem>
+                      <SelectItem value="jewelry">💎 Jewelry</SelectItem>
+                      <SelectItem value="headphones">🎧 Headphones</SelectItem>
+                      <SelectItem value="wallet">👛 Wallet</SelectItem>
+                      <SelectItem value="tech">🧑‍💻 Tech</SelectItem>
+                      <SelectItem value="other">❓ Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-3">
+                  <Label htmlFor="image">Photo (Optional)</Label>
+                  <div className="relative">
+                    <Input
+                      id="image"
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) =>
+                        e.target.files?.[0] && setImageFile(e.target.files[0])
+                      }
+                      className="h-12 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
+                    />
+                    <Upload className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  </div>
+                </div>
+
+                {imageFile && (
+                  <motion.div 
+                    className="relative"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Image
+                      src={URL.createObjectURL(imageFile)}
+                      alt="Preview"
+                      width={400}
+                      height={200}
+                      className="w-full h-40 object-cover rounded-lg border border-gray-200"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setImageFile(null)}
+                      className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 transition-colors"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </motion.div>
+                )}
+
+                <div className="flex gap-3 pt-2">
+                  <motion.div className="flex-1" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => setNewPinCoords(null)}
+                      className="w-full h-12 border-red-300 text-red-600 hover:bg-red-50 hover:border-red-400 hover:text-red-700 transition-colors"
+                    >
+                      Cancel
+                    </Button>
+                  </motion.div>
+                  <Button
+                    type="submit"
+                    disabled={saving}
+                    className="flex-1 h-12 bg-green-600 hover:bg-green-700"
+                  >
+                    {saving ? (
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        Saving...
+                      </div>
+                    ) : (
+                      "Save Pin"
+                    )}
+                  </Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
         </Modal>
       )}
 
       {/* View Pin */}
       {selectedPin && (
         <Modal onClose={() => setSelectedPin(null)}>
-          <h2 className="text-xl font-bold mb-2">{selectedPin.title}</h2>
-          {selectedPin.image_url && (
-            <Image
-              src={selectedPin.image_url}
-              alt={selectedPin.title ?? "Listing image"}
-              width={400}
-              height={200}
-              className="w-full h-40 object-cover rounded mb-4"
-            />
-          )}
-          <p className="mb-2">{selectedPin.description}</p>
-          <p className="text-sm text-gray-400">
-            <strong>Category ID:</strong> {selectedPin.category_id ?? "—"}
-          </p>
-          <button
-            onClick={() => {
-              if (confirm("Are you sure you want to delete this listing?")) {
-                handleDeletePin(selectedPin.id);
-              }
-            }}
-            className="mt-4 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded"
-          >
-            Delete
-          </button>
+          <Card className="border-0 shadow-none">
+            <CardHeader className="pb-4">
+              <div className="flex items-center gap-3">
+                <div className="bg-green-600 rounded-lg p-2">
+                  <MapPin className="h-5 w-5 text-white" />
+                </div>
+                <CardTitle className="text-green-600">{selectedPin.title}</CardTitle>
+              </div>
+            </CardHeader>
+            
+            <CardContent className="space-y-4">
+              {selectedPin.image_url && (
+                <div className="relative">
+                  <Image
+                    src={selectedPin.image_url}
+                    alt={selectedPin.title ?? "Listing image"}
+                    width={400}
+                    height={200}
+                    className="w-full h-40 object-cover rounded-lg border border-gray-200"
+                  />
+                </div>
+              )}
+              
+              <div className="space-y-4">
+                <div className="space-y-3">
+                  <Label className="text-sm font-medium text-gray-600">Description</Label>
+                  <p className="text-gray-800">{selectedPin.description || "No description provided"}</p>
+                </div>
+                
+                <div className="space-y-3">
+                  <Label className="text-sm font-medium text-gray-600">Category</Label>
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">
+                      {selectedPin.category_id ? CATEGORY_EMOJI_BY_ID[selectedPin.category_id] || "❓" : "❓"}
+                    </span>
+                    <span className="text-gray-800">
+                      {selectedPin.category_id ? 
+                        Object.keys(CATEGORY_MAP).find(key => CATEGORY_MAP[key] === selectedPin.category_id) || "Unknown" 
+                        : "Unknown"
+                      }
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-3 pt-2">
+                <motion.div className="flex-1" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setSelectedPin(null)}
+                    className="w-full h-12 border-red-300 text-red-600 hover:bg-red-50 hover:border-red-400 hover:text-red-700 transition-colors"
+                  >
+                    Close
+                  </Button>
+                </motion.div>
+                <Button
+                  onClick={() => {
+                    if (confirm("Are you sure you want to delete this listing?")) {
+                      handleDeletePin(selectedPin.id);
+                    }
+                  }}
+                  className="flex-1 h-12 bg-red-600 hover:bg-red-700 text-white"
+                >
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  Delete
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </Modal>
       )}
     </div>
