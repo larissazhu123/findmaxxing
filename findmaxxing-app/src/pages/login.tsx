@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { supabase } from "../lib/supabaseClient"; // 👈 Import your Supabase client
@@ -16,16 +16,64 @@ export default function LoginPage() {
     router.push("/browse");
   };
 
-  // 👇 Add this new function for Google sign-in
+
   const handleGoogleLogin = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: "http://localhost:3000/browse" //replace with actual url when needed
-      }
+        provider: 'google',
+        options: {
+            redirectTo: `${window.location.origin}/`,  // Redirect to /browse after successful login
+        },
     });
-    if (error) console.error("Error signing in with Google:", error.message);
-  };
+
+    if (error) {
+        console.error('Error during sign-in:', error.message);
+        return;
+    }
+
+    // Listen for auth state changes and session changes
+    supabase.auth.onAuthStateChange(async (event, session) => {
+        if (session) {
+            // Wait for the session to be fully ready (maybe add a small delay to handle race conditions)
+            const userEmail = session.user.email!;
+            const domain = userEmail.split('@')[1].toLowerCase().trim(); // Case-insensitive, remove any spaces
+
+            if (domain !== 'umass.edu') {
+                await supabase.auth.signOut();  // Sign out if domain doesn't match
+                alert("Access restricted to umass.edu emails only.");
+                window.location.replace(window.location.origin); // Redirect to home or another page
+            } else {
+                // Redirect to /browse if the domain is valid
+                window.location.replace('/browse');
+            }
+        }
+    });
+};
+
+// Optionally add session check on page load:
+const useAuthSession = () => {
+    const router = useRouter();
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+
+            if (session) {
+                const userEmail = session.user.email!;
+                const domain = userEmail.split('@')[1].toLowerCase().trim(); // Case-insensitive domain check
+
+                if (domain !== 'umass.edu') {
+                    await supabase.auth.signOut();
+                    alert("Access restricted to umass.edu emails only.");
+                    router.replace('/');  // Redirect to home page
+                } else {
+                    router.replace('/browse');  // Valid domain, go to /browse
+                }
+            }
+        };
+
+        checkSession();
+    }, [router]);
+};
 
   return (
     <main className="flex flex-col items-center justify-center h-screen">
