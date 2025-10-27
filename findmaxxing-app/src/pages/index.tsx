@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import Link from "next/link";
 import Head from "next/head";
 import { Button } from "@/components/ui/button";
