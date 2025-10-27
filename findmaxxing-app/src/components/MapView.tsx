@@ -65,19 +65,28 @@ function ZoomWatcher({ onChange }: { onChange: (z: number) => void }) {
 }
 
 function emojiIcon(emoji: string, size: number) {
+  const px = size;
   return L.divIcon({
     className: "emoji-pin",
-    html: `<div style="
-      font-size:${size}px;
-      line-height:1;
-      transform: translateY(-2px); /* nudges baseline so it sits on the point */
-      text-shadow: 0 1px 2px rgba(0,0,0,.45);
-    ">${emoji}</div>`,
-    iconSize: [size, size],
-    iconAnchor: [size / 2, size * 0.9], // center horizontally, bottom nearly at click point
-    popupAnchor: [0, -size],
+    html: `
+      <div style="
+        width:${px}px;height:${px}px;display:flex;align-items:center;justify-content:center;
+        border-radius:9999px;
+        background:rgba(0,0,0,.72);
+        border:2px solid #fff;
+        box-shadow:0 4px 10px rgba(0,0,0,.45);
+        color:#fff;font-size:${Math.round(px*0.7)}px;line-height:1;
+        text-shadow:0 1px 1px rgba(0,0,0,.8), 0 0 6px rgba(0,0,0,.55);
+        transform: translateY(-2px);
+      ">
+        ${emoji}
+      </div>`,
+    iconSize: [px, px],
+    iconAnchor: [px / 2, px * 0.9],
+    popupAnchor: [0, -px],
   });
 }
+
 
 function Modal({
   children,
@@ -588,10 +597,10 @@ export default function MapView({
                       {selectedPin.category_id ? CATEGORY_EMOJI_BY_ID[selectedPin.category_id] || "❓" : "❓"}
                     </span>
                     <span className="text-gray-800">
-                      {selectedPin.category_id ? 
-                        Object.keys(CATEGORY_MAP).find(key => CATEGORY_MAP[key] === selectedPin.category_id) || "Unknown" 
-                        : "Unknown"
-                      }
+                      {selectedPin.category_id
+                        ? (Object.keys(CATEGORY_MAP) as Array<keyof typeof CATEGORY_MAP>)
+                            .find((key) => CATEGORY_MAP[key] === selectedPin.category_id) || "Unknown"
+                        : "Unknown"}
                     </span>
                   </div>
                 </div>
