@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Head from "next/head";
@@ -11,16 +11,46 @@ import { GoogleIcon } from "@/components/GoogleIcon";
 import { Navbar } from "@/components/Navbar";
 import { motion } from "framer-motion";
 import { MapPin, Mail, Lock, User } from "lucide-react";
+import { supabase } from "../lib/supabaseClient"; 
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleGoogleSignIn = () => {
+  
+  const handleGoogleSignIn = async () => {
     console.log("Google sign in clicked");
-    router.push("/dashboard");
+    const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+            redirectTo: `${window.location.origin}/callback`,  // Redirect to /callback after successful login
+        },
+    });
+
+    if (error) {
+        console.error('Error during sign-in:', error.message);
+        return;
+    }
+
+    // Listen for auth state changes and session changes
+    supabase.auth.onAuthStateChange(async (event, session) => {
+        if (session) {
+            // Wait for the session to be fully ready (maybe add a small delay to handle race conditions)
+            const userEmail = session.user.email!;
+            const domain = userEmail.split('@')[1].toLowerCase().trim(); // Case-insensitive, remove any spaces
+ 
+            if (domain !== 'umass.edu') {
+                await supabase.auth.signOut();  // Sign out if domain doesn't match
+                alert("Access restricted to umass.edu emails only.");
+                window.location.replace(window.location.origin); // Redirect to home or another page
+            } else {
+                // Redirect to /dashboard if the domain is valid
+                window.location.replace("/dashboard");
+            }
+        }
+    });
   };
+
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
