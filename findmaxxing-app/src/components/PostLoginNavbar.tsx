@@ -1,49 +1,55 @@
+"use client";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { MapPin, List, Settings, Bell, Plus } from "lucide-react";
+import { MapPin, List, Bell, Plus, User } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useUser } from "@/context/UserContext";
 
 interface PostLoginNavbarProps {
   currentView?: "list" | "settings";
   onNavigate?: (view: "list" | "settings") => void;
   onReportItem?: () => void;
-  userNickname?: string;
   unreadNotifications?: number;
   className?: string;
 }
 
-export function PostLoginNavbar({ 
+export function PostLoginNavbar({
   currentView = "list",
   onNavigate,
   onReportItem,
-  userNickname = "User",
   unreadNotifications = 0,
-  className 
+  className,
 }: PostLoginNavbarProps) {
+  const { nickname, isReady } = useUser();
+
   return (
-    <nav className={`fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-gray-200 z-50 shadow-sm ${className || ''}`}>
+    <nav
+      className={`fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-gray-200 z-50 shadow-sm ${
+        className || ""
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex items-center gap-2">
+          <Link
+            href="/"
+            className="flex items-center gap-2 cursor-pointer hover:opacity-90 transition-opacity"
+          >
             <div className="bg-green-600 rounded-lg p-2">
               <MapPin className="h-5 w-5 text-white" />
             </div>
             <div>
-              <h2 className="text-green-600">FindMaxxing</h2>
+              <h2 className="text-green-600 font-semibold">FindMaxxing</h2>
             </div>
-          </div>
+          </Link>
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center gap-6">
             <Button
               variant={currentView === "list" ? "default" : "ghost"}
-              onClick={() => {
-                if (onNavigate) {
-                  onNavigate("list");
-                } else {
-                  window.location.href = "/dashboard";
-                }
-              }}
+              onClick={() =>
+                onNavigate ? onNavigate("list") : (window.location.href = "/dashboard")
+              }
               className="gap-2"
             >
               <List className="h-4 w-4" />
@@ -59,10 +65,7 @@ export function PostLoginNavbar({
               Report Item
             </Button>
 
-            <Button
-              variant="ghost"
-              className="gap-2 relative"
-            >
+            <Button variant="ghost" className="gap-2 relative">
               <Bell className="h-4 w-4" />
               Notifications
               {unreadNotifications > 0 && (
@@ -72,13 +75,14 @@ export function PostLoginNavbar({
               )}
             </Button>
 
+            {/* Profile / Nickname Button */}
             <Button
-              variant={currentView === "settings" ? "default" : "ghost"}
+              variant="ghost"
               onClick={() => onNavigate?.("settings")}
-              className="gap-2"
+              className="gap-2 bg-green-50 hover:bg-green-100 text-green-700 font-medium transition-colors"
             >
-              <Settings className="h-4 w-4" />
-              Settings
+              <User className="h-4 w-4 text-green-700" />
+              {isReady ? nickname : "Loading..."}
             </Button>
           </div>
 
@@ -95,13 +99,9 @@ export function PostLoginNavbar({
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => {
-                if (onNavigate) {
-                  onNavigate("list");
-                } else {
-                  window.location.href = "/dashboard";
-                }
-              }}
+              onClick={() =>
+                onNavigate ? onNavigate("list") : (window.location.href = "/dashboard")
+              }
             >
               <List className="h-5 w-5" />
             </Button>
@@ -110,7 +110,7 @@ export function PostLoginNavbar({
               size="icon"
               onClick={() => onNavigate?.("settings")}
             >
-              <Settings className="h-5 w-5" />
+              <User className="h-5 w-5" />
             </Button>
           </div>
         </div>

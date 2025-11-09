@@ -207,7 +207,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/alex/Documents/GitHub/findmaxxing/generated/prisma",
+      "value": "/Users/txi/Documents/GitHub/findmaxxing/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -221,11 +221,12 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/alex/Documents/GitHub/findmaxxing/prisma/schema.prisma",
+    "sourceFilePath": "/Users/txi/Documents/GitHub/findmaxxing/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../.env"
   },
   "relativePath": "../../prisma",
   "clientVersion": "6.16.3",
@@ -234,7 +235,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": true,
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
