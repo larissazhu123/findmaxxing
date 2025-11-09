@@ -23,19 +23,17 @@ export default function DashboardPage() {
         <title>Browse Items - FindMaxxing</title>
         <meta name="description" content="Browse lost and found items on the UMass campus" />
       </Head>
+
       <div className="flex h-screen w-full overflow-hidden bg-gradient-to-br from-green-50 via-white to-green-50 text-gray-900">
         <PostLoginNavbar
           currentView="list"
           onNavigate={(view) => {
             if (view === "settings") handleNavigateToSettings();
           }}
-          onReportItem={() => {
-            alert("Report item functionality coming soon!");
-          }}
-          userNickname="UMassHelper123"
+          onReportItem={() => alert("Report item functionality coming soon!")}
           unreadNotifications={3}
         />
-        
+
         {/* LEFT: Map */}
         <div className="w-1/3 h-[calc(100vh-4rem)] border-r border-gray-200 mt-16">
           <MapView
@@ -51,9 +49,7 @@ export default function DashboardPage() {
           <h1 className="text-2xl font-semibold mb-4">Nearby Listings</h1>
 
           {pins.length === 0 ? (
-            <p className="text-gray-600">
-              No listings yet — add one from the map!
-            </p>
+            <p className="text-gray-600">No listings yet — add one from the map!</p>
           ) : (
             pins.map((p) => (
               <ListingCard
