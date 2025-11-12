@@ -140,7 +140,6 @@ export default function SettingsPage() {
           onNavigate={(view) => {
             if (view === "list") handleNavigateToList();
           }}
-          onReportItem={() => alert("Report item functionality coming soon!")}
           unreadNotifications={3}
         />
 

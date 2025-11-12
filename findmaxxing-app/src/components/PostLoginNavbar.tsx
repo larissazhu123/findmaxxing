@@ -1,14 +1,13 @@
 "use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { MapPin, List, Bell, Plus, User } from "lucide-react";
+import { MapPin, List, Bell, User } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useUser } from "@/context/UserContext";
 
 interface PostLoginNavbarProps {
   currentView?: "list" | "settings";
   onNavigate?: (view: "list" | "settings") => void;
-  onReportItem?: () => void;
   unreadNotifications?: number;
   className?: string;
 }
@@ -16,7 +15,6 @@ interface PostLoginNavbarProps {
 export function PostLoginNavbar({
   currentView = "list",
   onNavigate,
-  onReportItem,
   unreadNotifications = 0,
   className,
 }: PostLoginNavbarProps) {
@@ -56,15 +54,6 @@ export function PostLoginNavbar({
               Browse Items
             </Button>
 
-            <Button
-              variant="ghost"
-              onClick={onReportItem}
-              className="gap-2 bg-green-50 text-green-700 hover:bg-green-100 hover:text-green-800"
-            >
-              <Plus className="h-4 w-4" />
-              Report Item
-            </Button>
-
             <Button variant="ghost" className="gap-2 relative">
               <Bell className="h-4 w-4" />
               Notifications
@@ -88,14 +77,6 @@ export function PostLoginNavbar({
 
           {/* Mobile Menu */}
           <div className="md:hidden flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onReportItem}
-              className="bg-green-50 text-green-700"
-            >
-              <Plus className="h-5 w-5" />
-            </Button>
             <Button
               variant="ghost"
               size="icon"
