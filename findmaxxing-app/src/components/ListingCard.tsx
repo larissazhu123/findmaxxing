@@ -1,6 +1,9 @@
 import Image from "next/image";
 import type { ListingRow } from "./MapView";
 
+
+const DEFAULT_IMAGE = "https://jtcmjgoibipkopwsvwdk.supabase.co/storage/v1/object/public/listing-images/listings/findmaxxingfinallogog.png"; // put the file in /public 
+
 type ListingCardProps = {
   pin: ListingRow;
   selectedPin: ListingRow | null;
@@ -23,7 +26,7 @@ export default function ListingCard({
       {/* Image */}
       <div className="relative w-48 h-32 flex-shrink-0">
         <Image
-          src={pin.image_url ?? "/globe.svg"}
+          src={pin.image_url ?? DEFAULT_IMAGE}
           alt={pin.title ?? "Listing image"}
           fill
           className="object-cover"
@@ -41,8 +44,15 @@ export default function ListingCard({
           </p>
         </div>
 
-        <p className="text-green-400 font-semibold mt-2">
-          Category {pin.category_id ?? "?"}
+        <p className="text-green-400 font-semibold">
+          {(() => {
+            const id = pin.category_id ?? 99;
+            const names: Record<number, string> = {
+              1: "Keys", 2: "Cards/ID", 3: "Water Bottle", 4: "Jewelry",
+              5: "Headphones", 6: "Wallet", 7: "Tech", 99: "Other",
+            };
+            return names[id] ?? "Other";
+          })()}
         </p>
       </div>
     </div>

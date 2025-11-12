@@ -29,6 +29,9 @@ const CATEGORY_EMOJI_BY_ID: Record<number, string> = {
   99: "❓", // other
 };
 
+const DEFAULT_IMAGE = "https://jtcmjgoibipkopwsvwdk.supabase.co/storage/v1/object/public/listing-images/listings/findmaxxingfinallogog.png"; // leading slash, served from /public
+// C:\Users\lzhu2\Documents\LarissaCollege2\findmaxxing\findmaxxing\findmaxxingfinallogog.png
+
 // ---------------- UI helpers ----------------
 // const PinIcon = L.icon({
 //   iconUrl: "/pin.svg",
@@ -281,9 +284,10 @@ export default function MapView({
   // --------- storage upload (optional) ----------
   async function uploadImageIfAny(
     file: File | null,
-    listingId: string
+    listingId: string,
+    defaultUrl: string = DEFAULT_IMAGE
   ): Promise<string | null> {
-    if (!file) return null;
+    if (!file) return defaultUrl;
     const ext = file.name.split(".").pop() || "jpg";
     const path = `listings/${listingId}.${ext}`;
 
@@ -293,11 +297,11 @@ export default function MapView({
     if (error) {
       console.error("upload error", error);
       setErrorMsg(error.message);
-      return null;
+      return defaultUrl;
     }
 
     const { data } = supabase.storage.from("listing-images").getPublicUrl(path); // bucket public
-    return data.publicUrl ?? null;
+    return data.publicUrl ?? defaultUrl;
   }
 
   // --------- insert listing ----------
