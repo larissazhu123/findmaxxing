@@ -7,7 +7,7 @@ interface UserContextType {
   isReady: boolean;
   refreshNickname: () => Promise<void>;
 }
-
+//basically sets up preloaded username globally post-login
 const UserContext = createContext<UserContextType>({
   nickname: "User",
   isReady: false,

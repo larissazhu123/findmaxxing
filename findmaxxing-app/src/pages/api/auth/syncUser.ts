@@ -1,8 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@/lib/prisma";
 import { requireSupabaseUser } from "@/lib/auth";
-
-// Helper: generate a random, readable nickname like "user-ab12cd34"
+//random username generator
 function generateRandomNickname() {
   return "user-" + Math.random().toString(36).substring(2, 10);
 }

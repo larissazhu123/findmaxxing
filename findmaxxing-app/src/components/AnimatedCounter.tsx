@@ -40,7 +40,6 @@ export function AnimatedCounter({
     };
 
     if (delay > 0) {
-      // use window.setTimeout to force browser return type (number) if you prefer
       timeoutId = setTimeout(startAnimation, delay * 1000);
     } else {
       startAnimation();
