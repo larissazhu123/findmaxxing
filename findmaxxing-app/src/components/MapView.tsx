@@ -17,7 +17,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { X, MapPin, Upload, Image as ImageIcon, Trash2 } from "lucide-react";
 
-// ---------------- Category setup (by NAME) ----------------
 const CATEGORY_EMOJI_BY_ID: Record<number, string> = {
   1: "🔑", // keys
   2: "🪪", // cards/id
@@ -32,7 +31,6 @@ const CATEGORY_EMOJI_BY_ID: Record<number, string> = {
 const DEFAULT_IMAGE = "https://jtcmjgoibipkopwsvwdk.supabase.co/storage/v1/object/public/listing-images/listings/findmaxxingfinallogog.png"; // leading slash, served from /public
 // C:\Users\lzhu2\Documents\LarissaCollege2\findmaxxing\findmaxxing\findmaxxingfinallogog.png
 
-// ---------------- UI helpers ----------------
 // const PinIcon = L.icon({
 //   iconUrl: "/pin.svg",
 //   iconSize: [32, 32],
@@ -159,7 +157,6 @@ function ClickHandler({
   return null;
 }
 
-// --------------- DB types -------------------
 export type ListingRow = {
   id: string;
   finder_user_id: string | null;
@@ -232,7 +229,6 @@ export default function MapView({
     []
   );
 
-  // --------- initial fetch ----------
   useEffect(() => {
     (async () => {
       const { data, error } = await supabase
@@ -249,7 +245,7 @@ export default function MapView({
     })();
   }, []);
 
-  // --------- realtime subscription ----------
+ 
   useEffect(() => {
     const channel = supabase
       .channel("listing-changes")
@@ -281,7 +277,7 @@ export default function MapView({
     };
   }, []);
 
-  // --------- storage upload (optional) ----------
+
   async function uploadImageIfAny(
     file: File | null,
     listingId: string,
@@ -304,7 +300,7 @@ export default function MapView({
     return data.publicUrl ?? defaultUrl;
   }
 
-  // --------- insert listing ----------
+ 
   const handleAddPin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newPinCoords) return;
@@ -361,7 +357,8 @@ export default function MapView({
       setSaving(false);
     }
   };
-  // --------- delete listing ----------
+ 
+  //Delete Listings
   async function handleDeletePin(id: string) {
     try {
       const { error } = await supabase.from("listing").delete().eq("id", id);
