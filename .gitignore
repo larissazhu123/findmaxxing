@@ -39,4 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-WARP.md
+generated/prisma/edge.js
+generated/prisma/index.js
+generated/prisma/wasm.js
+
