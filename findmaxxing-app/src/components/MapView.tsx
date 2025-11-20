@@ -9,6 +9,7 @@ import type { LeafletMouseEvent } from "leaflet";
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from "react-leaflet";
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "@/lib/supabaseClient";
+import type { User } from '@supabase/supabase-js';
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,7 +18,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { X, MapPin, Upload, Image as ImageIcon, Trash2 } from "lucide-react";
 
-// ---------------- Category setup (by NAME) ----------------
 const CATEGORY_EMOJI_BY_ID: Record<number, string> = {
   1: "🔑", // keys
   2: "🪪", // cards/id
@@ -32,7 +32,6 @@ const CATEGORY_EMOJI_BY_ID: Record<number, string> = {
 const DEFAULT_IMAGE = "https://jtcmjgoibipkopwsvwdk.supabase.co/storage/v1/object/public/listing-images/listings/findmaxxingfinallogog.png"; // leading slash, served from /public
 // C:\Users\lzhu2\Documents\LarissaCollege2\findmaxxing\findmaxxing\findmaxxingfinallogog.png
 
-// ---------------- UI helpers ----------------
 // const PinIcon = L.icon({
 //   iconUrl: "/pin.svg",
 //   iconSize: [32, 32],
@@ -159,7 +158,6 @@ function ClickHandler({
   return null;
 }
 
-// --------------- DB types -------------------
 export type ListingRow = {
   id: string;
   finder_user_id: string | null;
@@ -232,7 +230,6 @@ export default function MapView({
     []
   );
 
-  // --------- initial fetch ----------
   useEffect(() => {
     (async () => {
       const { data, error } = await supabase
@@ -249,7 +246,7 @@ export default function MapView({
     })();
   }, []);
 
-  // --------- realtime subscription ----------
+ 
   useEffect(() => {
     const channel = supabase
       .channel("listing-changes")
@@ -281,7 +278,7 @@ export default function MapView({
     };
   }, []);
 
-  // --------- storage upload (optional) ----------
+
   async function uploadImageIfAny(
     file: File | null,
     listingId: string,
@@ -300,9 +297,42 @@ export default function MapView({
       return defaultUrl;
     }
 
+
     const { data } = supabase.storage.from("listing-images").getPublicUrl(path); // bucket public
+    if (data.publicUrl !== null && data.publicUrl !== undefined) {
+      updatePoints(2, "uploading a picture with the lost item")
+    }
     return data.publicUrl ?? defaultUrl;
   }
+ 
+
+  const updatePoints = async (pointsGained: number, achievement: string) => { //Takes in the number of points gained and how user gained them
+    const { data: { session } } = await supabase.auth.getSession();
+    const accessToken = session?.access_token;
+    if (!accessToken) return alert("Not authenticated.");
+
+    try {
+      const res = await fetch("/api/user/updatePoints", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({ pointsAwarded: pointsGained }),
+      });
+
+      if (res.ok) {
+        alert(`Great Job, you gained +${pointsGained} points for ${achievement}!`);
+      } else {
+        const err = await res.json();
+        alert(`Failed to update : ${err.error || "Unknown error"}`);
+      }
+    } catch (err) {
+      console.error("Error updating points:", err);
+      alert("An error occurred while updating your points.");
+    }
+  };
+
 
   // --------- insert listing ----------
   const handleAddPin = async (e: React.FormEvent) => {
@@ -360,21 +390,25 @@ export default function MapView({
     } finally {
       setSaving(false);
     }
+
+    //Adds 10 points whenever a user submits a pin
+    await updatePoints(10, "submitting a lost item"); 
   };
-  // --------- delete listing ----------
-  async function handleDeletePin(id: string) {
+
+  // --------- claim listing ----------
+  async function handleClaimPin(id: string) {
     try {
       const { error } = await supabase.from("listing").delete().eq("id", id);
       if (error) throw error;
 
       // Update local state immediately
       setPins((prev) => prev.filter((p) => p.id !== id));
-
+ 
       // Close modal
       setSelectedPin(null);
     } catch (err: any) {
-      console.error("Error deleting pin:", err.message);
-      alert("Failed to delete listing. Please try again.");
+      console.error("Error claiming pin:", err.message);
+      alert("Failed to claim listing. Please try again.");
     }
   }
 
@@ -623,14 +657,13 @@ export default function MapView({
                 </motion.div>
                 <Button
                   onClick={() => {
-                    if (confirm("Are you sure you want to delete this listing?")) {
-                      handleDeletePin(selectedPin.id);
+                    if (confirm("Would you like to claim this listing?")) {
+                      handleClaimPin(selectedPin.id);
                     }
                   }}
-                  className="flex-1 h-12 bg-red-600 hover:bg-red-700 text-white"
+                  className="flex-1 h-12 bg-green-600 hover:bg-green-700 text-white"
                 >
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  Delete
+                  Claim
                 </Button>
               </div>
             </CardContent>

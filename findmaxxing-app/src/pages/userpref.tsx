@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-
+//THIS PAGE IS REDUNDANT, DELETE ASAP
 export default function UserPrefPage() {
   const [nickname, setNickname] = useState("");
   const [notificationsOn, setNotificationsOn] = useState(true);

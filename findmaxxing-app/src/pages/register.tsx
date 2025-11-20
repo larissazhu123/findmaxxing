@@ -10,7 +10,7 @@ import { GoogleIcon } from "@/components/GoogleIcon";
 import { Navbar } from "@/components/Navbar";
 import { motion } from "framer-motion";
 import { MapPin, Mail, Lock, User } from "lucide-react";
-
+//THIS PAGE IS REDUNDANT, DELETE ASAP
 export default function RegisterPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");

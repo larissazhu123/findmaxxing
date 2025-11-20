@@ -7,7 +7,7 @@ interface UserContextType {
   isReady: boolean;
   refreshNickname: () => Promise<void>;
 }
-
+//basically sets up preloaded username globally post-login
 const UserContext = createContext<UserContextType>({
   nickname: "User",
   isReady: false,
@@ -18,7 +18,6 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const [nickname, setNickname] = useState("User");
   const [isReady, setIsReady] = useState(false);
 
-  // ✅ Load nickname automatically on app start
   const loadNickname = async () => {
     try {
       const { data: { session } } = await supabase.auth.getSession();
@@ -46,7 +45,6 @@ export function UserProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     loadNickname();
 
-    // ✅ Also re-run whenever auth state changes (e.g., login/logout)
     const { data: listener } = supabase.auth.onAuthStateChange(() => {
       loadNickname();
     });

@@ -3,8 +3,8 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import ListingCard from "@/components/ListingCard";
 import type { ListingRow } from "@/components/MapView";
-
-// Load MapView client-side only
+//handles both mapview and listing card components
+// mapview client-side only
 const MapView = dynamic(() => import("@/components/MapView"), { ssr: false });
 
 export default function BrowsePage() {

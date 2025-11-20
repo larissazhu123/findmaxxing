@@ -19,7 +19,6 @@ import {
   Users, 
   Eye, 
   Clock, 
-  Award, 
   Check 
 } from "lucide-react";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
@@ -77,7 +76,7 @@ export default function LandingPage() {
                     <Button 
                       size="lg" 
                       className="gap-2 text-lg px-8 py-6"
-                      onClick={() => window.location.href = '/register'}
+                      onClick={() => window.location.href = 'login'}
                     >
                       <Upload className="h-6 w-6" />
                       Report Found Item
@@ -294,7 +293,7 @@ export default function LandingPage() {
                   </li>
                 </ul>
                 <Button size="lg" asChild className="gap-2 text-lg px-8 py-6">
-                  <Link href="/register">Explore the Map</Link>
+                  <Link href="login">Explore the Map</Link>
                 </Button>
               </div>
               <div className="relative">
@@ -533,7 +532,7 @@ export default function LandingPage() {
                     asChild
                     className="bg-white text-green-600 hover:bg-gray-100 text-lg px-8 py-6"
                   >
-                    <Link href="/register">Create Free Account</Link>
+                    <Link href="login">Create Free Account</Link>
                   </Button>
                 </motion.div>
                 <motion.div
