@@ -207,7 +207,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/txi/Documents/GitHub/findmaxxing/generated/prisma",
+      "value": "/Users/Mark/Documents/GitHub/findmaxxing/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -221,12 +221,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/txi/Documents/GitHub/findmaxxing/prisma/schema.prisma",
+    "sourceFilePath": "/Users/Mark/Documents/GitHub/findmaxxing/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../../prisma",
   "clientVersion": "6.16.3",

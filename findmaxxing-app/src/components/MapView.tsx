@@ -9,6 +9,7 @@ import type { LeafletMouseEvent } from "leaflet";
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from "react-leaflet";
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "@/lib/supabaseClient";
+import type { User } from '@supabase/supabase-js';
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -296,11 +297,47 @@ export default function MapView({
       return defaultUrl;
     }
 
+
     const { data } = supabase.storage.from("listing-images").getPublicUrl(path); // bucket public
+    if (data.publicUrl !== null && data.publicUrl !== undefined) {
+      updatePoints(2, "uploading a picture with the lost item")
+    }
     return data.publicUrl ?? defaultUrl;
   }
 
+<<<<<<< Updated upstream
  
+=======
+  const updatePoints = async (pointsGained: number, achievement: string) => { //Takes in the number of points gained and how user gained them
+    const { data: { session } } = await supabase.auth.getSession();
+    const accessToken = session?.access_token;
+    if (!accessToken) return alert("Not authenticated.");
+
+    try {
+      const res = await fetch("/api/user/updatePoints", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({ pointsAwarded: pointsGained }),
+      });
+
+      if (res.ok) {
+        alert(`Great Job, you gained +${pointsGained} points for ${achievement}!`);
+      } else {
+        const err = await res.json();
+        alert(`Failed to update : ${err.error || "Unknown error"}`);
+      }
+    } catch (err) {
+      console.error("Error updating points:", err);
+      alert("An error occurred while updating your points.");
+    }
+  };
+
+
+  // --------- insert listing ----------
+>>>>>>> Stashed changes
   const handleAddPin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newPinCoords) return;
@@ -356,22 +393,31 @@ export default function MapView({
     } finally {
       setSaving(false);
     }
+
+    //Adds 10 points whenever a user submits a pin
+    await updatePoints(10, "submitting a lost item"); 
+    
   };
+<<<<<<< Updated upstream
  
   //Delete Listings
   async function handleDeletePin(id: string) {
+=======
+  // --------- claim listing ----------
+  async function handleClaimPin(id: string) {
+>>>>>>> Stashed changes
     try {
       const { error } = await supabase.from("listing").delete().eq("id", id);
       if (error) throw error;
 
       // Update local state immediately
       setPins((prev) => prev.filter((p) => p.id !== id));
-
+ 
       // Close modal
       setSelectedPin(null);
     } catch (err: any) {
-      console.error("Error deleting pin:", err.message);
-      alert("Failed to delete listing. Please try again.");
+      console.error("Error claiming pin:", err.message);
+      alert("Failed to claim listing. Please try again.");
     }
   }
 
@@ -620,14 +666,13 @@ export default function MapView({
                 </motion.div>
                 <Button
                   onClick={() => {
-                    if (confirm("Are you sure you want to delete this listing?")) {
-                      handleDeletePin(selectedPin.id);
+                    if (confirm("Would you like to claim this listing?")) {
+                      handleClaimPin(selectedPin.id);
                     }
                   }}
-                  className="flex-1 h-12 bg-red-600 hover:bg-red-700 text-white"
+                  className="flex-1 h-12 bg-green-600 hover:bg-green-700 text-white"
                 >
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  Delete
+                  Claim
                 </Button>
               </div>
             </CardContent>

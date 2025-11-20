@@ -33,8 +33,8 @@ export default function AuthCallback() {
         router.replace('/dashboard');
       } 
     };
-
     handleRedirect();
+    
   }, [router]);
 
   return <p>Redirecting after sign-in...</p>;
