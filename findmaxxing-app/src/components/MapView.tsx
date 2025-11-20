@@ -302,12 +302,13 @@ export default function MapView({
     if (data.publicUrl !== null && data.publicUrl !== undefined) {
       updatePoints(2, "uploading a picture with the lost item")
     }
+    if (data.publicUrl !== null && data.publicUrl !== undefined) {
+      updatePoints(2, "uploading a picture with the lost item")
+    }
     return data.publicUrl ?? defaultUrl;
   }
-
-<<<<<<< Updated upstream
  
-=======
+
   const updatePoints = async (pointsGained: number, achievement: string) => { //Takes in the number of points gained and how user gained them
     const { data: { session } } = await supabase.auth.getSession();
     const accessToken = session?.access_token;
@@ -337,7 +338,6 @@ export default function MapView({
 
 
   // --------- insert listing ----------
->>>>>>> Stashed changes
   const handleAddPin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newPinCoords) return;
@@ -397,15 +397,14 @@ export default function MapView({
     //Adds 10 points whenever a user submits a pin
     await updatePoints(10, "submitting a lost item"); 
     
+
+    //Adds 10 points whenever a user submits a pin
+    await updatePoints(10, "submitting a lost item"); 
+    
   };
-<<<<<<< Updated upstream
- 
-  //Delete Listings
-  async function handleDeletePin(id: string) {
-=======
+
   // --------- claim listing ----------
   async function handleClaimPin(id: string) {
->>>>>>> Stashed changes
     try {
       const { error } = await supabase.from("listing").delete().eq("id", id);
       if (error) throw error;
