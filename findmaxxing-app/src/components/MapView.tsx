@@ -302,9 +302,6 @@ export default function MapView({
     if (data.publicUrl !== null && data.publicUrl !== undefined) {
       updatePoints(2, "uploading a picture with the lost item")
     }
-    if (data.publicUrl !== null && data.publicUrl !== undefined) {
-      updatePoints(2, "uploading a picture with the lost item")
-    }
     return data.publicUrl ?? defaultUrl;
   }
  
@@ -396,11 +393,6 @@ export default function MapView({
 
     //Adds 10 points whenever a user submits a pin
     await updatePoints(10, "submitting a lost item"); 
-    
-
-    //Adds 10 points whenever a user submits a pin
-    await updatePoints(10, "submitting a lost item"); 
-    
   };
 
   // --------- claim listing ----------
