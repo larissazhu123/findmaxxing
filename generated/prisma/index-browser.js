@@ -157,7 +157,8 @@ exports.Prisma.ListingScalarFieldEnum = {
   place_name: 'place_name',
   manual_address: 'manual_address',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  image_url: 'image_url'
 };
 
 exports.Prisma.Listing_photoScalarFieldEnum = {

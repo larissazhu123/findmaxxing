@@ -4926,6 +4926,7 @@ export namespace Prisma {
     manual_address: string | null
     created_at: Date | null
     updated_at: Date | null
+    image_url: string | null
   }
 
   export type ListingMaxAggregateOutputType = {
@@ -4943,6 +4944,7 @@ export namespace Prisma {
     manual_address: string | null
     created_at: Date | null
     updated_at: Date | null
+    image_url: string | null
   }
 
   export type ListingCountAggregateOutputType = {
@@ -4960,6 +4962,7 @@ export namespace Prisma {
     manual_address: number
     created_at: number
     updated_at: number
+    image_url: number
     _all: number
   }
 
@@ -4991,6 +4994,7 @@ export namespace Prisma {
     manual_address?: true
     created_at?: true
     updated_at?: true
+    image_url?: true
   }
 
   export type ListingMaxAggregateInputType = {
@@ -5008,6 +5012,7 @@ export namespace Prisma {
     manual_address?: true
     created_at?: true
     updated_at?: true
+    image_url?: true
   }
 
   export type ListingCountAggregateInputType = {
@@ -5025,6 +5030,7 @@ export namespace Prisma {
     manual_address?: true
     created_at?: true
     updated_at?: true
+    image_url?: true
     _all?: true
   }
 
@@ -5129,6 +5135,7 @@ export namespace Prisma {
     manual_address: string | null
     created_at: Date
     updated_at: Date
+    image_url: string | null
     _count: ListingCountAggregateOutputType | null
     _avg: ListingAvgAggregateOutputType | null
     _sum: ListingSumAggregateOutputType | null
@@ -5165,6 +5172,7 @@ export namespace Prisma {
     manual_address?: boolean
     created_at?: boolean
     updated_at?: boolean
+    image_url?: boolean
     claims?: boolean | listing$claimsArgs<ExtArgs>
     category?: boolean | listing$categoryArgs<ExtArgs>
     finder?: boolean | app_userDefaultArgs<ExtArgs>
@@ -5187,6 +5195,7 @@ export namespace Prisma {
     manual_address?: boolean
     created_at?: boolean
     updated_at?: boolean
+    image_url?: boolean
     category?: boolean | listing$categoryArgs<ExtArgs>
     finder?: boolean | app_userDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["listing"]>
@@ -5206,6 +5215,7 @@ export namespace Prisma {
     manual_address?: boolean
     created_at?: boolean
     updated_at?: boolean
+    image_url?: boolean
     category?: boolean | listing$categoryArgs<ExtArgs>
     finder?: boolean | app_userDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["listing"]>
@@ -5225,9 +5235,10 @@ export namespace Prisma {
     manual_address?: boolean
     created_at?: boolean
     updated_at?: boolean
+    image_url?: boolean
   }
 
-  export type listingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "finder_user_id" | "title" | "description" | "category_id" | "status" | "found_at" | "expires_at" | "lat" | "lng" | "place_name" | "manual_address" | "created_at" | "updated_at", ExtArgs["result"]["listing"]>
+  export type listingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "finder_user_id" | "title" | "description" | "category_id" | "status" | "found_at" | "expires_at" | "lat" | "lng" | "place_name" | "manual_address" | "created_at" | "updated_at" | "image_url", ExtArgs["result"]["listing"]>
   export type listingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     claims?: boolean | listing$claimsArgs<ExtArgs>
     category?: boolean | listing$categoryArgs<ExtArgs>
@@ -5267,6 +5278,7 @@ export namespace Prisma {
       manual_address: string | null
       created_at: Date
       updated_at: Date
+      image_url: string | null
     }, ExtArgs["result"]["listing"]>
     composites: {}
   }
@@ -5708,6 +5720,7 @@ export namespace Prisma {
     readonly manual_address: FieldRef<"listing", 'String'>
     readonly created_at: FieldRef<"listing", 'DateTime'>
     readonly updated_at: FieldRef<"listing", 'DateTime'>
+    readonly image_url: FieldRef<"listing", 'String'>
   }
     
 
@@ -9526,7 +9539,8 @@ export namespace Prisma {
     place_name: 'place_name',
     manual_address: 'manual_address',
     created_at: 'created_at',
-    updated_at: 'updated_at'
+    updated_at: 'updated_at',
+    image_url: 'image_url'
   };
 
   export type ListingScalarFieldEnum = (typeof ListingScalarFieldEnum)[keyof typeof ListingScalarFieldEnum]
@@ -9888,6 +9902,7 @@ export namespace Prisma {
     manual_address?: StringNullableFilter<"listing"> | string | null
     created_at?: DateTimeFilter<"listing"> | Date | string
     updated_at?: DateTimeFilter<"listing"> | Date | string
+    image_url?: StringNullableFilter<"listing"> | string | null
     claims?: ClaimListRelationFilter
     category?: XOR<CategoryNullableScalarRelationFilter, categoryWhereInput> | null
     finder?: XOR<App_userScalarRelationFilter, app_userWhereInput>
@@ -9909,6 +9924,7 @@ export namespace Prisma {
     manual_address?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    image_url?: SortOrderInput | SortOrder
     claims?: claimOrderByRelationAggregateInput
     category?: categoryOrderByWithRelationInput
     finder?: app_userOrderByWithRelationInput
@@ -9933,6 +9949,7 @@ export namespace Prisma {
     manual_address?: StringNullableFilter<"listing"> | string | null
     created_at?: DateTimeFilter<"listing"> | Date | string
     updated_at?: DateTimeFilter<"listing"> | Date | string
+    image_url?: StringNullableFilter<"listing"> | string | null
     claims?: ClaimListRelationFilter
     category?: XOR<CategoryNullableScalarRelationFilter, categoryWhereInput> | null
     finder?: XOR<App_userScalarRelationFilter, app_userWhereInput>
@@ -9954,6 +9971,7 @@ export namespace Prisma {
     manual_address?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    image_url?: SortOrderInput | SortOrder
     _count?: listingCountOrderByAggregateInput
     _avg?: listingAvgOrderByAggregateInput
     _max?: listingMaxOrderByAggregateInput
@@ -9979,6 +9997,7 @@ export namespace Prisma {
     manual_address?: StringNullableWithAggregatesFilter<"listing"> | string | null
     created_at?: DateTimeWithAggregatesFilter<"listing"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"listing"> | Date | string
+    image_url?: StringNullableWithAggregatesFilter<"listing"> | string | null
   }
 
   export type listing_photoWhereInput = {
@@ -10369,6 +10388,7 @@ export namespace Prisma {
     manual_address?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    image_url?: string | null
     claims?: claimCreateNestedManyWithoutListingInput
     category?: categoryCreateNestedOneWithoutListingsInput
     finder: app_userCreateNestedOneWithoutListingsInput
@@ -10390,6 +10410,7 @@ export namespace Prisma {
     manual_address?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    image_url?: string | null
     claims?: claimUncheckedCreateNestedManyWithoutListingInput
     photos?: listing_photoUncheckedCreateNestedManyWithoutListingInput
   }
@@ -10407,6 +10428,7 @@ export namespace Prisma {
     manual_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
     claims?: claimUpdateManyWithoutListingNestedInput
     category?: categoryUpdateOneWithoutListingsNestedInput
     finder?: app_userUpdateOneRequiredWithoutListingsNestedInput
@@ -10428,6 +10450,7 @@ export namespace Prisma {
     manual_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
     claims?: claimUncheckedUpdateManyWithoutListingNestedInput
     photos?: listing_photoUncheckedUpdateManyWithoutListingNestedInput
   }
@@ -10447,6 +10470,7 @@ export namespace Prisma {
     manual_address?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    image_url?: string | null
   }
 
   export type listingUpdateManyMutationInput = {
@@ -10462,6 +10486,7 @@ export namespace Prisma {
     manual_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type listingUncheckedUpdateManyInput = {
@@ -10479,6 +10504,7 @@ export namespace Prisma {
     manual_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type listing_photoCreateInput = {
@@ -11007,6 +11033,7 @@ export namespace Prisma {
     manual_address?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    image_url?: SortOrder
   }
 
   export type listingAvgOrderByAggregateInput = {
@@ -11030,6 +11057,7 @@ export namespace Prisma {
     manual_address?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    image_url?: SortOrder
   }
 
   export type listingMinOrderByAggregateInput = {
@@ -11047,6 +11075,7 @@ export namespace Prisma {
     manual_address?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    image_url?: SortOrder
   }
 
   export type listingSumOrderByAggregateInput = {
@@ -11975,6 +12004,7 @@ export namespace Prisma {
     manual_address?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    image_url?: string | null
     claims?: claimCreateNestedManyWithoutListingInput
     category?: categoryCreateNestedOneWithoutListingsInput
     photos?: listing_photoCreateNestedManyWithoutListingInput
@@ -11994,6 +12024,7 @@ export namespace Prisma {
     manual_address?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    image_url?: string | null
     claims?: claimUncheckedCreateNestedManyWithoutListingInput
     photos?: listing_photoUncheckedCreateNestedManyWithoutListingInput
   }
@@ -12121,6 +12152,7 @@ export namespace Prisma {
     manual_address?: StringNullableFilter<"listing"> | string | null
     created_at?: DateTimeFilter<"listing"> | Date | string
     updated_at?: DateTimeFilter<"listing"> | Date | string
+    image_url?: StringNullableFilter<"listing"> | string | null
   }
 
   export type notificationUpsertWithWhereUniqueWithoutUserInput = {
@@ -12193,6 +12225,7 @@ export namespace Prisma {
     manual_address?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    image_url?: string | null
     claims?: claimCreateNestedManyWithoutListingInput
     finder: app_userCreateNestedOneWithoutListingsInput
     photos?: listing_photoCreateNestedManyWithoutListingInput
@@ -12212,6 +12245,7 @@ export namespace Prisma {
     manual_address?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    image_url?: string | null
     claims?: claimUncheckedCreateNestedManyWithoutListingInput
     photos?: listing_photoUncheckedCreateNestedManyWithoutListingInput
   }
@@ -12515,6 +12549,7 @@ export namespace Prisma {
     manual_address?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    image_url?: string | null
     claims?: claimCreateNestedManyWithoutListingInput
     category?: categoryCreateNestedOneWithoutListingsInput
     finder: app_userCreateNestedOneWithoutListingsInput
@@ -12535,6 +12570,7 @@ export namespace Prisma {
     manual_address?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    image_url?: string | null
     claims?: claimUncheckedCreateNestedManyWithoutListingInput
   }
 
@@ -12567,6 +12603,7 @@ export namespace Prisma {
     manual_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
     claims?: claimUpdateManyWithoutListingNestedInput
     category?: categoryUpdateOneWithoutListingsNestedInput
     finder?: app_userUpdateOneRequiredWithoutListingsNestedInput
@@ -12587,6 +12624,7 @@ export namespace Prisma {
     manual_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
     claims?: claimUncheckedUpdateManyWithoutListingNestedInput
   }
 
@@ -12632,6 +12670,7 @@ export namespace Prisma {
     manual_address?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    image_url?: string | null
     category?: categoryCreateNestedOneWithoutListingsInput
     finder: app_userCreateNestedOneWithoutListingsInput
     photos?: listing_photoCreateNestedManyWithoutListingInput
@@ -12652,6 +12691,7 @@ export namespace Prisma {
     manual_address?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    image_url?: string | null
     photos?: listing_photoUncheckedCreateNestedManyWithoutListingInput
   }
 
@@ -12719,6 +12759,7 @@ export namespace Prisma {
     manual_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
     category?: categoryUpdateOneWithoutListingsNestedInput
     finder?: app_userUpdateOneRequiredWithoutListingsNestedInput
     photos?: listing_photoUpdateManyWithoutListingNestedInput
@@ -12739,6 +12780,7 @@ export namespace Prisma {
     manual_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
     photos?: listing_photoUncheckedUpdateManyWithoutListingNestedInput
   }
 
@@ -12828,6 +12870,7 @@ export namespace Prisma {
     manual_address?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    image_url?: string | null
   }
 
   export type notificationCreateManyUserInput = {
@@ -12877,6 +12920,7 @@ export namespace Prisma {
     manual_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
     claims?: claimUpdateManyWithoutListingNestedInput
     category?: categoryUpdateOneWithoutListingsNestedInput
     photos?: listing_photoUpdateManyWithoutListingNestedInput
@@ -12896,6 +12940,7 @@ export namespace Prisma {
     manual_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
     claims?: claimUncheckedUpdateManyWithoutListingNestedInput
     photos?: listing_photoUncheckedUpdateManyWithoutListingNestedInput
   }
@@ -12914,6 +12959,7 @@ export namespace Prisma {
     manual_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type notificationUpdateWithoutUserInput = {
@@ -12960,6 +13006,7 @@ export namespace Prisma {
     manual_address?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    image_url?: string | null
   }
 
   export type listingUpdateWithoutCategoryInput = {
@@ -12975,6 +13022,7 @@ export namespace Prisma {
     manual_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
     claims?: claimUpdateManyWithoutListingNestedInput
     finder?: app_userUpdateOneRequiredWithoutListingsNestedInput
     photos?: listing_photoUpdateManyWithoutListingNestedInput
@@ -12994,6 +13042,7 @@ export namespace Prisma {
     manual_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
     claims?: claimUncheckedUpdateManyWithoutListingNestedInput
     photos?: listing_photoUncheckedUpdateManyWithoutListingNestedInput
   }
@@ -13012,6 +13061,7 @@ export namespace Prisma {
     manual_address?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type claimCreateManyListingInput = {
