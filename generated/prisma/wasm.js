@@ -208,7 +208,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/txi/Documents/GitHub/findmaxxing/generated/prisma",
+      "value": "C:\\Users\\lzhu2\\Documents\\LarissaCollege2\\findmaxxing\\findmaxxing\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -217,12 +217,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "darwin-arm64",
+        "value": "windows",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/txi/Documents/GitHub/findmaxxing/prisma/schema.prisma",
+    "sourceFilePath": "C:\\Users\\lzhu2\\Documents\\LarissaCollege2\\findmaxxing\\findmaxxing\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

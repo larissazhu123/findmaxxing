@@ -299,9 +299,9 @@ export default function MapView({
 
 
     const { data } = supabase.storage.from("listing-images").getPublicUrl(path); // bucket public
-    if (data.publicUrl !== null && data.publicUrl !== undefined) {
-      updatePoints(2, "uploading a picture with the lost item")
-    }
+    // if (data.publicUrl !== null && data.publicUrl !== undefined) {
+    //   updatePoints(2, "uploading a picture with the lost item")
+    // }
     return data.publicUrl ?? defaultUrl;
   }
  
