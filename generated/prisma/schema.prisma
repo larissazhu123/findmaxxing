@@ -52,6 +52,7 @@ model listing {
   manual_address String?
   created_at     DateTime        @default(now()) @db.Timestamptz(6)
   updated_at     DateTime        @default(now()) @db.Timestamptz(6)
+  image_url      String?
   claims         claim[]
   category       category?       @relation(fields: [category_id], references: [id])
   finder         app_user        @relation("listing_finder", fields: [finder_user_id], references: [id])
