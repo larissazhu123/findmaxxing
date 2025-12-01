@@ -34,6 +34,7 @@ export default function SettingsPage() {
   const [pushNotifications, setPushNotifications] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [points, setPoints] = useState(0)
 
   const { refreshNickname } = useUser();
 
@@ -69,6 +70,7 @@ export default function SettingsPage() {
 
         setNicknameInput(data.username || "");
         setUserEmail(data.email || "");
+        setPoints(data.points || 0)
       } catch (err) {
         console.error("Error loading user profile:", err);
       } finally {
@@ -189,21 +191,14 @@ export default function SettingsPage() {
                       <h4 className="text-sm text-muted-foreground">
                         Activity Summary
                       </h4>
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 gap-4">
+                        
                         <div className="text-center p-3 bg-green-50 rounded-lg">
                           <p className="text-2xl text-green-600">
-                            {userStats.itemsReported}
+                            {points}
                           </p>
                           <p className="text-xs text-muted-foreground mt-1">
-                            Items Reported
-                          </p>
-                        </div>
-                        <div className="text-center p-3 bg-green-50 rounded-lg">
-                          <p className="text-2xl text-green-600">
-                            {userStats.itemsReturned}
-                          </p>
-                          <p className="text-xs text-muted-foreground mt-1">
-                            Items Returned
+                            Points
                           </p>
                         </div>
                       </div>
