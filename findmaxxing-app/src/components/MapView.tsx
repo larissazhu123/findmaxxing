@@ -9,14 +9,13 @@ import type { LeafletMouseEvent } from "leaflet";
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from "react-leaflet";
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "@/lib/supabaseClient";
-import type { User } from '@supabase/supabase-js';
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { X, MapPin, Upload, Image as ImageIcon, Trash2 } from "lucide-react";
+import { X, MapPin, Upload } from "lucide-react";
 
 const CATEGORY_EMOJI_BY_ID: Record<number, string> = {
   1: "🔑", // keys

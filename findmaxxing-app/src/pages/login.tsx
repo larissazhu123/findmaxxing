@@ -1,16 +1,16 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Head from "next/head";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { GoogleIcon } from "@/components/GoogleIcon";
 import { Navbar } from "@/components/Navbar";
 import { motion } from "framer-motion";
-import { MapPin, Mail, Lock, User } from "lucide-react";
+import { MapPin, Mail, Lock } from "lucide-react";
 import { supabase } from "../lib/supabaseClient"; 
 
 export default function LoginPage() {
