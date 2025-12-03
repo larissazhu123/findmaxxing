@@ -98,14 +98,8 @@ export default function ListingCard({
         <div className="flex items-center justify-between pt-3 border-t border-green-200/60">
           <div className="flex items-center gap-1.5 text-xs text-green-700/80">
             <Clock className="h-3.5 w-3.5" />
-            <span>{formatDate(pin.created_at)}</span>
+            <span>{formatDate(pin.created_at ?? null)}</span>
           </div>
-          {pin.location && (
-            <div className="flex items-center gap-1 text-xs text-green-700/80">
-              <MapPin className="h-3.5 w-3.5" />
-              <span className="truncate max-w-[80px]">{pin.location}</span>
-            </div>
-          )}
         </div>
       </div>
     </motion.div>
