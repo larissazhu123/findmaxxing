@@ -1,9 +1,9 @@
 {
   "devDependencies": {
-    "prisma": "^6.16.3"
+    "prisma": "^6.19.0"
   },
   "dependencies": {
-    "@prisma/client": "^6.16.3",
+    "@prisma/client": "^6.19.0",
     "@supabase/auth-helpers-nextjs": "^0.10.0"
   }
 }
