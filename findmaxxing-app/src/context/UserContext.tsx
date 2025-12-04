@@ -7,7 +7,7 @@ interface UserContextType {
   isReady: boolean;
   refreshNickname: () => Promise<void>;
 }
-//basically sets up preloaded username globally post-login
+
 const UserContext = createContext<UserContextType>({
   nickname: "User",
   isReady: false,
@@ -22,14 +22,40 @@ export function UserProvider({ children }: { children: ReactNode }) {
     try {
       const { data: { session } } = await supabase.auth.getSession();
       const accessToken = session?.access_token;
+
+      // if not logged in, don't load context
       if (!accessToken) {
         setIsReady(true);
         return;
       }
 
-      const res = await fetch("/api/user/me", {
+      let res = await fetch("/api/user/me", {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
+
+      // if no row, create one 
+      if (res.status === 404) {
+        console.warn("No profile found — syncing user now...");
+
+        const syncRes = await fetch("/api/auth/syncUser", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: session.user.id,
+            email: session.user.email,
+          }),
+        });
+
+        if (!syncRes.ok) throw new Error("Failed to sync user profile");
+
+        // Retry loading nickname after sync success
+        res = await fetch("/api/user/me", {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
+      }
 
       if (!res.ok) throw new Error("Failed to fetch user profile");
 
@@ -49,9 +75,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
       loadNickname();
     });
 
-    return () => {
-      listener.subscription.unsubscribe();
-    };
+    return () => listener.subscription.unsubscribe();
   }, []);
 
   const refreshNickname = async () => {

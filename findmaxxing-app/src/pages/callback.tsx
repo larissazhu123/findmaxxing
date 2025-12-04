@@ -9,7 +9,6 @@ export default function CallbackPage() {
   useEffect(() => {
     const handleAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-
       if (!session) return;
 
       const userEmail = session.user.email!;
@@ -22,10 +21,27 @@ export default function CallbackPage() {
       }
 
       const accessToken = session.access_token;
-      await fetch("/api/auth/syncUser", {
-        headers: { Authorization: `Bearer ${accessToken}` },
+      console.log("Syncing user profile to DB...");
+
+      const res = await fetch("/api/auth/syncUser", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: session.user.id,
+          email: session.user.email,
+        }),
       });
- 
+
+      if (!res.ok) {
+        console.error("syncUser failed:", await res.text());
+        alert("Login failed syncing profile. Please try again.");
+        return router.replace("/");
+      }
+
+      console.log("User sync success — redirecting to dashboard.");
       router.replace("/dashboard");
     };
 
