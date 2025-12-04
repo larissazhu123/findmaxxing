@@ -27,7 +27,7 @@ export function Navbar({ className }: NavbarProps) {
               <Link href="/login">Login</Link>
             </Button>
             <Button asChild className="bg-green-600 hover:bg-green-700 text-white">
-              <Link href="/register">Get Started</Link>
+              <Link href="/login">Get Started</Link>
             </Button>
           </div>
         </div>
