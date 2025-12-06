@@ -22,6 +22,8 @@ import {
   Check 
 } from "lucide-react";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
+import { GoogleIcon } from "@/components/GoogleIcon";
+import {handleGoogleSignIn} from "@/pages/api/user/googleAuthFetch"
 
 export default function LandingPage() {
   return (
@@ -76,7 +78,7 @@ export default function LandingPage() {
                     <Button 
                       size="lg" 
                       className="gap-2 text-lg px-8 py-6"
-                      onClick={() => window.location.href = 'login'}
+                      onClick={handleGoogleSignIn}
                     >
                       <Upload className="h-6 w-6" />
                       Report Found Item
@@ -85,7 +87,7 @@ export default function LandingPage() {
                       size="lg" 
                       variant="outline" 
                       className="gap-2 text-lg px-8 py-6"
-                      onClick={() => window.location.href = '/login'}
+                      onClick={handleGoogleSignIn}
                     >
                       <Search className="h-6 w-6" />
                       Search Lost Items
@@ -292,8 +294,11 @@ export default function LandingPage() {
                     </div>
                   </li>
                 </ul>
-                <Button size="lg" asChild className="gap-2 text-lg px-8 py-6">
-                  <Link href="login">Explore the Map</Link>
+                <Button 
+                  size="lg" asChild className="gap-2 text-lg px-8 py-6" 
+                  onClick={handleGoogleSignIn}
+                >
+                  Explore the Map
                 </Button>
               </div>
               <div className="relative">
@@ -531,8 +536,10 @@ export default function LandingPage() {
                     size="lg"
                     asChild
                     className="bg-white text-green-600 hover:bg-gray-100 text-lg px-8 py-6"
+                    onClick={handleGoogleSignIn}
+            
                   >
-                    <Link href="login">Create Free Account</Link>
+                    Create Free Account
                   </Button>
                 </motion.div>
                 <motion.div
@@ -543,9 +550,11 @@ export default function LandingPage() {
                   <Button
                     size="lg"
                     asChild
-                    className="bg-transparent text-white border-2 border-white hover:bg-white hover:text-green-600 transition-colors text-lg px-8 py-6"
+                    className="bg-white text-green-600 hover:bg-white hover:text-green-600 transition-colors text-lg px-8 py-6"
+                    onClick={handleGoogleSignIn}
                   >
-                    <Link href="/login">Sign In</Link>
+                    <GoogleIcon className="mr-3 h-5 w-5" />
+                  Sign In 
                   </Button>
                 </motion.div>
               </div>

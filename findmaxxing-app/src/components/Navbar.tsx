@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
+import { GoogleIcon } from "@/components/GoogleIcon";
+import {handleGoogleSignIn} from "@/pages/api/user/googleAuthFetch"
 
 interface NavbarProps {
   className?: string;
@@ -23,11 +25,19 @@ export function Navbar({ className }: NavbarProps) {
             </Link>
           </div>
           <div className="flex items-center gap-4">
-            <Button variant="ghost" asChild className="hover:bg-green-50 hover:text-green-600">
-              <Link href="/login">Login</Link>
+            <Button 
+             variant="ghost" 
+             asChild className="hover:bg-green-50 hover:text-green-600 border border-green-600"
+             onClick={handleGoogleSignIn}
+            >
+              <GoogleIcon className="mr-3 h-5 w-5" />
+              Login
             </Button>
-            <Button asChild className="bg-green-600 hover:bg-green-700 text-white">
-              <Link href="/login">Get Started</Link>
+            <Button 
+              asChild className="bg-green-600 hover:bg-green-700 text-white"
+              onClick={handleGoogleSignIn}
+            >
+              Get Started
             </Button>
           </div>
         </div>
