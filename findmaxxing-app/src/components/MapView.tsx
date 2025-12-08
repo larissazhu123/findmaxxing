@@ -31,6 +31,13 @@ const CATEGORY_EMOJI_BY_ID: Record<number, string> = {
 const DEFAULT_IMAGE = "https://jtcmjgoibipkopwsvwdk.supabase.co/storage/v1/object/public/listing-images/listings/findmaxxingfinallogog.png"; // leading slash, served from /public
 // C:\Users\lzhu2\Documents\LarissaCollege2\findmaxxing\findmaxxing\findmaxxingfinallogog.png
 
+const MAP_THEME_URLS = {
+  default: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  light: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+  dark: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+};
+
+
 // const PinIcon = L.icon({
 //   iconUrl: "/pin.svg",
 //   iconSize: [32, 32],
@@ -170,7 +177,7 @@ export type ListingRow = {
   lng: number | null;
   place_name: string | null;
   manual_address: string | null;
-  image_url: string | null; // <-- add column: ALTER TABLE public.listing ADD COLUMN IF NOT EXISTS image_url text;
+  image_url: string | null; 
   created_at?: string | null;
   updated_at?: string | null;
 };
@@ -203,6 +210,8 @@ export default function MapView({
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  const [mapTheme, setMapTheme] = useState<"default" | "light" | "dark">("default");
 
   // map UI category -> DB category_id (agree this mapping with backend)
   // const CATEGORY_MAP = useMemo(
@@ -412,14 +421,14 @@ export default function MapView({
   }
 
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full relative">
       <MapContainer
         center={[42.3895, -72.526]} // roughly UMass Amherst campus
         zoom={15}
         minZoom={14}
         maxZoom={18}
         scrollWheelZoom={true}
-        className="h-full w-full"
+        className="h-full w-full z-0"
         maxBounds={[
           [42.36, -72.56], // Southwest corner
           [42.42, -72.49], // Northeast corner
@@ -427,7 +436,7 @@ export default function MapView({
         maxBoundsViscosity={1.0} // prevents panning outside Amherst
       >
         <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url={MAP_THEME_URLS[mapTheme]}
           attribution="© OpenStreetMap contributors"
         />
         <MapCenterHandler selectedPin={selectedPin} />
@@ -455,6 +464,25 @@ export default function MapView({
 
         <ZoomWatcher onChange={setZoom} />
       </MapContainer>
+
+      <div className="absolute top-4 right-4 z-[1000] bg-white rounded-lg shadow-md border border-gray-200">
+        <Select 
+          value={mapTheme} 
+          onValueChange={(v) => setMapTheme(v as "default" | "light" | "dark")}
+        >
+          <SelectTrigger className="w-[140px] h-10 border-0 focus:ring-0">
+            <div className="flex items-center gap-2">
+              {/* I removed the <Layers /> component here */}
+              <SelectValue placeholder="Theme" />
+            </div>
+          </SelectTrigger>
+          <SelectContent position="popper" align="end">
+            <SelectItem value="default">Default</SelectItem>
+            <SelectItem value="light">Light</SelectItem>
+            <SelectItem value="dark">Dark</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
       {/* Add Pin Modal */}
       {newPinCoords && (
