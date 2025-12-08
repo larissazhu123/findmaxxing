@@ -24,9 +24,13 @@ import {
   LogOut,
   Edit2,
   Calendar,
+  Trophy
 } from "lucide-react";
 import { useUser } from "@/context/UserContext";
-
+type LeaderboardUser = {
+  username: string;
+  points: number;
+};
 export default function SettingsPage() {
   const [nicknameInput, setNicknameInput] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -35,7 +39,7 @@ export default function SettingsPage() {
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [points, setPoints] = useState(0)
-
+  const [leaderboard, setLeaderboard] = useState<LeaderboardUser[]>([]);
   const { refreshNickname } = useUser();
 
   // Mock stats
@@ -58,6 +62,7 @@ export default function SettingsPage() {
 
       try {
         await fetch("/api/auth/syncUser", {
+          method: "POST",
           headers: { Authorization: `Bearer ${accessToken}` },
         });
 
@@ -71,6 +76,16 @@ export default function SettingsPage() {
         setNicknameInput(data.username || "");
         setUserEmail(data.email || "");
         setPoints(data.points || 0)
+
+        const { data: topUsers } = await supabase
+          .from('app_user') 
+          .select('username, points')
+          .order('points', { ascending: false })
+          .limit(5);
+
+        if (topUsers) {
+          setLeaderboard(topUsers);
+        }
       } catch (err) {
         console.error("Error loading user profile:", err);
       } finally {
@@ -201,6 +216,45 @@ export default function SettingsPage() {
                             Points
                           </p>
                         </div>
+                      </div>
+                    </div>
+                    <Separator />
+                    
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <Trophy className="h-4 w-4 text-yellow-500" />
+                        <h4 className="text-sm font-medium text-muted-foreground">
+                          Top Finders
+                        </h4>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        {leaderboard.length === 0 ? (
+                          <p className="text-xs text-muted-foreground text-center py-2">No data yet</p>
+                        ) : (
+                          leaderboard.map((user, index) => (
+                            <div 
+                              key={index} 
+                              className="flex items-center justify-between p-2 rounded-lg bg-gray-50/50 border border-gray-100"
+                            >
+                              <div className="flex items-center gap-3">
+                                <span className={`text-xs font-bold w-4 ${
+                                  index === 0 ? "text-yellow-600" : 
+                                  index === 1 ? "text-gray-500" : 
+                                  index === 2 ? "text-orange-600" : "text-muted-foreground"
+                                }`}>
+                                  #{index + 1}
+                                </span>
+                                <span className="text-sm font-medium text-gray-700">
+                                  {user.username || "Anon"}
+                                </span>
+                              </div>
+                              <span className="text-sm font-bold text-green-600">
+                                {user.points}
+                              </span>
+                            </div>
+                          ))
+                        )}
                       </div>
                     </div>
                   </CardContent>
