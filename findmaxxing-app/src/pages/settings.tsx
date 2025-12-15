@@ -13,13 +13,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import {
   User,
-  Bell,
-  Shield,
   Mail,
   LogOut,
   Edit2,
@@ -30,8 +27,6 @@ import { useUser } from "@/context/UserContext";
 export default function SettingsPage() {
   const [nicknameInput, setNicknameInput] = useState("");
   const [userEmail, setUserEmail] = useState("");
-  const [emailNotifications, setEmailNotifications] = useState(true);
-  const [pushNotifications, setPushNotifications] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [points, setPoints] = useState(0)
@@ -266,7 +261,7 @@ export default function SettingsPage() {
                         />
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        Email cannot be changed. Contact support if needed.
+                        Email can be changed through google services.
                       </p>
                     </div>
 
@@ -277,8 +272,7 @@ export default function SettingsPage() {
                     )}
                   </CardContent>
                 </Card>
-
-                {/* NOTIFICATION SETTINGS */}
+{/* NOTIFICATION SETTINGS - COMMENTED OUT BECAUSE NOT YET IMPLEMENTED
                 <Card className="shadow-sm">
                   <CardHeader>
                     <div className="flex items-center gap-3">
@@ -325,8 +319,7 @@ export default function SettingsPage() {
                     </div>
                   </CardContent>
                 </Card>
-
-                {/* PRIVACY & SECURITY */}
+PRIVACY & SECURITY - COMMENTED OUT BECAUSE NOT YET IMPLEMENTED
                 <Card className="shadow-sm">
                   <CardHeader>
                     <div className="flex items-center gap-3">
@@ -356,7 +349,7 @@ export default function SettingsPage() {
                     </Button>
                   </CardContent>
                 </Card>
-
+*/}
                 {/* LOGOUT */}
                 <Card className="shadow-sm border-destructive/50">
                   <CardContent className="pt-6">

@@ -53,7 +53,7 @@ export function PostLoginNavbar({
               <List className="h-4 w-4" />
               Browse Items
             </Button>
-
+{/*
             <Button variant="ghost" className="gap-2 relative">
               <Bell className="h-4 w-4" />
               Notifications
@@ -63,7 +63,7 @@ export function PostLoginNavbar({
                 </Badge>
               )}
             </Button>
-
+*/}
             {/* Profile / Nickname Button */}
             <Button
               variant="ghost"

@@ -12,7 +12,7 @@ import { Navbar } from "@/components/Navbar";
 import { motion } from "framer-motion";
 import { MapPin, Mail, Lock } from "lucide-react";
 import { supabase } from "../lib/supabaseClient"; 
-
+//deprecated, no longer using the login page
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
